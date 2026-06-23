@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>md2red · Markdown → 小红书图文</title>
-  <meta name="description" content="把 Markdown 一键排版成多种国际知名设计流派风格的小红书竖版图片。纯 HTML+CSS+JS，零框架。" />
+  <title>md2rednote · Markdown → 小红书图文（Kinfolk 精简版）</title>
+  <meta name="description" content="把 Markdown 一键排版成北欧极简 Kinfolk 风格的小红书竖版图片。纯 HTML+CSS+JS，零框架。" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -30,33 +30,12 @@
 </head>
 <body>
   <header class="topbar">
-    <div class="brand-mark">md2red<span>· 图文生成器</span></div>
+    <div class="brand-mark">md2rednote<span>· 图文生成器</span></div>
     <div class="controls">
       <label class="field">
         <span>风格</span>
         <select id="theme">
-          <optgroup label="推荐 · 营养/健康/生活">
-            <option value="gallery">画廊艺术 Gallery</option>
-            <option value="kinfolk">北欧极简 Kinfolk</option>
-            <option value="swiss" selected>瑞士国际主义 Swiss</option>
-            <option value="editorial">时尚杂志 Editorial</option>
-            <option value="wabi">日式侗宂 Wabi-sabi</option>
-            <option value="aero">Frutiger Aero</option>
-            <option value="glass">玻璃拟态 Glassmorphism</option>
-          </optgroup>
-          <optgroup label="其他（已收起，仍可选）">
-            <option value="bauhaus">包豪斯 Bauhaus</option>
-            <option value="mondrian">蒙德里安 De Stijl</option>
-            <option value="brutalism">粗野主义 Brutalism</option>
-            <option value="artdeco">装饰艺术 Art Deco</option>
-            <option value="memphis">孟菲斯 Memphis</option>
-            <option value="vaporwave">蒸汽波 Vaporwave</option>
-            <option value="cyberpunk">赛博朋克 Cyberpunk</option>
-            <option value="riso">丝网印刷 Risograph</option>
-            <option value="acid">酸性 Acid / Acidwave</option>
-            <option value="y2k">Y2K 铬感</option>
-            <option value="anti">反设计 / 极繁 Anti-design</option>
-          </optgroup>
+          <option value="kinfolk" selected>北欧极简 Kinfolk</option>
         </select>
       </label>
       <label class="field">

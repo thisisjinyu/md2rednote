@@ -1,148 +1,12 @@
 /* ====================================================================
-   PER-THEME COVER VARIANTS — 各风格专属封面方案（构图/图处理）
-   link 顺序最后加载，以确保覆盖 base 与 themes
-   注：Kinfolk 专属规则已拆到 kinfolk.css（在本文件之后加载）
+   COVER / PAGE-ROLE 通用层 — 封面/正文/尾页骨架（与风格无关）
+   注：本仓库（md2rednote）为 kinfolk 精简版。
+   · 各风格专属封面方案（.cv-<风格>-*）与 per-variant 排版已移除；
+   · kinfolk 专属封面/正文/尾页排版见 kinfolk.css。
+   如需从 md2red 复制回某风格：把该风格的 .cv-<风格>-* 区块、PER-VARIANT
+   TYPOGRAPHY 区块、以及 PAGE ROLE 里 [data-theme="<风格>"].role-body 覆盖一并复制。
+   link 顺序最后加载，确保覆盖 base 与 themes。
    ==================================================================== */
-
-/* Gallery 画廊 */
-.cv-gallery-museum.layout-frame { padding:120px 100px; }
-.cv-gallery-museum .card-media { width:64%; height:560px; margin:0 auto 44px; border:14px solid #fff; box-shadow:0 16px 44px rgba(0,0,0,0.18), 0 0 0 1px var(--card-rule); }
-.cv-gallery-museum .card-eyebrow { justify-content:center; }
-.cv-gallery-museum .card-eyebrow, .cv-gallery-museum .card-body { text-align:center; }
-.cv-gallery-diptych.layout-split .card-media { width:50%; }
-.cv-gallery-diptych.layout-split .li-content { border-left:1px solid var(--card-rule); padding-left:64px; }
-
-/* Swiss 瑞士国际主义 */
-.cv-swiss-grid.layout-split .card-media { width:50%; }
-.cv-swiss-grid.layout-split .card-media img { filter:grayscale(1) contrast(1.05); }
-.cv-swiss-grid.layout-split .li-content { padding:92px 64px; border-left:10px solid #e2231a; }
-.cv-swiss-bw.layout-bg .card-media img { filter:grayscale(1) contrast(1.08) brightness(0.82); }
-.cv-swiss-bw.layout-bg .li-panel { background:#e2231a; }
-.cv-swiss-toptype.layout-top .card-media { height:50%; }
-.cv-swiss-toptype.layout-top .card-media img { filter:grayscale(1) contrast(1.05); }
-
-/* Editorial 时尚杂志 */
-.cv-editorial-cover.layout-bg .card-media img { filter:brightness(0.58) contrast(1.05); }
-.cv-editorial-cover.layout-bg .li-panel { background:transparent; padding:0; }
-.cv-editorial-cover.layout-bg .li-panel .card-eyebrow { justify-content:center; }
-.cv-editorial-plate.layout-frame { padding:118px 104px; }
-.cv-editorial-plate .card-media { height:600px; }
-.cv-editorial-plate .card-media img { filter:grayscale(1) contrast(1.03); }
-.cv-editorial-quote.layout-bottom .card-media { height:42%; }
-.cv-editorial-quote.layout-bottom .card-media img { filter:grayscale(1); }
-
-/* Wabi 侗宂 */
-.cv-wabi-scroll.layout-split .card-media { width:38%; order:2; }
-.cv-wabi-scroll.layout-split .li-content { order:1; padding:120px 60px; }
-.cv-wabi-scroll .card-media img { filter:saturate(0.85) brightness(1.02); }
-.cv-wabi-inset.layout-module .card-media { width:300px; height:380px; }
-.cv-wabi-low.layout-bottom .card-media { height:40%; }
-.cv-wabi-low .li-content { padding:110px 84px 60px; }
-
-/* Aero */
-.cv-aero-hero.layout-bg .card-media img { filter:brightness(0.92) saturate(1.1); }
-.cv-aero-hero.layout-bg .li-panel { background:rgba(255,255,255,0.24); border:1px solid rgba(255,255,255,0.6); backdrop-filter:blur(8px); }
-.cv-aero-hero.layout-bg .li-panel .card-eyebrow { color:#00a86b; }
-.cv-aero-hero.layout-bg .li-panel .card-body h1,
-.cv-aero-hero.layout-bg .li-panel .card-body h2,
-.cv-aero-hero.layout-bg .li-panel .card-body h3,
-.cv-aero-hero.layout-bg .li-panel .card-body h4,
-.cv-aero-hero.layout-bg .li-panel .card-body p,
-.cv-aero-hero.layout-bg .li-panel .card-body li,
-.cv-aero-hero.layout-bg .li-panel .card-body blockquote { color:#0f3b3a; }
-.cv-aero-hero.layout-bg .card-foot { color:#0f3b3a; border-top-color:rgba(15,59,58,0.35); }
-.cv-aero-hero.layout-bg .card-foot .page-no { color:#0f3b3a; }
-.cv-aero-glossytop.layout-top .card-media { height:50%; }
-.cv-aero-glossytop.layout-top .card-media::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(255,255,255,0.45), transparent 38%); pointer-events:none; }
-.cv-aero-bubble.layout-frame .card-media { height:540px; border-radius:36px; border:6px solid rgba(255,255,255,0.7); box-shadow:0 20px 50px rgba(0,90,120,0.22); }
-
-/* Glass */
-.cv-glass-frosted.layout-bg .card-media img { filter:brightness(0.85) saturate(1.05); }
-.cv-glass-frosted.layout-bg .li-panel {
-  background:rgba(255,255,255,0.16); border:1px solid rgba(255,255,255,0.5);
-  border-radius:32px; backdrop-filter:blur(16px);
-  box-shadow:0 20px 60px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.6);
-}
-.cv-glass-frosted.layout-bg .card-body { background:none; border:none; box-shadow:none; padding:0; }
-.cv-glass-card.layout-frame .card-media { height:520px; border-radius:28px; border:1px solid rgba(255,255,255,0.55); box-shadow:0 20px 50px rgba(0,0,0,0.2); }
-.cv-glass-split.layout-split .card-media { width:48%; }
-.cv-glass-split.layout-split .li-content { padding:92px 60px; }
-
-/* ====================================================================
-   OTHER-THEME COVER VARIANTS — 其他 11 个风格的专属封面方案
-   ==================================================================== */
-
-/* Bauhaus 包豪斯 */
-.cv-bauhaus-block.layout-split .card-media { width:48%; }
-.cv-bauhaus-block.layout-split .li-content { padding:96px 64px; border-left:12px solid #d7263d; }
-.card.role-cover.cv-bauhaus-block .card-body h1 { font-size:84px; }
-.cv-bauhaus-circle.layout-frame .card-media { width:560px; height:560px; border-radius:50%; margin:0 auto 48px; border:14px solid #0b5cab; }
-.cv-bauhaus-circle.layout-frame::after { display:none; }
-.cv-bauhaus-circle .card-eyebrow { justify-content:center; }
-.cv-bauhaus-circle .card-eyebrow, .cv-bauhaus-circle .card-body { text-align:center; }
-.cv-bauhaus-band.layout-top .card-media { height:46%; }
-.cv-bauhaus-band.layout-top .card-media::after { content:""; position:absolute; left:0; bottom:0; width:100%; height:22px; background:#f4b400; }
-.card.role-cover.cv-bauhaus-band .card-body h1 { font-size:96px; }
-
-/* Mondrian 蒙德里安 */
-.cv-mondrian-module.layout-module .card-media { width:380px; height:380px; }
-.cv-mondrian-gridframe.layout-frame .card-media { height:540px; border:16px solid #111; }
-.cv-mondrian-gridframe.layout-frame::after { display:none; }
-.cv-mondrian-topband.layout-top .card-media { height:44%; border-bottom:16px solid #111; }
-
-/* Brutalism 粗野主义 */
-.cv-brutalism-slab.layout-module .card-media { width:380px; height:380px; }
-.cv-brutalism-raw.layout-top .card-media { height:52%; }
-.cv-brutalism-raw.layout-top .card-media img { filter:grayscale(1) contrast(1.1); }
-.card.role-cover.cv-brutalism-raw .card-body h1 { font-size:100px; }
-.cv-brutalism-mono.layout-bg .card-media img { filter:grayscale(1) contrast(1.15) brightness(0.7); }
-.cv-brutalism-mono.layout-bg .li-panel { background:#000; border:4px solid #fff; }
-
-/* Art Deco 装饰艺术 */
-.cv-artdeco-goldframe.layout-frame .card-media { height:560px; }
-.cv-artdeco-plate.layout-bg .card-media img { filter:sepia(0.2) brightness(0.5) contrast(1.05); }
-.cv-artdeco-plate.layout-bg .li-content { justify-content:center; text-align:center; }
-.cv-artdeco-plate.layout-bg .li-panel { background:transparent; padding:0; }
-.cv-artdeco-plate.layout-bg .li-panel .card-eyebrow { justify-content:center; }
-.cv-artdeco-symtop.layout-top .card-media { height:48%; }
-.cv-artdeco-symtop .card-eyebrow { justify-content:center; }
-.cv-artdeco-symtop .card-eyebrow, .cv-artdeco-symtop .card-body { text-align:center; }
-
-/* Memphis 孟菲斯 */
-.cv-memphis-pop.layout-frame .card-media { height:520px; border-radius:28px; border:8px solid #38c6d9; }
-.card.role-cover.cv-memphis-pop .card-body h1 { font-size:88px; }
-.cv-memphis-band.layout-top .card-media { height:46%; border-radius:0 0 40px 40px; }
-.card.role-cover.cv-memphis-band .card-body h1 { font-size:92px; }
-
-/* Vaporwave 蒸汽波 */
-.cv-vaporwave-neon.layout-bg .card-media img { filter:saturate(1.4) contrast(1.1) brightness(0.8); }
-.cv-vaporwave-glitchtop.layout-top .card-media { height:50%; }
-.cv-vaporwave-glitchtop.layout-top .card-media img { filter:saturate(1.4) hue-rotate(-10deg); }
-
-/* Cyberpunk 赛博朋克 */
-.cv-cyberpunk-hud.layout-bg .card-media img { filter:contrast(1.2) brightness(0.6) saturate(1.2); }
-.cv-cyberpunk-splitscan.layout-split .card-media { width:50%; }
-.cv-cyberpunk-splitscan.layout-split .card-media img { filter:contrast(1.15) saturate(1.2); }
-.cv-cyberpunk-splitscan.layout-split .li-content { border-left:1px solid #00ffd5; padding:92px 60px; }
-
-/* Risograph 丝网印刷 */
-.cv-riso-duotop.layout-top .card-media { height:50%; }
-.cv-riso-duoframe.layout-frame .card-media { height:540px; }
-.cv-riso-collage.layout-module .card-media { width:340px; height:420px; transform:rotate(-3deg); }
-
-/* Acid 酸性 */
-.cv-acid-flood.layout-bg .card-media img { filter:saturate(1.5) contrast(1.1) brightness(0.75); }
-.cv-acid-glowtop.layout-top .card-media { height:50%; }
-.cv-acid-glowtop.layout-top .card-media img { filter:saturate(1.4) contrast(1.1); }
-
-/* Y2K 铬感 */
-.cv-y2k-chrome.layout-bg .card-media img { filter:brightness(0.85) saturate(1.1); }
-.cv-y2k-chrome.layout-bg .li-panel { background:linear-gradient(180deg, rgba(170,182,200,0.92), rgba(120,135,160,0.92)); border:1px solid rgba(255,255,255,0.6); }
-.cv-y2k-glossycard.layout-frame .card-media { height:520px; border-radius:30px; border:4px solid rgba(255,255,255,0.8); box-shadow:0 16px 40px rgba(0,0,0,0.25); }
-
-/* Anti-design 反设计 */
-.cv-anti-skew.layout-module .card-media { width:360px; height:360px; transform:rotate(4deg); border:8px solid #2d00f7; }
-.cv-anti-tear.layout-top .card-media { height:46%; transform:rotate(-1deg); }
 
 /* ====================================================================
    PAGE ROLE — 封页 (role-cover) vs 正文 (role-body) 区分
@@ -158,32 +22,9 @@
 
 .card.role-cover .card-body h1 { font-size:104px; }
 
-.card[data-theme="swiss"].role-body::before { border-top-width:8px; }
-
-.card[data-theme="editorial"].role-body { text-align:left; }
-.card[data-theme="editorial"].role-body .card-eyebrow { justify-content:flex-start; }
-.card[data-theme="editorial"].role-body .card-eyebrow::before { display:none; }
-.card[data-theme="editorial"].role-body .card-foot { justify-content:flex-end; }
-
-.card[data-theme="aero"].role-body { background:#e9f7ff; }
-
-.card[data-theme="glass"].role-body { background:#eef1ff; }
-.card[data-theme="glass"].role-body .card-body { background:none; border:none; box-shadow:none; padding:0; }
-.card[data-theme="glass"].role-body .card-eyebrow { color:#5b6cff; }
-.card[data-theme="glass"].role-body .card-body h1,
-.card[data-theme="glass"].role-body .card-body h2,
-.card[data-theme="glass"].role-body .card-body h3,
-.card[data-theme="glass"].role-body .card-body h4,
-.card[data-theme="glass"].role-body .card-body p,
-.card[data-theme="glass"].role-body .card-body li { color:#1c2233; }
-.card[data-theme="glass"].role-body .card-body blockquote { color:#5a6685; border-left-color:#5b6cff; }
-.card[data-theme="glass"].role-body .card-foot { color:#5a6685; }
-.card[data-theme="glass"].role-body .card-foot .page-no { color:#1c2233; }
-
 /* ====================================================================
    COVER CONTENT HIERARCHY — 封面内容层级（主标题 / 副标题 / 描述）
-   让各版式封面更“像封面”：无图时内容竖向居中；
-   h2 作副标题中号；p 作描述弱化小号
+   让封面更“像封面”：无图时内容竖向居中；h2 作副标题中号；p 作描述弱化小号
    ==================================================================== */
 /* 无图封面：内容竖向居中，更有封面构图感 */
 .card.role-cover:not(.has-img) .card-body { display:flex; flex-direction:column; justify-content:center; }
@@ -201,54 +42,8 @@
 .card.role-cover .card-body blockquote { font-size:38px; }
 
 /* ====================================================================
-   PER-VARIANT TYPOGRAPHY — 各封面方案专属文字排列/字号/竖向位置
-   （Kinfolk 专属排版已迁入 kinfolk.css）
-   ==================================================================== */
-
-/* Gallery */
-.card.role-cover.cv-gallery-museum .card-body h1 { font-size:78px; letter-spacing:0.5px; margin-bottom:26px; }
-.card.role-cover.cv-gallery-museum .card-body p { font-size:30px; }
-.card.role-cover.cv-gallery-fullbleed .card-body h1 { font-size:112px; line-height:0.98; letter-spacing:-1.5px; }
-.card.cv-gallery-diptych .li-content { justify-content:center; }
-.card.role-cover.cv-gallery-diptych .card-body h1 { font-size:72px; line-height:1.08; }
-
-/* Swiss — 顶对齐、巨大粗体、紧字距 */
-.card.cv-swiss-grid .li-content { justify-content:flex-start; }
-.card.role-cover.cv-swiss-grid .card-body h1 { font-size:88px; font-weight:800; letter-spacing:-2px; line-height:0.97; }
-.card.role-cover.cv-swiss-bw .card-body h1 { font-size:96px; font-weight:800; letter-spacing:-2.5px; line-height:0.95; }
-.card.role-cover.cv-swiss-toptype .card-body h1 { font-size:100px; font-weight:800; letter-spacing:-3px; line-height:0.94; }
-
-/* Editorial — 斜体刊封 */
-.card.cv-editorial-cover .li-content { justify-content:center; text-align:center; }
-.card.role-cover.cv-editorial-cover .card-body h1 { font-size:108px; font-style:italic; line-height:1.04; }
-.card.role-cover.cv-editorial-plate .card-body h1 { font-size:74px; font-style:italic; font-weight:500; }
-.card.cv-editorial-quote .li-content { justify-content:flex-start; }
-.card.role-cover.cv-editorial-quote .card-body h1 { font-size:64px; font-style:italic; }
-.card.role-cover.cv-editorial-quote .card-body blockquote { font-size:50px; }
-
-/* Wabi — 竖向分布、中等字号 */
-.card.cv-wabi-scroll .li-content { justify-content:space-between; }
-.card.role-cover.cv-wabi-scroll .card-body h1 { font-size:66px; font-weight:600; line-height:1.32; letter-spacing:1px; }
-.card.role-cover.cv-wabi-inset .card-body h1 { font-size:72px; font-weight:600; }
-.card.cv-wabi-low .li-content { justify-content:flex-start; }
-.card.role-cover.cv-wabi-low .card-body h1 { font-size:74px; font-weight:600; }
-
-/* Aero */
-.card.role-cover.cv-aero-hero .card-body h1 { font-size:82px; }
-.card.role-cover.cv-aero-glossytop .card-body h1 { font-size:80px; }
-.card.role-cover.cv-aero-bubble .card-body h1 { font-size:68px; text-align:center; }
-.card.cv-aero-bubble .card-eyebrow { justify-content:center; }
-
-/* Glass */
-.card.cv-glass-frosted .li-content { justify-content:center; }
-.card.role-cover.cv-glass-frosted .card-body h1 { font-size:88px; }
-.card.cv-glass-split .li-content { justify-content:center; }
-.card.role-cover.cv-glass-split .card-body h1 { font-size:74px; line-height:1.08; }
-.card.role-cover.cv-glass-card .card-body h1 { font-size:66px; }
-
-/* ====================================================================
    END PAGE — 尾页（收尾 / 行动号召），与 role-body 叠加使用
-   尾页 = role-body（继承各主题正文配色）+ role-end（居中收尾排版）
+   尾页 = role-body（继承正文配色）+ role-end（居中收尾排版）
    （Kinfolk 尾页主题专属样式已迁入 kinfolk.css）
    ==================================================================== */
 .card.role-end .card-body {
@@ -265,9 +60,8 @@
 
 /* ====================================================================
    BODY WHITESPACE — 正文留白处理（自动规则）
-   有图 → .bf：文字照常顶部排布（与无图版完全一致，引用不随图移动）；
-           末尾图片收进版心成为固定图框，自动填满文字与页脚之间，
-           顶部与底部各留固定间距；框内图片可拖拽平移 + 滚轮缩放（逻辑在 app.js）
+   有图 → .bf：文字照常顶部排布；末尾图片收进版心成为固定图框，自动填满
+           文字与页脚之间；框内图片可拖拽平移 + 滚轮缩放（逻辑在 app.js）
    无图 → .card-anchor：浅色巨大序号沉右下，主动消费留白
    ==================================================================== */
 .card.role-body .card-body { position:relative; z-index:1; }
