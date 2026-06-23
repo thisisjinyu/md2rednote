@@ -14,14 +14,14 @@
    ==================================================================== */
 
 /* -------------------- 封面方案构图（几何；.cv-* 已自带主题作用域） -------------------- */
-/* airy 极简留白：顶图 55% */
-.cv-kinfolk-airy.layout-top .card-media { height:55%; }
+/* airy 极简留白：顶图 45% */
+.cv-kinfolk-airy.layout-top .card-media { height:45%; }
 .cv-kinfolk-airy .card-media img { filter:brightness(1.05) saturate(0.82); }
-/* square 居中方图：图在上、标题在下，居中 */
-.cv-kinfolk-square.layout-frame { padding:130px 120px; }
-.cv-kinfolk-square .card-media { width:520px; height:520px; margin:0 auto 56px; }
-/* half 左右半幅：图宽 36% */
-.cv-kinfolk-half.layout-split .card-media { width:36%; }
+/* square 偏置方图：图偏左上、文字偏右下 */
+.cv-kinfolk-square.layout-frame { padding:130px 120px; display:flex; flex-direction:column; }
+.cv-kinfolk-square .card-media { width:520px; height:520px; margin:0 auto 0 0; }
+/* half 左右半幅：图宽 45% */
+.cv-kinfolk-half.layout-split .card-media { width:45%; }
 .cv-kinfolk-half.layout-split .li-content { padding:120px 76px; }
 .card.cv-kinfolk-half .li-content { justify-content:center; }
 
@@ -55,8 +55,8 @@
 .card.role-cover.cv-kinfolk-airy .card-body blockquote { margin:0 0 24px; padding:0; border:none; font-style:italic; font-weight:400; font-size:34px; line-height:1.45; letter-spacing:2px; color:var(--card-dim); }
 /* 描述：弱化，更小更淡，降低存在感 */
 .card.role-cover.cv-kinfolk-airy .card-body p { margin:0 0 14px; max-width:100%; font-size:27px; font-weight:300; line-height:1.7; letter-spacing:0.3px; color:var(--card-dim); }
-/* square：居中排版 + 字号 */
-.card.role-cover.cv-kinfolk-square .card-body { text-align:center; }
+/* square：右下排版 + 字号（图偏左上，文字推到右下） */
+.card.role-cover.cv-kinfolk-square .card-body { margin-top:auto; align-self:flex-end; max-width:80%; text-align:right; }
 .card.role-cover.cv-kinfolk-square .card-body h1 { font-size:54px; font-weight:400; letter-spacing:2px; }
 /* half：字号 */
 .card.role-cover.cv-kinfolk-half .card-body h1 { font-size:52px; font-weight:400; letter-spacing:1px; line-height:1.25; }
