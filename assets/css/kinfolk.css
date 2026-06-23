@@ -1,0 +1,96 @@
+/* ====================================================================
+   KINFOLK 北欧极简 — 封页 / 正文 / 尾页专属样式
+   统一“有图”模型：封面/正文都用「文字 + 固定图框」；
+   尾页不用图框，采用纯文字收尾排版。
+   无图时显示空图框占位（保持版式一致）；图框可拖拽平移 + 滚轮缩放。
+   理念：轻字重、宽行距、大留白、柔和层级。
+   load 顺序在 covers.css 之后，确保覆盖通用层。
+
+   选择器约定：
+   • 「方案专属」规则用 .card.role-cover.cv-kinfolk-<方案>（与 covers.css 各风格一致），
+     特异度 (0,4,x) 自然高于 covers 通用封面层 (0,3,x)，无需 [data-theme] padding。
+   • 「主题级通用」规则（对所有 Kinfolk 封面生效）用 [data-theme="kinfolk"] 作主题作用域，
+     这是为了与别的风格区分，不是为了堆特异度抢优先级。
+   ==================================================================== */
+
+/* -------------------- 封面方案构图（几何；.cv-* 已自带主题作用域） -------------------- */
+/* airy 极简留白：顶图 55% */
+.cv-kinfolk-airy.layout-top .card-media { height:55%; }
+.cv-kinfolk-airy .card-media img { filter:brightness(1.05) saturate(0.82); }
+/* square 居中方图：图在上、标题在下，居中 */
+.cv-kinfolk-square.layout-frame { padding:130px 120px; }
+.cv-kinfolk-square .card-media { width:520px; height:520px; margin:0 auto 56px; }
+/* half 左右半幅：图宽 36% */
+.cv-kinfolk-half.layout-split .card-media { width:36%; }
+.cv-kinfolk-half.layout-split .li-content { padding:120px 76px; }
+.card.cv-kinfolk-half .li-content { justify-content:center; }
+
+/* -------------------- 封面：主题级通用规则 --------------------
+   下列规则对“所有 Kinfolk 封面”生效，且需要针对 covers.css 同类通用层做主题区分，
+   故用 [data-theme="kinfolk"] 作【主题作用域】（非为了堆特异度抢优先级）。 */
+/* 统一去页眉页脚 */
+.card[data-theme="kinfolk"].role-cover .card-eyebrow,
+.card[data-theme="kinfolk"].role-cover .card-foot { display:none; }
+/* 封面图统一可拖拽缩放（有真实图片时；占位框不可拖） */
+.card[data-theme="kinfolk"].role-cover .card-media img { cursor:grab; transform-origin:center center; will-change:transform; }
+.card[data-theme="kinfolk"].role-cover .card-media img:active { cursor:grabbing; }
+.card[data-theme="kinfolk"].role-cover .card-media.is-empty { cursor:default; }
+/* 空图框占位（封面 + 正文统一）：柔和色块 + 细描边 */
+.card[data-theme="kinfolk"].role-cover .card-media.is-empty,
+.card[data-theme="kinfolk"].role-body.bf .card-body .body-figure.is-empty {
+  background:var(--card-bg); box-shadow:inset 0 0 0 1px var(--card-rule);
+}
+
+/* -------------------- 封面：各方案专属排版 --------------------
+   统一用 .card.role-cover.cv-kinfolk-<方案> 形式，特异度 (0,4,x) > covers 通用层 (0,3,x)。 */
+/* airy：大标题 + kicker 副标题 + 弱化描述 */
+.card.role-cover.cv-kinfolk-airy .li-content { justify-content:flex-start; padding:60px 88px 72px; display:flex; flex-direction:column; }
+.card.role-cover.cv-kinfolk-airy .card-body { flex:0 1 auto; display:block; }
+.card.role-cover.cv-kinfolk-airy .card-body h1 { margin:0 0 32px; font-size:88px; font-weight:400; letter-spacing:1px; line-height:1.16; }
+/* 标题内斜体字（如序号）→ 原字号（1em），仅斜体 + 强调色实色 */
+.card.role-cover.cv-kinfolk-airy .card-body h1 em { font-weight:400; color:var(--card-accent); }
+/* （备用）h2 作副标题 */
+.card.role-cover.cv-kinfolk-airy .card-body h2 { margin:0 0 26px; font-size:42px; font-weight:300; line-height:1.3; color:var(--card-dim); }
+/* 副标题（引用改写）：去掉左侧竖线，改为斜体 + 封面 H2 字色（--card-dim 实色，无透明度） */
+.card.role-cover.cv-kinfolk-airy .card-body blockquote { margin:0 0 24px; padding:0; border:none; font-style:italic; font-weight:400; font-size:34px; line-height:1.45; letter-spacing:2px; color:var(--card-dim); }
+/* 描述：弱化，更小更淡，降低存在感 */
+.card.role-cover.cv-kinfolk-airy .card-body p { margin:0 0 14px; max-width:100%; font-size:27px; font-weight:300; line-height:1.7; letter-spacing:0.3px; color:var(--card-dim); }
+/* square：居中排版 + 字号 */
+.card.role-cover.cv-kinfolk-square .card-body { text-align:center; }
+.card.role-cover.cv-kinfolk-square .card-body h1 { font-size:54px; font-weight:400; letter-spacing:2px; }
+/* half：字号 */
+.card.role-cover.cv-kinfolk-half .card-body h1 { font-size:52px; font-weight:400; letter-spacing:1px; line-height:1.25; }
+.card.role-cover.cv-kinfolk-half .card-body p { font-size:30px; font-weight:300; }
+
+/* -------------------- 正文排版 -------------------- */
+.card[data-theme="kinfolk"].role-body .card-head { margin-bottom:46px; }
+.card[data-theme="kinfolk"].role-body .card-eyebrow { font-size:16px; letter-spacing:5px; }
+.card[data-theme="kinfolk"].role-body .card-body h2 { font-size:48px; font-weight:400; line-height:1.26; letter-spacing:1px; margin:0 0 38px; }
+.card[data-theme="kinfolk"].role-body .card-body h2:first-child { margin-top:0; }
+.card[data-theme="kinfolk"].role-body .card-body p { font-size:31px; font-weight:300; line-height:1.86; letter-spacing:0.3px; margin:0 0 30px; }
+.card[data-theme="kinfolk"].role-body .card-body ul,
+.card[data-theme="kinfolk"].role-body .card-body ol { margin:0 0 32px; }
+.card[data-theme="kinfolk"].role-body .card-body li { font-size:30px; font-weight:300; line-height:1.7; margin-bottom:22px; }
+/* 列表标识 · 空心小圆环 */
+.card[data-theme="kinfolk"].role-body .card-body ul li::before { top:13px; left:3px; width:10px; height:10px; background:transparent; border:1.5px solid var(--card-accent); border-radius:50%; }
+.card[data-theme="kinfolk"].role-body .card-body blockquote { font-size:35px; font-weight:400; font-style:italic; line-height:1.55; margin:38px 0 0; padding-left:30px; border-left-width:2px; color:var(--card-dim); }
+/* 引用标识 · 顶部细短横线（尾页居中引用除外） */
+.card[data-theme="kinfolk"].role-body:not(.role-end) .card-body blockquote { padding:30px 0 0; border:none; position:relative; }
+.card[data-theme="kinfolk"].role-body:not(.role-end) .card-body blockquote::before { content:""; position:absolute; left:0; top:0; width:48px; height:1px; background:var(--card-accent); opacity:0.7; }
+.card[data-theme="kinfolk"].role-body .card-body mark { background:linear-gradient(transparent 62%, color-mix(in srgb, var(--card-accent) 22%, transparent) 62%); }
+
+/* -------------------- 尾页排版（纯文字收尾，去掉图框占位） --------------------
+   尾页不再使用图框：隐藏占位图框，文字独占版面；竖向居中、左对齐。 */
+.card[data-theme="kinfolk"].role-end .card-body .body-figure { display:none; }
+.card[data-theme="kinfolk"].role-end .card-body { justify-content:center; align-items:stretch; text-align:left; }
+.card[data-theme="kinfolk"].role-end .card-body .body-text { flex:1 1 auto; display:flex; flex-direction:column; justify-content:center; }
+.card[data-theme="kinfolk"].role-end .card-eyebrow { justify-content:flex-start; }
+/* 收尾标题：上方细短横线作收束记号 */
+.card[data-theme="kinfolk"].role-end .card-body h1 { position:relative; padding-top:42px; font-size:72px; font-weight:400; line-height:1.22; letter-spacing:2px; margin:0 0 28px; }
+.card[data-theme="kinfolk"].role-end .card-body h1::before { content:""; position:absolute; left:0; top:0; width:64px; height:1px; background:var(--card-accent); }
+.card[data-theme="kinfolk"].role-end .card-body h2 { font-size:34px; font-weight:300; letter-spacing:1px; line-height:1.42; margin:0 0 36px; color:var(--card-dim); }
+.card[data-theme="kinfolk"].role-end .card-body p { font-size:30px; font-weight:300; line-height:1.85; margin:0 0 20px; color:var(--card-ink); }
+.card[data-theme="kinfolk"].role-end .card-body strong { color:var(--card-accent); font-weight:400; }
+/* 结尾引用作行动号召：上方留白 + 顶部细线，斜体淡色 */
+.card[data-theme="kinfolk"].role-end .card-body blockquote { position:relative; padding:34px 0 0; margin:44px 0 0; border:none; font-size:32px; font-weight:300; font-style:italic; line-height:1.5; color:var(--card-dim); }
+.card[data-theme="kinfolk"].role-end .card-body blockquote::before { content:""; position:absolute; left:0; top:0; width:48px; height:1px; background:var(--card-accent); opacity:0.7; }
