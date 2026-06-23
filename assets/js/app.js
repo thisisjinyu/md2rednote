@@ -3,108 +3,24 @@
 
   // 各风格专属的封面方案（id 唯一，base = 底层构图骨架）
   // 底层构图：top / bottom / split / frame / module / bg
+  // 注：本仓库（md2rednote）为 kinfolk 精简版，仅保留 kinfolk。
+  // 如需从 md2red 复制回某风格，把该风格的键加回下面三个对象即可。
   const COVER_VARIANTS = {
-    gallery: [
-      { id: "museum", label: "美术馆挂画", base: "frame" },
-      { id: "fullbleed", label: "顶部满幅大标题", base: "top" },
-      { id: "diptych", label: "双联分栏", base: "split" },
-    ],
     kinfolk: [
       { id: "airy", label: "极简留白", base: "top" },
       { id: "square", label: "居中方图", base: "frame" },
       { id: "half", label: "左右半幅", base: "split" },
     ],
-    swiss: [
-      { id: "grid", label: "网格分栏", base: "split" },
-      { id: "bw", label: "黑白满幅 + 红块", base: "bg" },
-      { id: "toptype", label: "顶部出血 + 粗标题", base: "top" },
-    ],
-    editorial: [
-      { id: "cover", label: "全幅刊封", base: "bg" },
-      { id: "plate", label: "经典相框", base: "frame" },
-      { id: "quote", label: "引文 + 底图", base: "bottom" },
-    ],
-    wabi: [
-      { id: "scroll", label: "立轴竖图", base: "split" },
-      { id: "inset", label: "小幅嵌入", base: "module" },
-      { id: "low", label: "底部横图留白", base: "bottom" },
-    ],
-    aero: [
-      { id: "hero", label: "满版玻璃面板", base: "bg" },
-      { id: "glossytop", label: "光泽顶图", base: "top" },
-      { id: "bubble", label: "圆角浮窗", base: "frame" },
-    ],
-    glass: [
-      { id: "frosted", label: "满版磨砂", base: "bg" },
-      { id: "card", label: "玻璃卡片图", base: "frame" },
-      { id: "split", label: "分栏玻璃", base: "split" },
-    ],
-    bauhaus: [
-      { id: "block", label: "几何分栏", base: "split" },
-      { id: "circle", label: "圆点相框", base: "frame" },
-      { id: "band", label: "色带顶图", base: "top" },
-    ],
-    mondrian: [
-      { id: "module", label: "色块嵌图", base: "module" },
-      { id: "gridframe", label: "网格相框", base: "frame" },
-      { id: "topband", label: "顶部色块", base: "top" },
-    ],
-    brutalism: [
-      { id: "slab", label: "粗框嵌图", base: "module" },
-      { id: "raw", label: "出血顶图", base: "top" },
-      { id: "mono", label: "满版灰阶", base: "bg" },
-    ],
-    artdeco: [
-      { id: "goldframe", label: "金边相框", base: "frame" },
-      { id: "plate", label: "全幅刊封", base: "bg" },
-      { id: "symtop", label: "对称顶图", base: "top" },
-    ],
-    memphis: [
-      { id: "pop", label: "圆角嵌图", base: "frame" },
-      { id: "band", label: "撞色顶图", base: "top" },
-    ],
-    vaporwave: [
-      { id: "neon", label: "满版霓虹", base: "bg" },
-      { id: "glitchtop", label: "故障顶图", base: "top" },
-    ],
-    cyberpunk: [
-      { id: "hud", label: "满版 HUD", base: "bg" },
-      { id: "splitscan", label: "分屏扫描", base: "split" },
-    ],
-    riso: [
-      { id: "duotop", label: "套色顶图", base: "top" },
-      { id: "duoframe", label: "套色相框", base: "frame" },
-      { id: "collage", label: "拼贴小图", base: "module" },
-    ],
-    acid: [
-      { id: "flood", label: "满版酸性", base: "bg" },
-      { id: "glowtop", label: "荧光顶图", base: "top" },
-    ],
-    y2k: [
-      { id: "chrome", label: "铬感满版", base: "bg" },
-      { id: "glossycard", label: "光泽卡片", base: "frame" },
-    ],
-    anti: [
-      { id: "skew", label: "歪斜嵌图", base: "module" },
-      { id: "tear", label: "撞色顶图", base: "top" },
-    ],
   };
 
   // 各风格页码进度的视觉类型：dots/dashes/bars/numbers/arrows
   const PROGRESS_KIND = {
-    gallery: "dots", kinfolk: "dots", swiss: "numbers", editorial: "numbers",
-    wabi: "dashes", aero: "dots", glass: "dots", bauhaus: "bars",
-    mondrian: "numbers", brutalism: "numbers", artdeco: "dashes", memphis: "bars",
-    vaporwave: "bars", cyberpunk: "arrows", riso: "dots", acid: "bars",
-    y2k: "bars", anti: "arrows",
+    kinfolk: "dots",
   };
 
   // 各风格所属设计体系的列网格数（构图参考）
   const GRID_COLS = {
-    swiss: 12, bauhaus: 12, mondrian: 12,
-    editorial: 8, artdeco: 8, glass: 8,
-    gallery: 6, kinfolk: 6, wabi: 6, aero: 6, riso: 6, cyberpunk: 6,
-    memphis: 4, vaporwave: 4, acid: 4, y2k: 4, anti: 4, brutalism: 4,
+    kinfolk: 6,
   };
 
   // 示例：首页=封面（主标题/副标题/描述），中间=正文，末页=尾页
