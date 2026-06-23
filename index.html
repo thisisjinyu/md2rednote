@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>md2red · Markdown → 小红书图文</title>
+  <meta name="description" content="把 Markdown 一键排版成多种国际知名设计流派风格的小红书竖版图片。纯 HTML+CSS+JS，零框架。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/themes.css" />
+  <link rel="stylesheet" href="assets/css/covers.css" />
+  <link rel="stylesheet" href="assets/css/kinfolk.css" />
+  <style>
+    /* 导出 PDF：浏览器原生打印，矢量输出，每张卡片占一页（与卡片同比 1080×1440） */
+    #print-root { display: none; }
+    @media print {
+      @page { size: 1080px 1440px; margin: 0; }
+      html, body { height: auto; overflow: visible; background: #fff; }
+      body > *:not(#print-root) { display: none !important; }
+      #print-root { display: block !important; }
+      .print-page { width: 1080px; height: 1440px; overflow: hidden; break-after: page; page-break-after: always; }
+      .print-page:last-child { break-after: auto; page-break-after: auto; }
+      .print-page .card { transform: none !important; margin: 0 !important; box-shadow: none !important; border-radius: 0 !important; }
+      .card { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .card-grid { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark">md2red<span>· 图文生成器</span></div>
+    <div class="controls">
+      <label class="field">
+        <span>风格</span>
+        <select id="theme">
+          <optgroup label="推荐 · 营养/健康/生活">
+            <option value="gallery">画廊艺术 Gallery</option>
+            <option value="kinfolk">北欧极简 Kinfolk</option>
+            <option value="swiss" selected>瑞士国际主义 Swiss</option>
+            <option value="editorial">时尚杂志 Editorial</option>
+            <option value="wabi">日式侗宂 Wabi-sabi</option>
+            <option value="aero">Frutiger Aero</option>
+            <option value="glass">玻璃拟态 Glassmorphism</option>
+          </optgroup>
+          <optgroup label="其他（已收起，仍可选）">
+            <option value="bauhaus">包豪斯 Bauhaus</option>
+            <option value="mondrian">蒙德里安 De Stijl</option>
+            <option value="brutalism">粗野主义 Brutalism</option>
+            <option value="artdeco">装饰艺术 Art Deco</option>
+            <option value="memphis">孟菲斯 Memphis</option>
+            <option value="vaporwave">蒸汽波 Vaporwave</option>
+            <option value="cyberpunk">赛博朋克 Cyberpunk</option>
+            <option value="riso">丝网印刷 Risograph</option>
+            <option value="acid">酸性 Acid / Acidwave</option>
+            <option value="y2k">Y2K 铬感</option>
+            <option value="anti">反设计 / 极繁 Anti-design</option>
+          </optgroup>
+        </select>
+      </label>
+      <label class="field">
+        <span>封面方案</span>
+        <select id="imageLayout"></select>
+      </label>
+      <label class="field field-check">
+        <span>无图</span>
+        <input id="noImage" type="checkbox" />
+      </label>
+      <label class="field">
+        <span>图片地址</span>
+        <input id="imageUrl" type="text" value="https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" />
+      </label>
+      <label class="field field-check">
+        <span>图片取色</span>
+        <input id="autoColor" type="checkbox" />
+      </label>
+      <label class="field field-check">
+        <span>网格</span>
+        <input id="showGrid" type="checkbox" checked />
+      </label>
+      <label class="field">
+        <span>栏目</span>
+        <input id="eyebrow" type="text" value="NUTRITION / 营养笔记" />
+      </label>
+      <label class="field">
+        <span>品牌</span>
+        <input id="brand" type="text" value="@津玉不良言" />
+      </label>
+      <button id="exportOne" class="btn">导出本页 PDF</button>
+      <button id="exportAll" class="btn btn-primary">导出 PDF</button>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <section class="editor-pane">
+      <div class="pane-head">
+        <span>Markdown</span>
+        <button id="loadSample" class="btn btn-ghost">载入示例</button>
+      </div>
+      <textarea id="input" spellcheck="false" placeholder="在这里粘贴 Markdown，用 --- 分页"></textarea>
+      <p class="hint">用单独一行的 <code>---</code> 分页 · 首页为封面、末页为尾页，中间为正文 · 支持 # 标题、**加粗**、*斜体*、&gt; 引用、- 列表、==高亮== · 封面方案随风格切换（仅作用于首页） · 勾选“无图”生成纯文字封面 · 勾选“图片取色”按图片主色生成 6:3:1 配色 · 勾选“网格”显示构图/网格参考（导出不含） · 导出为 PDF：在打印对话框选“另存为 PDF”，边距选“无”</p>
+    </section>
+
+    <section class="preview-pane">
+      <div id="stage" class="stage">
+        <div id="frame" class="card-frame">
+          <article id="card" class="card"></article>
+        </div>
+      </div>
+      <div class="pager">
+        <button id="prev" class="btn btn-ghost">‹</button>
+        <span id="counter" class="counter">01 / 01</span>
+        <button id="next" class="btn btn-ghost">›</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/js/markdown.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
