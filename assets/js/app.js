@@ -4,7 +4,7 @@
   // 各风格专属的封面方案（id 唯一，base = 底层构图骨架）
   // 底层构图：top / bottom / split / frame / module / bg
   // 注：本仓库（md2rednote）为 kinfolk 精简版，仅保留 kinfolk。
-  // 如需从 md2red 复制回某风格，把该风格的键加回下面三个对象即可。
+  // 如需从 md2red 复制回某风格，把该风格的键加回下面两个对象即可。
   const COVER_VARIANTS = {
     kinfolk: [
       { id: "airy", label: "极简留白", base: "top" },
@@ -16,11 +16,6 @@
   // 各风格页码进度的视觉类型：dots/dashes/bars/numbers/arrows
   const PROGRESS_KIND = {
     kinfolk: "dots",
-  };
-
-  // 各风格所属设计体系的列网格数（构图参考）
-  const GRID_COLS = {
-    kinfolk: 6,
   };
 
   // 示例：首页=封面（主标题/副标题/描述），中间=正文，末页=尾页
@@ -154,25 +149,6 @@
     return `<div class="card-progress kind-${kind}">${marks}</div>`;
   }
 
-  // 构图/网格参考层：按风格决定列数，根据 3:4 比例推导行数，叠加三分构图线（仅编辑可见）
-  function buildGrid(theme, base) {
-    const cols = GRID_COLS[theme] || 6;
-    const gap = cols >= 12 ? 12 : cols >= 8 ? 18 : 24;
-    const rows = Math.max(2, Math.round(cols * CARD.h / CARD.w));
-    let cspans = "";
-    for (let i = 0; i < cols; i++) cspans += "<span></span>";
-    let rspans = "";
-    for (let i = 0; i < rows; i++) rspans += "<span></span>";
-    const baseLabel = base === "none" ? "纯文字" : base.toUpperCase();
-    return `<div class="card-grid" aria-hidden="true">` +
-      `<div class="cg-thirds"></div>` +
-      `<div class="cg-margin"></div>` +
-      `<div class="cg-cols" style="gap:${gap}px">${cspans}</div>` +
-      `<div class="cg-rows" style="gap:${gap}px">${rspans}</div>` +
-      `<div class="cg-label">${theme.toUpperCase()} · ${cols}×${rows} · ${baseLabel}</div>` +
-      `</div>`;
-  }
-
   /* ---------- 颜色工具 ---------- */
   function rgbToHsl(r, g, b) {
     r /= 255; g /= 255; b /= 255;
@@ -296,7 +272,6 @@
     const isEnd = total > 1 && index === total - 1;
     const isBody = !isCover && !isEnd;
     const noImg = $("noImage").checked;
-    const showGrid = $("showGrid").checked;
 
     const list = variantsFor(theme);
     const variantId = $("imageLayout").value;
@@ -324,7 +299,6 @@
     else cls.push("role-body");
     if (useImg) { cls.push("has-img", "layout-" + base, "cv-" + theme + "-" + variantId); }
     if (useBox) cls.push("bf");
-    if (showGrid) cls.push("grid-on");
     card.className = cls.join(" ");
     card.setAttribute("data-theme", theme);
 
@@ -370,7 +344,7 @@
     } else {
       inner = media + `<div class="li-content">${headHtml}${bodyHtml}${footHtml}</div>`;
     }
-    card.innerHTML = inner + anchorHtml + buildGrid(theme, base);
+    card.innerHTML = inner + anchorHtml;
     applyColorsToCard();
     if (useBox) setupBodyFigure(index);
     // 封面图可拖拽缩放（Kinfolk 统一有图，有真实图片时）
@@ -418,7 +392,6 @@
       renderPage(i);
       const clone = card.cloneNode(true);
       clone.removeAttribute("id");
-      clone.classList.remove("grid-on"); // PDF 不含网格参考
       clone.style.transform = "none";    // 全尺寸输出，去掉预览缩放
       const page = document.createElement("div");
       page.className = "print-page";
@@ -452,7 +425,6 @@
   $("noImage").addEventListener("change", () => renderPage(index));
   $("imageUrl").addEventListener("input", () => refresh());
   $("autoColor").addEventListener("change", () => refresh());
-  $("showGrid").addEventListener("change", () => renderPage(index));
   $("eyebrow").addEventListener("input", () => renderPage(index));
   $("brand").addEventListener("input", () => renderPage(index));
   $("prev").addEventListener("click", () => renderPage(index - 1));
