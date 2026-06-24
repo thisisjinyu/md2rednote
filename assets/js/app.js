@@ -23,7 +23,45 @@
   };
 
   // 示例：首页=封面（标题/副标题/描述 + 末尾图片），中间=正文，末页=尾页
-  const SAMPLE = `# 少吃一口糖，身体会谢谢你\n## 21 天温和减糖计划\n不靠硬扑，而是重新认识食物。三个不费力的小改变，从今天开始。\n\n![](https://images.pexels.com/photos/6617496/pexels-photo-6617496.jpeg?auto=compress&cs=tinysrgb&w=1200)\n\n---\n\n## 三个温柔的开始\n\n- 把含糖饮料换成**气泡水 + 柠檬**\n- 主食里掺一半**糙米与豆类**\n- 嘴馅时先喝一杯水，==等十分钟==\n\n![](https://images.pexels.com/photos/27850094/pexels-photo-27850094.jpeg?auto=compress&cs=tinysrgb&w=1200)\n\n---\n\n## 为什么有效\n\n血糖平稳了，*情绪和精力*也会跟着稳。\n\n1. 减少胰岛素的剧烈波动\n2. 延长饱腹感，自然少吃\n3. 让味觉慢慢变得敏锐\n\n> 改变不必剧烈，坚持才会发光。\n\n![](https://images.pexels.com/photos/4909324/pexels-photo-4909324.jpeg?auto=compress&cs=tinysrgb&w=1200)\n\n---\n\n# 从今天开始\n## 给身体多一点温柔\n少吃一口糖，不是剥夺，而是更懂得照顾自己。\n\n如果这份计划帮到你，点亮**收藏**，明天接着看。\n\n> 关注 · 一起慢慢变好`;
+  const SAMPLE = `# 少吃一口糖，身体会谢谢你
+## 21 天温和减糖计划
+不靠硬扑，而是重新认识食物。三个不费力的小改变，从今天开始。
+
+![](https://images.pexels.com/photos/6617496/pexels-photo-6617496.jpeg?auto=compress&cs=tinysrgb&w=1200)
+
+---
+
+## 三个温柔的开始
+
+- 把含糖饮料换成**气泡水 + 柠檬**
+- 主食里掺一半**糙米与豆类**
+- 嘴馋时先喝一杯水，==等十分钟==
+
+![](https://images.pexels.com/photos/27850094/pexels-photo-27850094.jpeg?auto=compress&cs=tinysrgb&w=1200)
+
+---
+
+## 为什么有效
+
+血糖平稳了，*情绪和精力*也会跟着稳。
+
+1. 减少胰岛素的剧烈波动
+2. 延长饱腹感，自然少吃
+3. 让味觉慢慢变得敏锐
+
+> 改变不必剧烈，坚持才会发光。
+
+![](https://images.pexels.com/photos/4909324/pexels-photo-4909324.jpeg?auto=compress&cs=tinysrgb&w=1200)
+
+---
+
+# 从今天开始
+## 给身体多一点温柔
+少吃一口糖，不是剥夺，而是更懂得照顾自己。
+
+如果这份计划帮到你，点亮**收藏**，明天接着看。
+
+> 关注 · 一起慢慢变好`;
 
   const $ = (id) => document.getElementById(id);
   const input = $("input");
@@ -304,184 +342,4 @@
 
     const theme = $("theme").value;
     const isCover = index === 0;
-    const isEnd = total > 1 && index === total - 1;
-    const isBody = !isCover && !isEnd;
-    const noImg = $("noImage").checked;
-
-    const list = variantsFor(theme);
-    const variantId = $("imageLayout").value;
-    const variant = list.find((v) => v.id === variantId);
-    // Kinfolk 统一有图：封面/正文/尾页始终走有图版式，忽略“无图”开关
-    const isKin = theme === "kinfolk";
-    const base = variant ? ((isKin || !noImg) ? variant.base : "none") : "none";
-
-    // 三部分都从各自 markdown 末尾抽取图片：封页→封面图框，正文/尾页→正文图框
-    const md = window.mdToHtml(pages[index]);
-    const figRole = isKin ? true : isBody;
-    const fig = figRole ? splitTrailingFigure(md) : null;
-    const hasFig = !!(fig && fig.imgHtml);
-    let textHtml = fig ? fig.textHtml : md;
-    // 「超大数字」封面：抽取标题首个数字作巨幅主视觉
-    if (isCover && variantId === "bignum") textHtml = applyBigNumber(textHtml);
-    // 封面用 card-media 图框；正文/尾页用 body-figure 图框
-    const useImg = base !== "none" && isCover && (isKin || hasFig);
-    const useBox = isKin ? (isBody || isEnd) : (isBody && hasFig);
-
-    // 同步控件可用状态：无图时禁用方案（Kinfolk 统一有图，保持可用）
-    $("imageLayout").disabled = (noImg && !isKin) || list.length === 0;
-
-    const cls = ["card"];
-    if (isCover) cls.push("role-cover");
-    else if (isEnd) cls.push("role-body", "role-end");
-    else cls.push("role-body");
-    if (useImg) { cls.push("has-img", "layout-" + base); }
-    if (isCover && variant) { cls.push("cv-" + theme + "-" + variantId); if (variant.bold) cls.push("cv-bold"); }
-    if (useBox) cls.push("bf");
-    card.className = cls.join(" ");
-    card.setAttribute("data-theme", theme);
-
-    const eyebrow = $("eyebrow").value.trim();
-    const brand = $("brand").value.trim();
-    const no = String(index + 1).padStart(2, "0");
-    const tot = String(total).padStart(2, "0");
-
-    // 正文页码按顺序编排（不含首页封面与末页尾页）
-    const bodyTotal = Math.max(0, total - 2);
-    const bodyNo = isBody ? index : 0;
-
-    const eyebrowHtml = eyebrow ? `<div class="card-eyebrow">${escapeAttr(eyebrow)}</div>` : "";
-    const progressHtml = isBody ? buildProgress(theme, bodyNo, bodyTotal) : "";
-    const headHtml = isBody
-      ? `<div class="card-head">${eyebrowHtml}${progressHtml}</div>`
-      : eyebrowHtml;
-    const bodyInner = useBox
-      ? `<div class="body-text">${textHtml}</div><div class="body-figure${hasFig ? "" : " is-empty"}">${hasFig ? fig.imgHtml : ""}</div>`
-      : textHtml;
-    const bodyHtml = `<div class="card-body">${bodyInner}</div>`;
-    const footHtml = `<div class="card-foot"><span class="card-brand">${escapeAttr(brand)}</span></div>`;
-    // 无图正文页（非 Kinfolk）：底部大序号锁点，消费下方留白
-    const anchorHtml = (isBody && !useBox)
-      ? `<div class="card-anchor">${String(bodyNo).padStart(2, "0")}</div>`
-      : "";
-
-    // 封面图框：取自本页 markdown 末尾图片；无图显示占位框
-    const media = useImg
-      ? `<div class="card-media${hasFig ? "" : " is-empty"}">${hasFig ? fig.imgHtml : ""}</div>`
-      : "";
-
-    let inner;
-    if (!useImg) {
-      inner = headHtml + bodyHtml + footHtml;
-    } else if (base === "module") {
-      inner = headHtml + `<div class="card-body">${media}${textHtml}</div>` + footHtml;
-    } else if (base === "frame") {
-      inner = media + headHtml + bodyHtml + footHtml;
-    } else if (base === "bg") {
-      inner = media + `<div class="li-content"><div class="li-panel">${headHtml}${bodyHtml}</div>${footHtml}</div>`;
-    } else if (base === "bottom") {
-      inner = `<div class="li-content">${headHtml}${bodyHtml}${footHtml}</div>` + media;
-    } else {
-      inner = media + `<div class="li-content">${headHtml}${bodyHtml}${footHtml}</div>`;
-    }
-    card.innerHTML = inner + anchorHtml;
-    applyColorsToCard();
-    if (useBox) setupBodyFigure(index);
-    // 封面图可拖拽缩放（Kinfolk 统一有图，有真实图片时）
-    if (isCover && useImg && isKin && hasFig) setupCoverImage(index);
-
-    counter.textContent = `${no} / ${tot}`;
-    fit();
-  }
-
-  function refresh() {
-    const on = $("autoColor").checked;
-    const url = coverImgSrc();
-    if (on && url && !(url in colorCache)) {
-      ensureColors(url).then(() => renderPage(index));
-    } else {
-      renderPage(index);
-    }
-  }
-
-  function rebuild(keepIndex) {
-    pages = splitPages(input.value);
-    const target = keepIndex ? index : 0;
-    const on = $("autoColor").checked;
-    const url = coverImgSrc();
-    if (on && url && !(url in colorCache)) {
-      ensureColors(url).then(() => renderPage(target));
-    } else {
-      renderPage(target);
-    }
-  }
-
-  function onThemeChange() {
-    populateLayoutOptions($("theme").value);
-    renderPage(index);
-  }
-
-  /* ---------- 导出 PDF（浏览器原生打印，矢量输出） ---------- */
-  function buildPrintRoot(indices) {
-    const old = document.getElementById("print-root");
-    if (old) old.remove();
-    const root = document.createElement("div");
-    root.id = "print-root";
-    const cur = index;
-    indices.forEach((i) => {
-      renderPage(i);
-      const clone = card.cloneNode(true);
-      clone.removeAttribute("id");
-      clone.style.transform = "none";    // 全尺寸输出，去掉预览缩放
-      const page = document.createElement("div");
-      page.className = "print-page";
-      page.appendChild(clone);
-      root.appendChild(page);
-    });
-    document.body.appendChild(root);
-    renderPage(cur); // 还原预览
-    return root;
-  }
-
-  async function exportPdf(indices) {
-    if (document.fonts) { try { await document.fonts.ready; } catch (e) {} }
-    if ($("autoColor").checked) { await ensureColors(coverImgSrc()); }
-    const root = buildPrintRoot(indices);
-    const cleanup = () => {
-      root.remove();
-      window.removeEventListener("afterprint", cleanup);
-    };
-    window.addEventListener("afterprint", cleanup);
-    setTimeout(() => window.print(), 80);
-  }
-
-  function exportOne() { return exportPdf([index]); }
-  function exportAll() { return exportPdf(pages.map((_, i) => i)); }
-
-  input.addEventListener("input", () => rebuild(true));
-  $("theme").addEventListener("change", onThemeChange);
-  $("imageLayout").addEventListener("change", () => renderPage(index));
-  $("noImage").addEventListener("change", () => renderPage(index));
-  $("autoColor").addEventListener("change", () => refresh());
-  $("eyebrow").addEventListener("input", () => renderPage(index));
-  $("brand").addEventListener("input", () => renderPage(index));
-  $("prev").addEventListener("click", () => renderPage(index - 1));
-  $("next").addEventListener("click", () => renderPage(index + 1));
-  $("exportOne").addEventListener("click", exportOne);
-  $("exportAll").addEventListener("click", exportAll);
-  $("loadSample").addEventListener("click", () => { input.value = SAMPLE; rebuild(false); });
-  window.addEventListener("resize", fit);
-
-  // 图框内拖拽平移：全局监听一次，避免重复绑定
-  document.addEventListener("mousemove", (e) => {
-    if (!drag) return;
-    const k = fitScale || 1;
-    drag.st.x = drag.ox + (e.clientX - drag.sx) / k;
-    drag.st.y = drag.oy + (e.clientY - drag.sy) / k;
-    applyXform(drag.box, drag.img, drag.st);
-  });
-  document.addEventListener("mouseup", () => { drag = null; });
-
-  populateLayoutOptions($("theme").value);
-  input.value = SAMPLE;
-  rebuild(false);
-})();
+    const isEnd =
