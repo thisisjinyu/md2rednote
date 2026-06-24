@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="assets/css/kinfolk.css" />
   <link rel="stylesheet" href="assets/css/cover-bigtop.css" />
   <link rel="stylesheet" href="assets/css/cover-fullbg.css" />
+  <link rel="stylesheet" href="assets/css/debug.css" />
   <style>
     /* 导出 PDF：浏览器原生打印，矢量输出，每张卡片占一页（与卡片同比 1080×1440） */
     #print-root { display: none; }
@@ -65,15 +66,6 @@
   </header>
 
   <main class="workspace">
-    <section class="editor-pane">
-      <div class="pane-head">
-        <span>Markdown</span>
-        <button id="loadSample" class="btn btn-ghost">载入示例</button>
-      </div>
-      <textarea id="input" spellcheck="false" placeholder="在这里粘贴 Markdown，用 --- 分页"></textarea>
-      <p class="hint">用单独一行的 <code>---</code> 分页 · 首页为封面、末页为尾页，中间为正文 · 图片在每页<strong>末尾用 ![](图片链接) 插入</strong>，无图则显示占位框 · 支持 # 标题、**加粗**、*斜体*、&gt; 引用、- 列表、==高亮== · 封面方案随风格切换（仅作用于首页） · 勾选“图片取色”按封面图主色生成 6:3:1 配色 · 导出为 PDF：在打印对话框选“另存为 PDF”，边距选“无”</p>
-    </section>
-
     <section class="preview-pane">
       <div id="stage" class="stage">
         <div id="frame" class="card-frame">
@@ -86,9 +78,30 @@
         <button id="next" class="btn btn-ghost">›</button>
       </div>
     </section>
+
+    <section class="code-pane">
+      <div class="code-block">
+        <div class="pane-head"><span>当前页 HTML</span></div>
+        <pre id="codeHtml" class="code-view"></pre>
+      </div>
+      <div class="code-block">
+        <div class="pane-head"><span>命中的 CSS 规则</span></div>
+        <pre id="codeCss" class="code-view"></pre>
+      </div>
+    </section>
+
+    <section class="editor-pane">
+      <div class="pane-head">
+        <span>Markdown</span>
+        <button id="loadSample" class="btn btn-ghost">载入示例</button>
+      </div>
+      <textarea id="input" spellcheck="false" placeholder="在这里粘贴 Markdown，用 --- 分页"></textarea>
+      <p class="hint">用单独一行的 <code>---</code> 分页 · 首页为封面、末页为尾页，中间为正文 · 图片在每页<strong>末尾用 ![](图片链接) 插入</strong>，无图则显示占位框 · 支持 # 标题、**加粗**、*斜体*、&gt; 引用、- 列表、==高亮== · 封面方案随风格切换（仅作用于首页） · 勾选“图片取色”按封面图主色生成 6:3:1 配色 · 导出为 PDF：在打印对话框选“另存为 PDF”，边距选“无”</p>
+    </section>
   </main>
 
   <script src="assets/js/markdown.js"></script>
   <script src="assets/js/app.js"></script>
+  <script src="assets/js/inspector.js"></script>
 </body>
 </html>
