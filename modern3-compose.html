@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>复杂构图专项 · Composition Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@600;900&family=Archivo:ital,wght@0,900;1,900&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; }
+  body { margin:0; background:#0a0b0d; color:#e8e4dc; font-family:"Noto Sans SC",system-ui,sans-serif; }
+  .top { padding:24px 30px; border-bottom:1px solid rgba(255,255,255,.08); }
+  .top h1 { margin:0 0 6px; font-size:19px; }
+  .top p { margin:0; font-size:13px; color:#8a909a; line-height:1.6; max-width:840px; }
+  .top a { color:#c5e86b; }
+  .deck { display:flex; flex-wrap:wrap; gap:40px; padding:40px 30px 70px; }
+  .item { display:flex; flex-direction:column; gap:12px; width:368px; }
+  .frame { width:368px; height:490px; border-radius:14px; overflow:hidden; box-shadow:0 26px 60px rgba(0,0,0,.6); }
+  .cap { font-size:12.5px; color:#aeb4bd; font-weight:600; }
+  .cap small { display:block; color:#7e848d; font-weight:400; margin-top:3px; line-height:1.5; }
+  .card { width:1080px; height:1440px; transform:scale(.3407); transform-origin:top left; position:relative; overflow:hidden; }
+
+  /* C1 对角线斜切 + 竖排标题 + 描边大数字 */
+  .c1 { background:#0f1714; color:#f2efe3; }
+  .c1 .media { position:absolute; inset:0; clip-path:polygon(0 0, 100% 0, 100% 56%, 0 90%); overflow:hidden; }
+  .c1 .media img { width:100%; height:100%; object-fit:cover; filter:saturate(1.05); }
+  .c1 .vtitle { position:absolute; right:66px; top:70px; writing-mode:vertical-rl; font-family:"Noto Serif SC",serif; font-weight:900; font-size:104px; letter-spacing:8px; color:#fff; z-index:3; text-shadow:0 6px 26px rgba(0,0,0,.55); }
+  .c1 .bigno { position:absolute; left:54px; bottom:250px; font-family:"Archivo",sans-serif; font-weight:900; font-size:380px; line-height:.75; color:transparent; -webkit-text-stroke:5px #c5e86b; z-index:2; }
+  .c1 .eyebrow { position:absolute; left:70px; bottom:196px; font-size:26px; letter-spacing:6px; color:#c5e86b; font-weight:700; z-index:3; }
+  .c1 .sub { position:absolute; left:70px; bottom:104px; font-size:42px; font-weight:600; z-index:3; max-width:640px; line-height:1.3; }
+
+  /* C2 图片镶空字 */
+  .c2 { background:#14110d; color:#f2efe3; padding:96px 68px; display:flex; flex-direction:column; }
+  .c2 .eyebrow { font-size:28px; letter-spacing:7px; color:#ff7a4d; font-weight:700; }
+  .c2 .knock { font-family:"Noto Serif SC",serif; font-weight:900; font-size:248px; line-height:.92; letter-spacing:4px; margin:34px 0 30px; background-image:url('https://images.pexels.com/photos/27850094/pexels-photo-27850094.jpeg?auto=compress&cs=tinysrgb&w=1200'); background-size:140%; background-position:center 35%; -webkit-background-clip:text; background-clip:text; color:transparent; -webkit-text-fill-color:transparent; }
+  .c2 .rule { height:5px; width:200px; background:#ff7a4d; }
+  .c2 .sub { font-size:44px; font-weight:600; margin-top:36px; line-height:1.35; }
+  .c2 .foot { margin-top:auto; font-size:30px; color:#8c8578; font-weight:600; }
+
+  /* C3 圆形异形 + 文字绕排 + 重叠数字 */
+  .c3 { background:#f1ece0; color:#1b2a22; padding:88px 70px; }
+  .c3 .ghost { position:absolute; right:30px; top:120px; font-family:"Archivo",sans-serif; font-weight:900; font-size:520px; line-height:.7; color:#e3dccb; z-index:0; }
+  .c3 .inner { position:relative; z-index:2; }
+  .c3 .circle { float:right; shape-outside:circle(48%); -webkit-shape-outside:circle(48%); width:520px; height:520px; clip-path:circle(50%); overflow:hidden; margin:14px -10px 22px 44px; box-shadow:0 24px 50px rgba(0,0,0,.18); }
+  .c3 .circle img { width:100%; height:100%; object-fit:cover; }
+  .c3 .eyebrow { font-size:26px; letter-spacing:5px; font-weight:800; color:#5f7a3b; }
+  .c3 h1 { font-family:"Noto Serif SC",serif; font-size:96px; font-weight:900; line-height:1.05; margin:16px 0 24px; letter-spacing:-1px; }
+  .c3 p { font-size:38px; line-height:1.55; color:#46514a; font-weight:500; margin:0; }
+  .c3 .tag { position:absolute; left:60px; bottom:90px; z-index:3; background:#143a2c; color:#c5e86b; font-size:26px; font-weight:700; padding:14px 30px; border-radius:100px; transform:rotate(-4deg); }
+
+  /* C4 多层斜切拼贴叠压 */
+  .c4 { background:#0d0d0f; color:#fff; }
+  .c4 .ph { position:absolute; overflow:hidden; box-shadow:0 24px 50px rgba(0,0,0,.5); }
+  .c4 .ph img { width:100%; height:100%; object-fit:cover; }
+  .c4 .ph1 { width:560px; height:720px; top:90px; left:60px; transform:rotate(-5deg); clip-path:polygon(0 0,100% 6%,100% 100%,0 94%); }
+  .c4 .ph2 { width:430px; height:540px; bottom:150px; right:54px; transform:rotate(5deg); clip-path:polygon(0 6%,100% 0,100% 94%,0 100%); border:8px solid #d6ff3d; }
+  .c4 .title { position:absolute; left:0; right:0; top:560px; text-align:center; z-index:4; }
+  .c4 .title .en { font-family:"Archivo",sans-serif; font-style:italic; font-weight:900; font-size:200px; line-height:.8; color:#d6ff3d; letter-spacing:-8px; text-transform:uppercase; transform:skewX(-6deg); mix-blend-mode:difference; }
+  .c4 .title h1 { font-size:80px; font-weight:900; margin:8px 0 0; letter-spacing:-1px; text-shadow:0 4px 20px rgba(0,0,0,.6); }
+  .c4 .kick { position:absolute; top:60px; right:70px; z-index:5; font-size:25px; font-weight:800; letter-spacing:4px; background:#d6ff3d; color:#0d0d0f; padding:10px 20px; transform:skewX(-8deg); }
+</style>
+</head>
+<body>
+  <div class="top">
+    <h1>复杂构图专项 · Composition Lab</h1>
+    <p>不考虑动态内容 / PDF / 维护，先把“杂志/海报级”构图做出来。四张封面分别用了：对角线异形裁切、竖排压字、图片镶空字、文字绕圆排版、多层斜切叠压。这些全是纯 HTML/CSS。 · <a href="index.html">返回生成器</a></p>
+  </div>
+  <div class="deck">
+    <div class="item">
+      <div class="frame"><div class="card c1">
+        <div class="media"><img src="https://images.pexels.com/photos/6617496/pexels-photo-6617496.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="" /></div>
+        <span class="vtitle">晨间仪式</span>
+        <span class="bigno">6</span>
+        <span class="eyebrow">MORNING RITUAL</span>
+        <span class="sub">早起党的温柔自救指南</span>
+      </div></div>
+      <span class="cap">① 对角线斜切 + 竖排<small>clip-path 异形图边 · writing-mode 竖排标题 · 描边大数字压底</small></span>
+    </div>
+    <div class="item">
+      <div class="frame"><div class="card c2">
+        <span class="eyebrow">MORNING RITUAL</span>
+        <span class="knock">晨间仪式</span>
+        <div class="rule"></div>
+        <span class="sub">改变人生的 6 个小习惯</span>
+        <span class="foot">@津玉不良言</span>
+      </div></div>
+      <span class="cap">② 图片镶空字<small>background-clip:text 让图片从标题笔画里透出来</small></span>
+    </div>
+    <div class="item">
+      <div class="frame"><div class="card c3">
+        <span class="ghost">06</span>
+        <div class="inner">
+          <div class="circle"><img src="https://images.pexels.com/photos/27850094/pexels-photo-27850094.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="" /></div>
+          <span class="eyebrow">WHOLE · 原鲜食</span>
+          <h1>三个温柔的开始</h1>
+          <p>含糖饮料换成气泡水加柠檬，主食氀一半糙米与豆类，嘴馔时先喝水等十分钟再决定。文字会自动沿着右侧的圆形图片轮廓排版。</p>
+        </div>
+        <span class="tag">温柔的开始</span>
+      </div></div>
+      <span class="cap">③ 圆形裁切 + 文字绕排<small>clip-path:circle · shape-outside 让正文沿圆边流动 · 超大数字压底</small></span>
+    </div>
+    <div class="item">
+      <div class="frame"><div class="card c4">
+        <span class="kick">MORNING RITUAL</span>
+        <div class="ph ph1"><img src="https://images.pexels.com/photos/6617496/pexels-photo-6617496.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="" /></div>
+        <div class="ph ph2"><img src="https://images.pexels.com/photos/4909324/pexels-photo-4909324.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="" /></div>
+        <div class="title"><div class="en">Ritual</div><h1>改变人生的 6 个晨间仪式</h1></div>
+      </div></div>
+      <span class="cap">④ 多层斜切拼贴叠压<small>两张图 clip-path 斜切 + 旋转叠放 · 大字跨图压顶（mix-blend）</small></span>
+    </div>
+  </div>
+</body>
+</html>
