@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>2026 进阶 · 材质与光</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@600;900&family=Archivo:ital,wght@0,900;1,900&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; }
+  body { margin:0; background:#0a0b0d; color:#e8e4dc; font-family:"Noto Sans SC",system-ui,sans-serif; }
+  .top { padding:24px 30px; border-bottom:1px solid rgba(255,255,255,.08); }
+  .top h1 { margin:0 0 6px; font-size:19px; }
+  .top p { margin:0; font-size:13px; color:#8a909a; line-height:1.6; max-width:840px; }
+  .top a { color:#9ad7ff; }
+  .deck { display:flex; flex-wrap:wrap; gap:40px; padding:40px 30px 70px; }
+  .item { display:flex; flex-direction:column; gap:12px; width:368px; }
+  .frame { width:368px; height:490px; border-radius:14px; overflow:hidden; box-shadow:0 26px 60px rgba(0,0,0,.6); }
+  .cap { font-size:12.5px; color:#aeb4bd; font-weight:600; }
+  .cap small { display:block; color:#7e848d; font-weight:400; margin-top:3px; line-height:1.5; }
+  .card { width:1080px; height:1440px; transform:scale(.3407); transform-origin:top left; position:relative; overflow:hidden; }
+
+  /* S1 极光虹彩渐变 */
+  .s1 { background:#08080f; color:#fff; }
+  .s1 .mesh { position:absolute; inset:-25%; background:
+      radial-gradient(38% 38% at 22% 26%, #6ee7ff 0, transparent 60%),
+      radial-gradient(42% 42% at 80% 18%, #ff7ae0 0, transparent 60%),
+      radial-gradient(48% 48% at 68% 84%, #b18cff 0, transparent 62%),
+      radial-gradient(40% 40% at 14% 82%, #8effc1 0, transparent 60%),
+      #08080f;
+    filter:blur(22px) saturate(1.35); }
+  .s1 .sheen { position:absolute; inset:0; background:conic-gradient(from 200deg at 60% 40%, rgba(255,255,255,.18), transparent 25%, rgba(255,255,255,.12) 55%, transparent 80%); mix-blend-mode:screen; }
+  .s1 .c { position:absolute; inset:0; padding:90px 70px; display:flex; flex-direction:column; }
+  .s1 .eyebrow { font-size:27px; letter-spacing:6px; font-weight:700; color:rgba(255,255,255,.85); }
+  .s1 h1 { font-size:138px; font-weight:900; line-height:.94; letter-spacing:-3px; margin:auto 0 0; text-shadow:0 8px 40px rgba(0,0,0,.3); }
+  .s1 .sub { font-size:42px; font-weight:600; margin:30px 0 0; color:rgba(255,255,255,.92); }
+
+  /* S2 聚光灯产品英雄 */
+  .s2 { background:#0c0a08; color:#f3ede2; }
+  .s2 .media { position:absolute; inset:0; }
+  .s2 .media img { width:100%; height:100%; object-fit:cover; }
+  .s2 .vig { position:absolute; inset:0; background:radial-gradient(58% 48% at 50% 36%, transparent 0, rgba(0,0,0,.45) 56%, rgba(0,0,0,.94) 100%); }
+  .s2 .spot { position:absolute; inset:0; background:radial-gradient(36% 28% at 50% 34%, rgba(255,236,200,.4), transparent 70%); mix-blend-mode:screen; }
+  .s2 .eyebrow { position:absolute; top:120px; left:0; right:0; text-align:center; font-size:26px; letter-spacing:8px; font-weight:700; color:#e8c89a; }
+  .s2 h1 { position:absolute; left:60px; right:60px; bottom:230px; text-align:center; font-family:"Noto Serif SC",serif; font-size:108px; font-weight:900; line-height:1.04; margin:0; }
+  .s2 .sub { position:absolute; left:0; right:0; bottom:150px; text-align:center; font-size:36px; font-weight:500; color:rgba(243,237,226,.8); }
+
+  /* S3 3D 透视堆叠 */
+  .s3 { background:#13151b; color:#fff; perspective:1700px; display:grid; place-items:center; }
+  .s3 .stack { position:relative; width:560px; height:760px; transform-style:preserve-3d; transform:rotateY(-24deg) rotateX(8deg); }
+  .s3 .layer { position:absolute; inset:0; border-radius:34px; overflow:hidden; box-shadow:0 50px 90px rgba(0,0,0,.55); }
+  .s3 .layer img { width:100%; height:100%; object-fit:cover; }
+  .s3 .l3 { transform:translateZ(-180px) translate(150px,96px); opacity:.45; }
+  .s3 .l2 { transform:translateZ(-90px) translate(76px,48px); opacity:.75; }
+  .s3 .l1 { transform:translateZ(0); }
+  .s3 .chip { position:absolute; left:-40px; bottom:80px; transform:translateZ(150px); background:rgba(20,22,28,.7); backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,.3); border-radius:24px; padding:36px 44px; width:520px; }
+  .s3 .chip .e { font-size:24px; letter-spacing:4px; color:#9ad7ff; font-weight:700; }
+  .s3 .chip h1 { font-size:62px; font-weight:900; line-height:1.05; margin:14px 0 0; }
+
+  /* S4 不对称竖切 */
+  .s4 { display:flex; }
+  .s4 .img { position:relative; flex:1.45; overflow:hidden; }
+  .s4 .img img { width:100%; height:100%; object-fit:cover; }
+  .s4 .img .vlabel { position:absolute; top:60px; left:40px; writing-mode:vertical-rl; font-size:30px; font-weight:800; letter-spacing:6px; color:#fff; text-shadow:0 4px 16px rgba(0,0,0,.5); }
+  .s4 .txt { flex:1; background:#ff4d2e; color:#fff; padding:70px 50px; display:flex; flex-direction:column; }
+  .s4 .txt .num { font-family:"Archivo",sans-serif; font-size:230px; font-weight:900; line-height:.8; }
+  .s4 .txt h1 { font-size:84px; font-weight:900; line-height:1.0; letter-spacing:-1px; margin:30px 0 0; }
+  .s4 .txt .sub { margin-top:auto; font-size:34px; font-weight:600; opacity:.92; line-height:1.4; }
+</style>
+</head>
+<body>
+  <div class="top">
+    <h1>2026 进阶 · 材质与光 Surface &amp; Light</h1>
+    <p>用光、深度、材质表达层次，而不是仅靠排版：极光虹彩渐变、聚光灯产品英雄、真 3D 透视卡片堆叠、不对称竖切色块。 · <a href="index.html">返回生成器</a></p>
+  </div>
+  <div class="deck">
+    <div class="item">
+      <div class="frame"><div class="card s1">
+        <div class="mesh"></div><div class="sheen"></div>
+        <div class="c">
+          <span class="eyebrow">MORNING RITUAL</span>
+          <h1>晨间仪式</h1>
+          <span class="sub">改变人生的 6 个小习惯</span>
+        </div>
+      </div></div>
+      <span class="cap">① 极光虹彩渐变<small>多层 radial mesh + 模糊 + conic 镜面高光（全頭色彩）</small></span>
+    </div>
+    <div class="item">
+      <div class="frame"><div class="card s2">
+        <div class="media"><img src="https://images.pexels.com/photos/4909324/pexels-photo-4909324.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="" /></div>
+        <div class="vig"></div><div class="spot"></div>
+        <span class="eyebrow">MORNING RITUAL</span>
+        <h1>晨间仪式</h1>
+        <span class="sub">改变人生的 6 个小习惯</span>
+      </div></div>
+      <span class="cap">② 聚光灯产品英雄<small>径向晕影 + 聚光高光（screen），戏剧化聚焦单主体</small></span>
+    </div>
+    <div class="item">
+      <div class="frame"><div class="card s3">
+        <div class="stack">
+          <div class="layer l3"><img src="https://images.pexels.com/photos/4909324/pexels-photo-4909324.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="" /></div>
+          <div class="layer l2"><img src="https://images.pexels.com/photos/27850094/pexels-photo-27850094.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="" /></div>
+          <div class="layer l1"><img src="https://images.pexels.com/photos/6617496/pexels-photo-6617496.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="" /></div>
+          <div class="chip"><span class="e">MORNING RITUAL</span><h1>改变人生的<br />6 个晨间仪式</h1></div>
+        </div>
+      </div></div>
+      <span class="cap">③ 3D 透视卡片堆叠<small>perspective + preserve-3d，translateZ 造真景深，标题浮在最前</small></span>
+    </div>
+    <div class="item">
+      <div class="frame"><div class="card s4">
+        <div class="img"><img src="https://images.pexels.com/photos/6617496/pexels-photo-6617496.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="" /><span class="vlabel">MORNING RITUAL</span></div>
+        <div class="txt"><span class="num">06</span><h1>晨间仪式</h1><span class="sub">改变人生的温柔自救指南</span></div>
+      </div></div>
+      <span class="cap">④ 不对称竖切色块<small>图 / 色块不等宽分割 + 竖排标签 + 巨数字</small></span>
+    </div>
+  </div>
+</body>
+</html>
