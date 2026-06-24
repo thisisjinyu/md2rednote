@@ -1,0 +1,35 @@
+/* ====================================================================
+   PAGE 视觉样式 — 封面/正文/尾页的字号 / 配色 / 装饰（与 page.css 配套）
+   page.css 只放布局骨架；这里放「样式」。kinfolk.css 在其后加载，会按主题覆盖。
+   load 顺序：page.css 之后、kinfolk 之前。
+   ==================================================================== */
+
+/* -------- 正文 -------- */
+.card.role-body { background: var(--card-bg-2); }
+.card.role-body .card-eyebrow { font-size:18px; margin-bottom:28px; }
+.card.role-body .card-body h1 { font-size:58px; line-height:1.12; margin:4px 0 28px; font-style:normal; letter-spacing:0; }
+.card.role-body .card-body h2 { font-size:44px; margin:32px 0 18px; }
+.card.role-body .card-body h3 { font-size:33px; margin:26px 0 14px; }
+.card.role-body .card-body p { font-size:32px; }
+.card.role-body .card-body li { font-size:31px; }
+
+/* -------- 封面：内容层级（主标题/副标题/描述） -------- */
+.card.role-cover .card-body h1 { font-size:104px; margin-bottom:26px; }
+.card.role-cover .card-body h2 { font-size:42px; font-weight:500; line-height:1.28; margin:0 0 30px; color:var(--card-dim); letter-spacing:0; }
+.card.role-cover .card-body p { font-size:33px; line-height:1.55; color:var(--card-dim); margin:0 0 18px; }
+.card.role-cover .card-body blockquote { font-size:38px; }
+
+/* -------- 尾页 -------- */
+.card.role-end .card-body h1 { font-size:84px; line-height:1.08; margin:0 0 30px; }
+.card.role-end .card-body h2 { font-size:40px; font-weight:500; color:var(--card-dim); margin:0 0 26px; }
+.card.role-end .card-body p { font-size:34px; line-height:1.55; color:var(--card-dim); margin:0 0 18px; }
+.card.role-end .card-body strong { color:var(--card-accent); }
+.card.role-end .card-body blockquote { font-size:36px; font-style:italic; border:none; padding:0; margin:28px 0 0; }
+
+/* -------- 无图正文页：浅色巨大序号沉右下，消费留白 -------- */
+.card-anchor {
+  position:absolute; right:78px; bottom:148px; z-index:0;
+  font-family:var(--font-serif); font-weight:700; font-style:normal;
+  font-size:300px; line-height:0.78; letter-spacing:-4px;
+  color:var(--card-accent); opacity:0.10; pointer-events:none; user-select:none;
+}

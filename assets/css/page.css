@@ -1,0 +1,33 @@
+/* ====================================================================
+   PAGE 基础骨架 — 封面/正文/尾页的结构与布局（与风格无关）
+   只保留布局/定位类「基础样式」；字号、配色、装饰等视觉样式见 page-type.css。
+   load 顺序：themes 之后、kinfolk 之前。
+   ==================================================================== */
+
+/* -------- 正文：文字层定位（供 .card-anchor 等叠放） -------- */
+.card.role-body .card-body { position:relative; z-index:1; }
+
+/* -------- 正文有图（.bf）：文字在上、末尾图片收进版心成固定图框 --------
+   图框自动填满文字与页脚之间；框内图片 object-fit:cover，可拖拽平移+滚轮缩放（逻辑在 app.js）。 */
+.card.role-body.bf .card-body { display:flex; flex-direction:column; }
+.card.role-body.bf .card-body .body-text { flex:0 0 auto; }
+.card.role-body.bf .card-body .body-text > *:first-child { margin-top:0; }
+.card.role-body.bf .card-body .body-text > *:last-child { margin-bottom:0; }
+.card.role-body.bf .card-body .body-figure {
+  flex:1 1 auto; min-height:0; position:relative; overflow:hidden;
+  margin-top:40px; margin-bottom:33px; border-radius:8px; background:#e9e6df;
+}
+.card.role-body.bf .card-body .body-figure img {
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit:cover; border-radius:0; box-shadow:none;
+  transform-origin:center center; will-change:transform; cursor:grab;
+}
+.card.role-body.bf .card-body .body-figure img:active { cursor:grabbing; }
+
+/* -------- 封面：无图时内容竖向居中 -------- */
+.card.role-cover:not(.has-img) .card-body { display:flex; flex-direction:column; justify-content:center; }
+
+/* -------- 尾页：内容居中收尾 -------- */
+.card.role-end .card-body { display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; }
+.card.role-end .card-eyebrow { justify-content:center; }
+.card.role-end .card-foot { justify-content:flex-end; }
