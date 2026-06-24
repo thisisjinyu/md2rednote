@@ -1,6 +1,7 @@
 /* 网格参考叠层 · 与 app.js 解耦
    职责：按选定列数计算「正方形格子」布局，生成带 Excel 式编号（列字母+行号）的格子。
-   该叠层挂在 .card-frame 上（不在 #card 内），不会进入导出。顶栏「网格」勾选框控制显隐。 */
+   该叠层挂在 .card-frame 上（不在 #card 内），不会进入导出。顶栏「网格」勾选框控制显隐。
+   最外圈格子加标记类（et/eb/el/er），由 CSS 去掉服向外的那条边，改由外边框充当，避免双线。 */
 (function () {
   var overlay = document.querySelector('.grid-overlay');
   var colsSel = document.getElementById('gridCols');
@@ -43,11 +44,17 @@
     overlay.style.gridTemplateRows = 'repeat(' + L.rows + ', 1fr)';
     overlay.style.columnGap = (L.gutter / (W - 2 * L.mx) * 100) + '%';
     overlay.style.rowGap = (L.gutter / (H - 2 * L.my) * 100) + '%';
-    // 生成格子 + Excel 式编号（列字母 + 行号，如 C4）
+    // 生成格子 + Excel 式编号（列字母 + 行号，如 C4）；最外圈加 et/eb/el/er 去掉服向外的边
     var html = '';
     for (var r = 0; r < L.rows; r++) {
       for (var c = 0; c < L.cols; c++) {
-        html += '<i><b>' + colLabel(c) + (r + 1) + '</b></i>';
+        var cl = [];
+        if (r === 0) cl.push('et');
+        if (r === L.rows - 1) cl.push('eb');
+        if (c === 0) cl.push('el');
+        if (c === L.cols - 1) cl.push('er');
+        var attr = cl.length ? ' class="' + cl.join(' ') + '"' : '';
+        html += '<i' + attr + '><b>' + colLabel(c) + (r + 1) + '</b></i>';
       }
     }
     overlay.innerHTML = html;
