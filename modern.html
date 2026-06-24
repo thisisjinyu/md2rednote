@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>现代版式探索 · md2rednote Design Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; }
+  body { margin:0; background:#0e0e0f; color:#ece8e0; font-family:"Noto Sans SC",system-ui,sans-serif; }
+  .wrap { max-width:1080px; margin:0 auto; padding:64px 30px 80px; }
+  .kicker { font-size:14px; letter-spacing:4px; color:#ff8a6e; font-weight:700; }
+  h1.title { font-size:46px; font-weight:900; letter-spacing:-1px; margin:12px 0 14px; }
+  .lead { font-size:16px; line-height:1.7; color:#a59f93; max-width:720px; margin:0 0 48px; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+  a.card { display:block; text-decoration:none; color:inherit; background:#1a1a1c; border:1px solid rgba(255,255,255,.08); border-radius:18px; padding:30px 32px; transition:transform .15s ease, border-color .15s ease, background .15s ease; }
+  a.card:hover { transform:translateY(-3px); border-color:rgba(255,138,110,.5); background:#201f22; }
+  a.card .tag { font-size:13px; font-weight:700; letter-spacing:2px; color:#ff8a6e; }
+  a.card h2 { font-size:25px; font-weight:800; margin:10px 0 8px; }
+  a.card p { font-size:14px; line-height:1.6; color:#a59f93; margin:0; }
+  a.card.wide { grid-column:1 / -1; }
+  .swatch { display:flex; gap:8px; margin-top:18px; }
+  .swatch span { width:30px; height:30px; border-radius:8px; }
+  .note { margin-top:46px; padding:22px 26px; background:#16160f; border:1px solid rgba(255,225,77,.18); border-radius:14px; font-size:13.5px; line-height:1.7; color:#bdb79e; }
+  .note b { color:#ffe14d; }
+  .back { display:inline-block; margin-bottom:34px; font-size:14px; color:#a59f93; text-decoration:none; }
+  .back:hover { color:#ff8a6e; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="back" href="index.html">← 回到生成器</a>
+    <div class="kicker">DESIGN LAB</div>
+    <h1 class="title">现代版式探索</h1>
+    <p class="lead">针对“太老套、没现代感”的问题，做了几个独立的方向 demo（含网络图）。每个都是同一份内容（减糖/晨间仪式）的封面 + 正文，方便公平对比。看中哪个告诉我，我再把它做成真正可用的样式接进生成器。</p>
+    <div class="grid">
+      <a class="card" href="modern-a-bold.html">
+        <span class="tag">方案 A</span>
+        <h2>大字报 / Bold Editorial</h2>
+        <p>超大特粗标题占满版心、色块高亮、去边框。信息流里最“吼得住”。</p>
+        <div class="swatch"><span style="background:#141210"></span><span style="background:#f4f1ea"></span><span style="background:#ff5a36"></span></div>
+      </a>
+      <a class="card" href="modern-b-gradient.html">
+        <span class="tag">方案 B</span>
+        <h2>奶油弥散渐变 / Soft Mesh</h2>
+        <p>多层柔光渐变背景 + 大圆角图 + 毛玻璃卡。治愈、当下最火。</p>
+        <div class="swatch"><span style="background:#ffd9c2"></span><span style="background:#ecd6f4"></span><span style="background:#cfe9da"></span></div>
+      </a>
+      <a class="card" href="modern-c-bento.html">
+        <span class="tag">方案 C</span>
+        <h2>极简 Bento 卡片</h2>
+        <p>信息拆成圆角“便当格”块，柔阴影、模块化、科技感。</p>
+        <div class="swatch"><span style="background:#eef0f2"></span><span style="background:#fff;border:1px solid #444"></span><span style="background:#5b6b53"></span></div>
+      </a>
+      <a class="card" href="modern-d-collage.html">
+        <span class="tag">方案 D</span>
+        <h2>杂志拼贴 / 微粗野</h2>
+        <p>硬黑边、硬阴影、错位旋转、手写贴纸。个性、潮、原生感。</p>
+        <div class="swatch"><span style="background:#15130f"></span><span style="background:#ffe14d"></span><span style="background:#ff3b30"></span></div>
+      </a>
+      <a class="card wide" href="modern-options.html">
+        <span class="tag">对比页</span>
+        <h2>字体 ×3 · 边框处理 ×3</h2>
+        <p>同一句标题分别用三种字体（全无衬线粗体 / 无衬线+衬线点缀 / 优雅衬线做新）；同一张封面分别用三种边框处理（去掉 / 弱化 / 色块出血）。直接选。</p>
+      </a>
+    </div>
+    <div class="note"><b>怎么看：</b>部署后访问 <b>md2rednote.github.io/modern.html</b>（记得硬刷新 Cmd/Ctrl+Shift+R）。这些都是独立预览页，不影响你现在的生成器。选定后告诉我“封面用哪个 + 正文用哪个 + 字体/边框怎么选”，我再改成可用样式。</div>
+  </div>
+</body>
+</html>
