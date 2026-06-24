@@ -16,3 +16,22 @@
   .col-resizer { display: none; }
   .code-pane { border-top: 1px solid var(--line); }
 }
+
+/* ====================================================================
+   GRID OVERLAY — 版心边距 + 正方形网格参考（仅预览可见，导出不含）
+   挂在 .card-frame 上（不进入导出克隆的 .card），由顶栏「网格」勾选框控制，默认隐藏。
+   页边 90px（≈ 宽 8.3% / 高 6.25%，落在小红书 6–8% 安全边距区间内）；
+   版心 900×1260 正好切成 5 列 × 7 行的 180px 正方形格子。
+   ==================================================================== */
+.card-frame { position: relative; }
+.grid-overlay {
+  position: absolute; top: 6.25%; bottom: 6.25%; left: 8.3333%; right: 8.3333%;
+  display: none; pointer-events: none; z-index: 40;
+  --grid-line: rgba(54, 166, 255, 0.5);
+  border: 1.5px solid rgba(54, 166, 255, 0.9);
+  background-image:
+    linear-gradient(to right, var(--grid-line) 0 1.5px, transparent 1.5px),
+    linear-gradient(to bottom, var(--grid-line) 0 1.5px, transparent 1.5px);
+  background-size: 20% calc(100% / 7);
+}
+body:has(#gridToggle:checked) .grid-overlay { display: block; }
