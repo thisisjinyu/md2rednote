@@ -6,8 +6,8 @@
    covers.css 的 .cv-<风格>-* + app.js 的三个对象键 + index.html 的 option。
    ==================================================================== */
 .card[data-theme="kinfolk"] {
-  --card-bg:#e9e4da; --card-bg-2:#f1ede5; --card-ink:#46433c; --card-dim:#9a958a; --card-accent:#7d7768; --card-rule:rgba(70,67,60,0.18);
-  --font-serif:"Noto Serif SC",Georgia,serif; --font-cjk:"Noto Sans SC",sans-serif;
+  --card-bg:#f3efe8; --card-bg-2:#efe9e0; --card-ink:#2f2b25; --card-dim:#8f877a; --card-accent:#a86b4f; --card-rule:rgba(47,43,37,0.16);
+  --font-serif:"Playfair Display","Noto Serif SC",Georgia,serif; --font-cjk:"Noto Sans SC",sans-serif;
 }
 .card[data-theme="kinfolk"]::before { border:none; }
 .card[data-theme="kinfolk"] .card-eyebrow { letter-spacing:6px; font-size:18px; }

@@ -65,7 +65,7 @@
 /* -------------------- 正文排版 -------------------- */
 .card[data-theme="kinfolk"].role-body .card-head { margin-bottom:46px; }
 .card[data-theme="kinfolk"].role-body .card-eyebrow { font-size:16px; letter-spacing:5px; }
-.card[data-theme="kinfolk"].role-body .card-body h2 { font-size:48px; font-weight:400; line-height:1.26; letter-spacing:1px; margin:0 0 38px; }
+.card[data-theme="kinfolk"].role-body .card-body h2 { font-size:50px; font-weight:600; line-height:1.26; letter-spacing:1px; margin:0 0 38px; }
 .card[data-theme="kinfolk"].role-body .card-body h2:first-child { margin-top:0; }
 .card[data-theme="kinfolk"].role-body .card-body p { font-size:31px; font-weight:300; line-height:1.86; letter-spacing:0.3px; margin:0 0 30px; }
 .card[data-theme="kinfolk"].role-body .card-body ul,
@@ -77,7 +77,7 @@
 /* 引用标识 · 顶部细短横线（尾页居中引用除外） */
 .card[data-theme="kinfolk"].role-body:not(.role-end) .card-body blockquote { padding:30px 0 0; border:none; position:relative; }
 .card[data-theme="kinfolk"].role-body:not(.role-end) .card-body blockquote::before { content:""; position:absolute; left:0; top:0; width:48px; height:1px; background:var(--card-accent); opacity:0.7; }
-.card[data-theme="kinfolk"].role-body .card-body mark { background:linear-gradient(transparent 62%, color-mix(in srgb, var(--card-accent) 22%, transparent) 62%); }
+.card[data-theme="kinfolk"].role-body .card-body mark { background:linear-gradient(transparent 58%, color-mix(in srgb, var(--card-accent) 38%, transparent) 58%); }
 
 /* -------------------- 正文排版结束 -------------------- */
 
@@ -88,7 +88,7 @@
 .card[data-theme="kinfolk"].role-end .card-body .body-text { flex:1 1 auto; display:flex; flex-direction:column; justify-content:center; }
 .card[data-theme="kinfolk"].role-end .card-eyebrow { justify-content:flex-start; }
 /* 收尾标题：上方细短横线作收束记号 */
-.card[data-theme="kinfolk"].role-end .card-body h1 { position:relative; padding-top:42px; font-size:72px; font-weight:400; line-height:1.22; letter-spacing:2px; margin:0 0 28px; }
+.card[data-theme="kinfolk"].role-end .card-body h1 { position:relative; padding-top:42px; font-size:72px; font-weight:600; line-height:1.22; letter-spacing:2px; margin:0 0 28px; }
 .card[data-theme="kinfolk"].role-end .card-body h1::before { content:""; position:absolute; left:0; top:0; width:64px; height:1px; background:var(--card-accent); }
 .card[data-theme="kinfolk"].role-end .card-body h2 { font-size:34px; font-weight:300; letter-spacing:1px; line-height:1.42; margin:0 0 36px; color:var(--card-dim); }
 .card[data-theme="kinfolk"].role-end .card-body p { font-size:30px; font-weight:300; line-height:1.85; margin:0 0 20px; color:var(--card-ink); }
@@ -96,3 +96,71 @@
 /* 结尾引用作行动号召：上方留白 + 顶部细线，斜体淡色 */
 .card[data-theme="kinfolk"].role-end .card-body blockquote { position:relative; padding:34px 0 0; margin:44px 0 0; border:none; font-size:32px; font-weight:300; font-style:italic; line-height:1.5; color:var(--card-dim); }
 .card[data-theme="kinfolk"].role-end .card-body blockquote::before { content:""; position:absolute; left:0; top:0; width:48px; height:1px; background:var(--card-accent); opacity:0.7; }
+
+/* ====================================================================
+   NEW COVER STYLES — 新增 6 种封面样式（精致加粗风格）
+   bigtop 上图大标题 / fullbg 全幅压底大字 / colorblock 大色块标题
+   bignum 超大数字 / bigtitle 高亮大标题·纯文字 / vtitle 竖排标题
+   统一标记 .cv-bold：显示英文字头、加粗衬线标题、强化高亮
+   ==================================================================== */
+
+/* 通用：显示眉标（去尾部细线）、加粗标题、强化 ==高亮== */
+.card[data-theme="kinfolk"].role-cover.cv-bold .card-eyebrow { display:flex; margin-bottom:30px; }
+.card[data-theme="kinfolk"].role-cover.cv-bold .card-eyebrow::after { display:none; }
+.card.role-cover.cv-bold .card-body h1 { font-family:var(--font-serif); font-weight:700; }
+.card.role-cover.cv-bold .card-body mark { background:linear-gradient(transparent 54%, color-mix(in srgb, var(--card-accent) 40%, transparent) 54%); color:inherit; padding:0 4px; }
+
+/* A · 上图大标题（顶图 56% + 加粗大标题） */
+.cv-kinfolk-bigtop.layout-top .card-media { height:56%; }
+.cv-kinfolk-bigtop .card-media img { filter:saturate(0.92) brightness(1.02); }
+.card.role-cover.cv-kinfolk-bigtop .li-content { justify-content:center; padding:0 92px; }
+.card.role-cover.cv-kinfolk-bigtop .card-body h1 { font-size:90px; line-height:1.1; letter-spacing:0; margin:0 0 20px; }
+.card.role-cover.cv-kinfolk-bigtop .card-body h2 { font-size:34px; font-weight:400; color:var(--card-dim); margin:0 0 14px; }
+.card.role-cover.cv-kinfolk-bigtop .card-body p { font-size:30px; font-weight:300; color:var(--card-dim); }
+
+/* B · 全幅压底大字（满幅底图 + 渐变压暗 + 白色大标题） */
+.cv-kinfolk-fullbg .card-media img { filter:brightness(0.74) saturate(0.86); }
+.cv-kinfolk-fullbg .card-media::after { content:""; position:absolute; inset:0; background:linear-gradient(to top, rgba(20,15,11,0.80), rgba(20,15,11,0.04) 58%); }
+.card.role-cover.cv-kinfolk-fullbg .li-content { padding:0 88px 104px; }
+.card.role-cover.cv-kinfolk-fullbg .li-panel { background:transparent; padding:0; }
+.card.role-cover.cv-kinfolk-fullbg .card-eyebrow { color:rgba(255,255,255,0.92); }
+.card.role-cover.cv-kinfolk-fullbg .card-body h1 { color:#fff; font-size:100px; line-height:1.08; margin:0 0 22px; }
+.card.role-cover.cv-kinfolk-fullbg .card-body h2 { color:rgba(255,255,255,0.9); font-weight:400; font-size:33px; margin:0 0 12px; }
+.card.role-cover.cv-kinfolk-fullbg .card-body p { color:rgba(255,255,255,0.88); font-weight:300; font-size:30px; }
+.card.role-cover.cv-kinfolk-fullbg .card-body mark { background:transparent; color:#f0c4aa; }
+
+/* E · 大色块标题（左侧强调色块 55% + 右侧配图 45%） */
+.card.role-cover.cv-kinfolk-colorblock.layout-split { flex-direction:row; }
+.cv-kinfolk-colorblock.layout-split .card-media { width:45%; order:2; }
+.cv-kinfolk-colorblock .card-media img { filter:saturate(0.9) brightness(0.99); }
+.card.role-cover.cv-kinfolk-colorblock .li-content { order:1; width:55%; flex:none; background:var(--card-accent); color:#fff; justify-content:center; padding:104px 72px; position:relative; overflow:hidden; }
+.card.role-cover.cv-kinfolk-colorblock .card-body { position:relative; z-index:1; }
+.card.role-cover.cv-kinfolk-colorblock .card-eyebrow { color:rgba(255,255,255,0.85); }
+.card.role-cover.cv-kinfolk-colorblock .card-body h1 { color:#fff; font-size:80px; line-height:1.12; margin:0 0 22px; }
+.card.role-cover.cv-kinfolk-colorblock .card-body h2 { color:rgba(255,255,255,0.92); font-weight:400; font-size:30px; }
+.card.role-cover.cv-kinfolk-colorblock .card-body p { color:rgba(255,255,255,0.9); font-weight:300; }
+.card.role-cover.cv-kinfolk-colorblock .card-body mark { background:rgba(255,255,255,0.22); color:#fff; }
+.card.role-cover.cv-kinfolk-colorblock .li-content::after { content:""; position:absolute; right:40px; bottom:40px; width:228px; height:228px; opacity:0.20; pointer-events:none; background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='1.4'%3E%3Ccircle cx='50' cy='50' r='14'/%3E%3Ccircle cx='50' cy='50' r='28'/%3E%3Ccircle cx='50' cy='50' r='42'/%3E%3C/g%3E%3C/svg%3E") no-repeat center/contain; }
+
+/* C · 超大数字（标题首个数字做巨幅主视觉 + 右侧半幅图 38%） */
+.card.role-cover.cv-kinfolk-bignum.layout-split { flex-direction:row; }
+.cv-kinfolk-bignum.layout-split .card-media { width:38%; order:2; }
+.cv-kinfolk-bignum .card-media img { filter:saturate(0.9) brightness(1.0); }
+.card.role-cover.cv-kinfolk-bignum .li-content { order:1; flex:1; justify-content:center; padding:0 0 0 92px; }
+.card.role-cover.cv-kinfolk-bignum .cv-bignum-block { margin:0 0 24px; }
+.card.role-cover.cv-kinfolk-bignum .cv-num { font-family:var(--font-serif); font-weight:700; font-size:300px; line-height:0.82; color:var(--card-accent); }
+.card.role-cover.cv-kinfolk-bignum .cv-num-lead { font-family:var(--font-serif); font-weight:600; font-size:60px; line-height:1.15; margin-top:6px; }
+.card.role-cover.cv-kinfolk-bignum .card-body h2 { font-size:30px; font-weight:400; color:var(--card-dim); margin:0 0 14px; }
+.card.role-cover.cv-kinfolk-bignum .card-body p { font-size:28px; font-weight:300; color:var(--card-dim); }
+
+/* D · 高亮大标题·纯文字（无图，超大加粗标题 + 关键词高亮 + 角落淡墨纹） */
+.card.role-cover.cv-kinfolk-bigtitle .card-body { display:flex; flex-direction:column; justify-content:center; position:relative; z-index:1; }
+.card.role-cover.cv-kinfolk-bigtitle .card-body h1 { font-size:104px; line-height:1.14; letter-spacing:0; margin:0; }
+.card.role-cover.cv-kinfolk-bigtitle .card-body h2 { font-size:32px; font-weight:400; color:var(--card-dim); margin:34px 0 0; }
+.card.role-cover.cv-kinfolk-bigtitle .card-body p { font-size:30px; font-weight:300; color:var(--card-dim); margin:34px 0 0; }
+.card.role-cover.cv-kinfolk-bigtitle::after { content:""; position:absolute; right:80px; top:96px; width:228px; height:228px; opacity:0.15; pointer-events:none; background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='none' stroke='%23a86b4f' stroke-width='1.4'%3E%3Ccircle cx='50' cy='50' r='14'/%3E%3Ccircle cx='50' cy='50' r='28'/%3E%3Ccircle cx='50' cy='50' r='42'/%3E%3C/g%3E%3C/svg%3E") no-repeat center/contain; }
+
+/* F · 竖排标题（竖向主标题 + 右侧窄图条 32%） */
+.card.role-cover.cv-kinfolk-vtitle.layout-split { flex-direction:row; }
+.cv-kinfolk-vtitle.layout-split .card-media { width:32%; order:2; }
+.cv-kinfolk-vtitle .card-media img {
