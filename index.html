@@ -54,6 +54,16 @@
         <input id="gridToggle" type="checkbox" />
       </label>
       <label class="field">
+        <span>列数</span>
+        <select id="gridCols">
+          <option value="4">4 列</option>
+          <option value="5" selected>5 列</option>
+          <option value="6">6 列</option>
+          <option value="7">7 列</option>
+          <option value="8">8 列</option>
+        </select>
+      </label>
+      <label class="field">
         <span>栏目</span>
         <input id="eyebrow" type="text" value="NUTRITION / 营养笔记" />
       </label>
@@ -71,7 +81,7 @@
       <div id="stage" class="stage">
         <div id="frame" class="card-frame">
           <article id="card" class="card"></article>
-          <div class="grid-overlay" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="grid-overlay" aria-hidden="true"></div>
         </div>
       </div>
       <div class="pager">
@@ -102,13 +112,14 @@
         <button id="loadSample" class="btn btn-ghost">载入示例</button>
       </div>
       <textarea id="input" spellcheck="false" placeholder="在这里粘贴 Markdown，用 --- 分页"></textarea>
-      <p class="hint">用单独一行的 <code>---</code> 分页 · 首页为封面、末页为尾页，中间为正文 · 图片在每页<strong>末尾用 ![](图片链接) 插入</strong>，无图则显示占位框 · 支持 # 标题、**加粗**、*斜体*、&gt; 引用、- 列表、==高亮== · 封面方案随风格切换（仅作用于首页） · 勾选“图片取色”按封面图主色生成 6:3:1 配色 · 勾选“网格”叠加模块化网格参考（不进导出） · 导出为 PDF：在打印对话框选“另存为 PDF”，边距选“无”</p>
+      <p class="hint">用单独一行的 <code>---</code> 分页 · 首页为封面、末页为尾页，中间为正文 · 图片在每页<strong>末尾用 ![](图片链接) 插入</strong>，无图则显示占位框 · 支持 # 标题、**加粗**、*斜体*、&gt; 引用、- 列表、==高亮== · 封面方案随风格切换（仅作用于首页） · 勾选“图片取色”按封面图主色生成 6:3:1 配色 · 勾选“网格”叠加参考网格（列数可选、格子恒为正方形、带 Excel 式编号，不进导出） · 导出为 PDF：在打印对话框选“另存为 PDF”，边距选“无”</p>
     </section>
   </main>
 
   <script src="assets/js/markdown.js"></script>
   <script src="assets/js/app.js"></script>
   <script src="assets/js/inspector.js"></script>
+  <script src="assets/js/grid.js"></script>
   <script src="assets/js/resize.js"></script>
 </body>
 </html>
