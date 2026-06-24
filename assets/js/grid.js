@@ -1,13 +1,13 @@
 /* 网格参考叠层 · 与 app.js 解耦
-   职责：按选定列数计算「正方形格子」布局，生成带 Excel 式编号（列字母+行号）的格子。
+   职责：固定 8 列，计算「正方形格子」布局，生成带 Excel 式编号（列字母+行号）的格子。
    该叠层挂在 .card-frame 上（不在 #card 内），不会进入导出。顶栏「网格」勾选框控制显隐。
    最外圈格子加标记类（et/eb/el/er），由 CSS 去掉服向外的那条边，改由外边框充当，避免双线。 */
 (function () {
   var overlay = document.querySelector('.grid-overlay');
-  var colsSel = document.getElementById('gridCols');
   if (!overlay) return;
 
   var W = 1080, H = 1440;  // 画布固定 3:4
+  var N = 8;               // 固定 8 列
 
   // 列序号 -> 字母（0->A, 1->B, ... 26->AA）
   function colLabel(n) {
@@ -21,10 +21,10 @@
     return s;
   }
 
-  // 保持正方形的布局算法：输入列数 N，输出 { cols, rows, s, gutter, mx, my }
+  // 保持正方形的布局算法：输出 { cols, rows, s, gutter, mx, my }
   // 原理：左右边距固定→由宽度定出正方形边长→高度方向四舍五入取行数→上下边距重算居中，格子恒为正方形
   function computeLayout(N) {
-    var g = Math.round(120 / N);             // 间距随列数缩放（N=5 -> 24）
+    var g = Math.round(120 / N);             // 间距（N=8 -> 15）
     var mx = 92;                              // 左右页边距固定
     var s = (W - 2 * mx - (N - 1) * g) / N;   // 正方形边长（由宽度决定）
     var M = Math.round((H - 2 * mx + g) / (s + g)); // 最贴合高度的行数
@@ -60,11 +60,5 @@
     overlay.innerHTML = html;
   }
 
-  function rebuild() {
-    var n = colsSel ? parseInt(colsSel.value, 10) : 5;
-    build(n && n > 0 ? n : 5);
-  }
-
-  if (colsSel) colsSel.addEventListener('change', rebuild);
-  rebuild();
+  build(N);
 })();
