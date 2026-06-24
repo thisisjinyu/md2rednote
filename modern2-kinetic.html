@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>2026 · 运动动能 / Kinetic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Archivo:ital,wght@0,800;0,900;1,800;1,900&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; }
+  body { margin:0; background:#08090a; color:#e8e4dc; font-family:"Noto Sans SC",system-ui,sans-serif; }
+  .top { padding:24px 30px; border-bottom:1px solid rgba(255,255,255,.08); }
+  .top h1 { margin:0 0 6px; font-size:19px; }
+  .top p { margin:0; font-size:13px; color:#8a8f86; line-height:1.6; max-width:800px; }
+  .top a { color:#d6ff3d; }
+  .deck { display:flex; flex-wrap:wrap; gap:36px; padding:36px 30px 60px; }
+  .item { display:flex; flex-direction:column; gap:12px; }
+  .frame { width:368px; height:490px; border-radius:14px; overflow:hidden; box-shadow:0 26px 60px rgba(0,0,0,.6); }
+  .cap { font-size:12px; color:#8a8f86; }
+  .card { width:1080px; height:1440px; transform:scale(.3407); transform-origin:top left; position:relative; overflow:hidden; font-family:"Noto Sans SC",system-ui,sans-serif; background:#0b0b0b; color:#fff; --acid:#d6ff3d; }
+  .kin .media { position:absolute; inset:0; }
+  .kin .media img { width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(1.25) brightness(.85); }
+  .kin .duo { position:absolute; inset:0; background:linear-gradient(125deg, #1a3a00 0%, #0b0b0b 60%); mix-blend-mode:multiply; }
+  .kin .duo2 { position:absolute; inset:0; background:linear-gradient(125deg, var(--acid), transparent 55%); mix-blend-mode:overlay; opacity:.85; }
+  .kin .scan { position:absolute; inset:0; background:repeating-linear-gradient(115deg, rgba(255,255,255,.05) 0 2px, transparent 2px 26px); }
+  .kin .kick { position:absolute; top:64px; left:60px; font-size:26px; font-weight:800; letter-spacing:4px; background:var(--acid); color:#0b0b0b; padding:12px 22px; transform:skewX(-8deg); }
+  .kin .big { position:absolute; left:50px; right:50px; bottom:230px; }
+  .kin .big .en { font-family:"Archivo",sans-serif; font-style:italic; font-weight:900; font-size:230px; line-height:.8; letter-spacing:-10px; color:var(--acid); transform:skewX(-7deg); text-transform:uppercase; }
+  .kin .big h1 { font-size:84px; font-weight:900; line-height:.98; margin:12px 0 0; transform:skewX(-7deg); letter-spacing:-1px; }
+  .kin .sub { position:absolute; left:60px; bottom:140px; font-size:32px; font-weight:700; color:#cfcfcf; transform:skewX(-7deg); }
+  .kin .arrow { position:absolute; right:54px; bottom:150px; font-family:"Archivo",sans-serif; font-style:italic; font-weight:900; font-size:90px; color:var(--acid); }
+  /* body */
+  .kb { position:absolute; inset:0; padding:70px 60px; display:flex; flex-direction:column; }
+  .kb .htitle { font-family:"Archivo",sans-serif; font-style:italic; font-weight:900; font-size:120px; line-height:.82; color:var(--acid); transform:skewX(-7deg); text-transform:uppercase; margin:0 0 6px; }
+  .kb .hcn { font-size:54px; font-weight:900; transform:skewX(-7deg); margin:0 0 50px; }
+  .kb .step { display:flex; align-items:center; gap:30px; border-bottom:3px solid rgba(255,255,255,.14); padding:34px 0; }
+  .kb .step .n { font-family:"Archivo",sans-serif; font-style:italic; font-weight:900; font-size:96px; color:var(--acid); transform:skewX(-7deg); flex:none; width:130px; line-height:1; }
+  .kb .step p { font-size:40px; font-weight:700; line-height:1.3; margin:0; }
+  .kb .foot { margin-top:auto; font-size:30px; font-weight:800; color:var(--acid); transform:skewX(-7deg); }
+</style>
+</head>
+<body>
+  <div class="top">
+    <h1>2026 · 运动动能 / Kinetic Sport</h1>
+    <p>双色调动态影像（酸性柠檬绿×黑）+ 倾斜/斜体运动感超大字 + 扫描动感线。高能量、肟脏、运动品牌调性，适合健身/运动/补剂。 · <a href="modern2.html">← 返回 2026 总览</a></p>
+  </div>
+  <div class="deck">
+    <div class="item">
+      <div class="frame"><div class="card">
+        <div class="kin">
+          <div class="media"><img src="https://images.pexels.com/photos/27850094/pexels-photo-27850094.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="" /></div>
+          <div class="duo"></div><div class="duo2"></div><div class="scan"></div>
+          <span class="kick">MORNING RITUAL</span>
+          <div class="big"><div class="en">Move</div><h1>改变人生的 6 个晨间仪式</h1></div>
+          <span class="sub">早起党的温柔自救指南</span>
+          <span class="arrow">//</span>
+        </div>
+      </div></div>
+      <span class="cap">封面</span>
+    </div>
+    <div class="item">
+      <div class="frame"><div class="card">
+        <div class="kb">
+          <div class="htitle">Start</div>
+          <div class="hcn">三个小改变</div>
+          <div class="step"><span class="n">01</span><p>含糖饮料换成气泡水 + 柠檬</p></div>
+          <div class="step"><span class="n">02</span><p>主食氀一半糙米与豆类</p></div>
+          <div class="step"><span class="n">03</span><p>嘴馔先喝水，等十分钟</p></div>
+          <div class="foot">@津玉不良言 //</div>
+        </div>
+      </div></div>
+      <span class="cap">正文</span>
+    </div>
+  </div>
+</body>
+</html>
