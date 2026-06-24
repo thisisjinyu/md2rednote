@@ -65,31 +65,13 @@
 .card[data-theme="kinfolk"].role-end .card-body blockquote::before { content:""; position:absolute; left:0; top:0; width:48px; height:1px; background:var(--card-accent); opacity:0.7; }
 
 /* ====================================================================
-   NEW COVER STYLES — 新增 6 种封面样式（精致加粗风格，统一标记 .cv-bold）
+   NEW COVER STYLES — 新增封面样式（精致加粗风格，统一标记 .cv-bold）
+   注：“上图大标题”与“全幅压底大字”已拆到 cover-bigtop.css / cover-fullbg.css
    ==================================================================== */
 .card[data-theme="kinfolk"].role-cover.cv-bold .card-eyebrow { display:flex; margin-bottom:30px; }
 .card[data-theme="kinfolk"].role-cover.cv-bold .card-eyebrow::after { display:none; }
 .card.role-cover.cv-bold .card-body h1 { font-family:var(--font-serif); font-weight:700; }
 .card.role-cover.cv-bold .card-body mark { background:linear-gradient(transparent 54%, color-mix(in srgb, var(--card-accent) 40%, transparent) 54%); color:inherit; padding:0 4px; }
-
-/* A · 上图大标题 */
-.cv-kinfolk-bigtop.layout-top .card-media { height:56%; }
-.cv-kinfolk-bigtop .card-media img { filter:saturate(0.92) brightness(1.02); }
-.card.role-cover.cv-kinfolk-bigtop .li-content { justify-content:center; padding:0 92px; }
-.card.role-cover.cv-kinfolk-bigtop .card-body h1 { font-size:90px; line-height:1.1; letter-spacing:0; margin:0 0 20px; }
-.card.role-cover.cv-kinfolk-bigtop .card-body h2 { font-size:34px; font-weight:400; color:var(--card-dim); margin:0 0 14px; }
-.card.role-cover.cv-kinfolk-bigtop .card-body p { font-size:30px; font-weight:300; color:var(--card-dim); }
-
-/* B · 全幅压底大字 */
-.cv-kinfolk-fullbg .card-media img { filter:brightness(0.74) saturate(0.86); }
-.cv-kinfolk-fullbg .card-media::after { content:""; position:absolute; inset:0; background:linear-gradient(to top, rgba(20,15,11,0.80), rgba(20,15,11,0.04) 58%); }
-.card.role-cover.cv-kinfolk-fullbg .li-content { padding:0 88px 104px; }
-.card.role-cover.cv-kinfolk-fullbg .li-panel { background:transparent; padding:0; }
-.card.role-cover.cv-kinfolk-fullbg .card-eyebrow { color:rgba(255,255,255,0.92); }
-.card.role-cover.cv-kinfolk-fullbg .card-body h1 { color:#fff; font-size:100px; line-height:1.08; margin:0 0 22px; }
-.card.role-cover.cv-kinfolk-fullbg .card-body h2 { color:rgba(255,255,255,0.9); font-weight:400; font-size:33px; margin:0 0 12px; }
-.card.role-cover.cv-kinfolk-fullbg .card-body p { color:rgba(255,255,255,0.88); font-weight:300; font-size:30px; }
-.card.role-cover.cv-kinfolk-fullbg .card-body mark { background:transparent; color:#f0c4aa; }
 
 /* E · 大色块标题 */
 .card.role-cover.cv-kinfolk-colorblock.layout-split { flex-direction:row; }
