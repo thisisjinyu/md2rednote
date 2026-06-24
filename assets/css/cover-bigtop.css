@@ -1,0 +1,11 @@
+/* ====================================================================
+   封面样式 · 上图大标题（cv-kinfolk-bigtop）
+   从 kinfolk.css 拆出。依赖通用的 .cv-bold 规则（在 kinfolk.css）。
+   load 顺序需在 kinfolk.css 之后，确保覆盖通用层。
+   ==================================================================== */
+.cv-kinfolk-bigtop.layout-top .card-media { height:56%; }
+.cv-kinfolk-bigtop .card-media img { filter:saturate(0.92) brightness(1.02); }
+.card.role-cover.cv-kinfolk-bigtop .li-content { justify-content:center; padding:0 92px; }
+.card.role-cover.cv-kinfolk-bigtop .card-body h1 { font-size:90px; line-height:1.1; letter-spacing:0; margin:0 0 20px; }
+.card.role-cover.cv-kinfolk-bigtop .card-body h2 { font-size:34px; font-weight:400; color:var(--card-dim); margin:0 0 14px; }
+.card.role-cover.cv-kinfolk-bigtop .card-body p { font-size:30px; font-weight:300; color:var(--card-dim); }

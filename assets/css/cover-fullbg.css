@@ -1,0 +1,14 @@
+/* ====================================================================
+   封面样式 · 全幅压底大字（cv-kinfolk-fullbg）
+   从 kinfolk.css 拆出。依赖通用的 .cv-bold 规则（在 kinfolk.css）。
+   load 顺序需在 kinfolk.css 之后，确保覆盖通用层。
+   ==================================================================== */
+.cv-kinfolk-fullbg .card-media img { filter:brightness(0.74) saturate(0.86); }
+.cv-kinfolk-fullbg .card-media::after { content:""; position:absolute; inset:0; background:linear-gradient(to top, rgba(20,15,11,0.80), rgba(20,15,11,0.04) 58%); }
+.card.role-cover.cv-kinfolk-fullbg .li-content { padding:0 88px 104px; }
+.card.role-cover.cv-kinfolk-fullbg .li-panel { background:transparent; padding:0; }
+.card.role-cover.cv-kinfolk-fullbg .card-eyebrow { color:rgba(255,255,255,0.92); }
+.card.role-cover.cv-kinfolk-fullbg .card-body h1 { color:#fff; font-size:100px; line-height:1.08; margin:0 0 22px; }
+.card.role-cover.cv-kinfolk-fullbg .card-body h2 { color:rgba(255,255,255,0.9); font-weight:400; font-size:33px; margin:0 0 12px; }
+.card.role-cover.cv-kinfolk-fullbg .card-body p { color:rgba(255,255,255,0.88); font-weight:300; font-size:30px; }
+.card.role-cover.cv-kinfolk-fullbg .card-body mark { background:transparent; color:#f0c4aa; }
