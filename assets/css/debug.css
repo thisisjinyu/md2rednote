@@ -18,31 +18,30 @@
 }
 
 /* ====================================================================
-   MODULAR GRID OVERLAY — 模块化网格参考（仅预览可见，导出不含）
+   GRID OVERLAY — 连续单线网格参考（仅预览可见，导出不含）
    挂在 .card-frame 上（不进入导出克隆的 .card），顶栏「网格」勾选框控制，默认隐藏。
-   设计稿 1080×1440、基于 8px 网格系统的固定参数（格子为正方形，无半格）：
-     · 正方形格子 = 160×160px（8 的倍数）；gutter = 24px（8 的倍数）；pitch = 184px
-     · 5 列 × 7 行；页边距 左右 92px / 上下 88px
-       校验：5×160+4×24+2×92=1080；7×160+6×24+2×88=1440
-   渲染：只画「细线描边」——外边框 + 每个独立正方形的细线轮廓，不再填充 gutter（避免大面积色块遮挡阅读）。
-   用重复背景平铺：每个 tile = 一个格子+一道 gutter，在 tile 的左边（0）与右边（160/184=86.96%）各画一条细线，
-   中间透明；两格之间的 gutter（160~184）不画线，自然形成间隙。百分比仅为随预览缩放。
-   tile 占比：列 184/896=20.5357%，行 184/1264=14.5570%
+   之前的模块化网格（格子间留 24px gutter）会让十字路口中间留个小空洞（四个角碰不到一起），
+   改为连续单线后横竖线贯通，所有十字路口都是干净的 + 。设计稿 1080×1440的固定参数：
+     · 正方形格子 = 180×180px；页边距 = 90px（四边严格相等）；5 列 × 7 行
+       校验：5×180+2×90=1080；7×180+2×90=1440
+   实现：overlay = 版心框（内缩 90px）；重复背景每个 tile = 一个格子，在 tile 起始处画一根
+   贯通细线（竖线满高、横线满宽），交叉处自然成实心 + ；外四边由 border 画。百分比仅为随预览缩放。
+   tile 占比：列 180/900=20%，行 180/1260=14.2857%
    ==================================================================== */
 .card-frame { position: relative; }
 .grid-overlay {
   position: absolute;
-  top: 6.1111%;     /* 88 / 1440 */
-  bottom: 6.1111%;
-  left: 8.5185%;    /* 92 / 1080 */
-  right: 8.5185%;
+  top: 6.25%;       /* 90 / 1440 */
+  bottom: 6.25%;
+  left: 8.3333%;    /* 90 / 1080 */
+  right: 8.3333%;
   display: none; pointer-events: none; z-index: 40;
   --ln: rgba(54, 166, 255, 0.7);
   border: 1.5px solid rgba(54, 166, 255, 0.85);
   background-image:
-    linear-gradient(to right, var(--ln) 0 1.1%, transparent 1.1% 86.4%, var(--ln) 86.4% 87.5%, transparent 87.5% 100%),
-    linear-gradient(to bottom, var(--ln) 0 1.1%, transparent 1.1% 86.4%, var(--ln) 86.4% 87.5%, transparent 87.5% 100%);
-  background-size: 20.5357% 14.5570%;
+    linear-gradient(to right, var(--ln) 0 1.2%, transparent 1.2% 100%),
+    linear-gradient(to bottom, var(--ln) 0 1.2%, transparent 1.2% 100%);
+  background-size: 20% 14.2857%;
   background-position: 0 0;
 }
 body:has(#gridToggle:checked) .grid-overlay { display: block; }
