@@ -2,14 +2,18 @@
   const CARD = { w: 1080, h: 1440 }; // 固定 3:4 竖版
 
   // 各风格专属的封面方案（id 唯一，base = 底层构图骨架）
-  // 底层构图：top / bottom / split / frame / module / bg
-  // 注：本仓库（md2rednote）为 kinfolk 精简版，仅保留 kinfolk。
-  // 如需从 md2red 复制回某风格，把该风格的键加回下面两个对象即可。
+  // 底层构图：top / bottom / split / frame / module / bg / none
   const COVER_VARIANTS = {
     kinfolk: [
       { id: "airy", label: "极简留白", base: "top" },
       { id: "square", label: "居中方图", base: "frame" },
       { id: "half", label: "左右半幅", base: "split" },
+      { id: "bigtop", label: "上图大标题", base: "top", bold: true },
+      { id: "fullbg", label: "全幅压底大字", base: "bg", bold: true },
+      { id: "colorblock", label: "大色块标题", base: "split", bold: true },
+      { id: "bignum", label: "超大数字", base: "split", bold: true },
+      { id: "bigtitle", label: "高亮大标题·纯文字", base: "none", bold: true },
+      { id: "vtitle", label: "竖排标题", base: "split", bold: true },
     ],
   };
 
@@ -19,7 +23,7 @@
   };
 
   // 示例：首页=封面（标题/副标题/描述 + 末尾图片），中间=正文，末页=尾页
-  const SAMPLE = `# 少吃一口糖，身体会谢谢你\n## 21 天温和减糖计划\n不靠硬扑，而是重新认识食物。三个不费力的小改变，从今天开始。\n\n![](https://images.pexels.com/photos/6617496/pexels-photo-6617496.jpeg?auto=compress&cs=tinysrgb&w=1200)\n\n---\n\n## 三个温柔的开始\n\n- 把含糖饮料换成**气泡水 + 柠檬**\n- 主食里掺一半**糙米与豆类**\n- 嘴馋时先喝一杯水，==等十分钟==\n\n![](https://images.pexels.com/photos/27850094/pexels-photo-27850094.jpeg?auto=compress&cs=tinysrgb&w=1200)\n\n---\n\n## 为什么有效\n\n血糖平稳了，*情绪和精力*也会跟着稳。\n\n1. 减少胰岛素的剧烈波动\n2. 延长饱腹感，自然少吃\n3. 让味觉慢慢变得敏锐\n\n> 改变不必剧烈，坚持才会发光。\n\n![](https://images.pexels.com/photos/4909324/pexels-photo-4909324.jpeg?auto=compress&cs=tinysrgb&w=1200)\n\n---\n\n# 从今天开始\n## 给身体多一点温柔\n少吃一口糖，不是剥夺，而是更懂得照顾自己。\n\n如果这份计划帮到你，点亮**收藏**，明天接着看。\n\n> 关注 · 一起慢慢变好`;
+  const SAMPLE = `# 少吃一口糖，身体会谢谢你\n## 21 天温和减糖计划\n不靠硬扑，而是重新认识食物。三个不费力的小改变，从今天开始。\n\n![](https://images.pexels.com/photos/6617496/pexels-photo-6617496.jpeg?auto=compress&cs=tinysrgb&w=1200)\n\n---\n\n## 三个温柔的开始\n\n- 把含糖饮料换成**气泡水 + 柠檬**\n- 主食里掺一半**糙米与豆类**\n- 嘴馅时先喝一杯水，==等十分钟==\n\n![](https://images.pexels.com/photos/27850094/pexels-photo-27850094.jpeg?auto=compress&cs=tinysrgb&w=1200)\n\n---\n\n## 为什么有效\n\n血糖平稳了，*情绪和精力*也会跟着稳。\n\n1. 减少胰岛素的剧烈波动\n2. 延长饱腹感，自然少吃\n3. 让味觉慢慢变得敏锐\n\n> 改变不必剧烈，坚持才会发光。\n\n![](https://images.pexels.com/photos/4909324/pexels-photo-4909324.jpeg?auto=compress&cs=tinysrgb&w=1200)\n\n---\n\n# 从今天开始\n## 给身体多一点温柔\n少吃一口糖，不是剥夺，而是更懂得照顾自己。\n\n如果这份计划帮到你，点亮**收藏**，明天接着看。\n\n> 关注 · 一起慢慢变好`;
 
   const $ = (id) => document.getElementById(id);
   const input = $("input");
@@ -64,6 +68,26 @@
 
   function escapeAttr(s) {
     return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\"/g, "&quot;");
+  }
+
+  // 「超大数字」封面：从标题里抽出首个数字做巨幅主视觉，余下作引导词
+  function applyBigNumber(textHtml) {
+    const tmp = document.createElement("div");
+    tmp.innerHTML = textHtml;
+    const h1 = tmp.querySelector("h1");
+    if (h1) {
+      const t = h1.textContent.trim();
+      const mm = t.match(/(\d+)/);
+      if (mm) {
+        const num = mm[1];
+        const lead = t.replace(num, "").replace(/\s+/g, " ").trim();
+        const wrap = document.createElement("div");
+        wrap.className = "cv-bignum-block";
+        wrap.innerHTML = `<div class="cv-num">${num}</div>` + (lead ? `<div class="cv-num-lead">${escapeAttr(lead)}</div>` : "");
+        h1.replaceWith(wrap);
+      }
+    }
+    return tmp.innerHTML;
   }
 
   /* ---------- 图片：固定图框 + 框内拖拽缩放（封面 / 正文末尾图复用同一套） ---------- */
@@ -296,7 +320,9 @@
     const figRole = isKin ? true : isBody;
     const fig = figRole ? splitTrailingFigure(md) : null;
     const hasFig = !!(fig && fig.imgHtml);
-    const textHtml = fig ? fig.textHtml : md;
+    let textHtml = fig ? fig.textHtml : md;
+    // 「超大数字」封面：抽取标题首个数字作巨幅主视觉
+    if (isCover && variantId === "bignum") textHtml = applyBigNumber(textHtml);
     // 封面用 card-media 图框；正文/尾页用 body-figure 图框
     const useImg = base !== "none" && isCover && (isKin || hasFig);
     const useBox = isKin ? (isBody || isEnd) : (isBody && hasFig);
@@ -308,7 +334,8 @@
     if (isCover) cls.push("role-cover");
     else if (isEnd) cls.push("role-body", "role-end");
     else cls.push("role-body");
-    if (useImg) { cls.push("has-img", "layout-" + base, "cv-" + theme + "-" + variantId); }
+    if (useImg) { cls.push("has-img", "layout-" + base); }
+    if (isCover && variant) { cls.push("cv-" + theme + "-" + variantId); if (variant.bold) cls.push("cv-bold"); }
     if (useBox) cls.push("bf");
     card.className = cls.join(" ");
     card.setAttribute("data-theme", theme);
@@ -393,8 +420,7 @@
     renderPage(index);
   }
 
-  /* ---------- 导出 PDF（浏览器原生打印，矢量输出，不再用 html2canvas 光栅化） ---------- */
-  // 把指定页渲染成全尺寸卡片克隆，放进打印容器；每张卡片占一页
+  /* ---------- 导出 PDF（浏览器原生打印，矢量输出） ---------- */
   function buildPrintRoot(indices) {
     const old = document.getElementById("print-root");
     if (old) old.remove();
@@ -425,7 +451,6 @@
       window.removeEventListener("afterprint", cleanup);
     };
     window.addEventListener("afterprint", cleanup);
-    // 留一帧让打印布局生效再唤起打印对话框（在对话框中选“另存为 PDF”）
     setTimeout(() => window.print(), 80);
   }
 
