@@ -177,7 +177,7 @@
   }
   // 正文末尾固定图框
   function setupBodyFigure(idx) { bindPanZoom(card.querySelector(".body-figure"), idx); }
-  // 封面图（Kinfolk 统一有图）
+  // 封面图
   function setupCoverImage(idx) { bindPanZoom(card.querySelector(".card-media"), idx); }
 
   /* ---------- 下拉：按风格填充专属封面方案 ---------- */
@@ -342,4 +342,174 @@
 
     const theme = $("theme").value;
     const isCover = index === 0;
-    const isEnd =
+    const isEnd = total > 1 && index === total - 1;
+    const isBody = !isCover && !isEnd;
+
+    const list = variantsFor(theme);
+    const variantId = $("imageLayout").value;
+    const variant = list.find((v) => v.id === variantId);
+    const base = variant ? variant.base : "none";
+
+    // 三部分都从各自 markdown 末尾抽取图片：封页→封面图框，正文/尾页→正文图框
+    const md = window.mdToHtml(pages[index]);
+    const fig = splitTrailingFigure(md);
+    const hasFig = !!(fig && fig.imgHtml);
+    let textHtml = fig ? fig.textHtml : md;
+    // 「超大数字」封面：抽取标题首个数字作巨幅主视觉
+    if (isCover && variantId === "bignum") textHtml = applyBigNumber(textHtml);
+    // 封面用 card-media 图框；正文/尾页用 body-figure 图框
+    const useImg = isCover && base !== "none";
+    const useBox = isBody || isEnd;
+
+    $("imageLayout").disabled = list.length === 0;
+
+    const cls = ["card"];
+    if (isCover) cls.push("role-cover");
+    else if (isEnd) cls.push("role-body", "role-end");
+    else cls.push("role-body");
+    if (useImg) { cls.push("has-img", "layout-" + base); }
+    if (isCover && variant) { cls.push("cv-" + theme + "-" + variantId); if (variant.bold) cls.push("cv-bold"); }
+    if (useBox) cls.push("bf");
+    card.className = cls.join(" ");
+    card.setAttribute("data-theme", theme);
+
+    const eyebrow = $("eyebrow").value.trim();
+    const brand = $("brand").value.trim();
+    const no = String(index + 1).padStart(2, "0");
+    const tot = String(total).padStart(2, "0");
+
+    // 正文页码按顺序编排（不含首页封面与末页尾页）
+    const bodyTotal = Math.max(0, total - 2);
+    const bodyNo = isBody ? index : 0;
+
+    const eyebrowHtml = eyebrow ? `<div class="card-eyebrow">${escapeAttr(eyebrow)}</div>` : "";
+    const progressHtml = isBody ? buildProgress(theme, bodyNo, bodyTotal) : "";
+    const headHtml = isBody
+      ? `<div class="card-head">${eyebrowHtml}${progressHtml}</div>`
+      : eyebrowHtml;
+    const bodyInner = useBox
+      ? `<div class="body-text">${textHtml}</div><div class="body-figure${hasFig ? "" : " is-empty"}">${hasFig ? fig.imgHtml : ""}</div>`
+      : textHtml;
+    const bodyHtml = `<div class="card-body">${bodyInner}</div>`;
+    const footHtml = `<div class="card-foot"><span class="card-brand">${escapeAttr(brand)}</span></div>`;
+
+    // 封面图框：取自本页 markdown 末尾图片；本页无图则显示占位框
+    const media = useImg
+      ? `<div class="card-media${hasFig ? "" : " is-empty"}">${hasFig ? fig.imgHtml : ""}</div>`
+      : "";
+
+    let inner;
+    if (!useImg) {
+      inner = headHtml + bodyHtml + footHtml;
+    } else if (base === "module") {
+      inner = headHtml + `<div class="card-body">${media}${textHtml}</div>` + footHtml;
+    } else if (base === "frame") {
+      inner = media + headHtml + bodyHtml + footHtml;
+    } else if (base === "bg") {
+      inner = media + `<div class="li-content"><div class="li-panel">${headHtml}${bodyHtml}</div>${footHtml}</div>`;
+    } else if (base === "bottom") {
+      inner = `<div class="li-content">${headHtml}${bodyHtml}${footHtml}</div>` + media;
+    } else {
+      inner = media + `<div class="li-content">${headHtml}${bodyHtml}${footHtml}</div>`;
+    }
+    card.innerHTML = inner;
+    applyColorsToCard();
+    if (useBox) setupBodyFigure(index);
+    // 封面图可拖拽缩放（本页有真实图片时）
+    if (isCover && useImg && hasFig) setupCoverImage(index);
+
+    counter.textContent = `${no} / ${tot}`;
+    fit();
+  }
+
+  function refresh() {
+    const on = $("autoColor").checked;
+    const url = coverImgSrc();
+    if (on && url && !(url in colorCache)) {
+      ensureColors(url).then(() => renderPage(index));
+    } else {
+      renderPage(index);
+    }
+  }
+
+  function rebuild(keepIndex) {
+    pages = splitPages(input.value);
+    const target = keepIndex ? index : 0;
+    const on = $("autoColor").checked;
+    const url = coverImgSrc();
+    if (on && url && !(url in colorCache)) {
+      ensureColors(url).then(() => renderPage(target));
+    } else {
+      renderPage(target);
+    }
+  }
+
+  function onThemeChange() {
+    populateLayoutOptions($("theme").value);
+    renderPage(index);
+  }
+
+  /* ---------- 导出 PDF（浏览器原生打印，矢量输出） ---------- */
+  function buildPrintRoot(indices) {
+    const old = document.getElementById("print-root");
+    if (old) old.remove();
+    const root = document.createElement("div");
+    root.id = "print-root";
+    const cur = index;
+    indices.forEach((i) => {
+      renderPage(i);
+      const clone = card.cloneNode(true);
+      clone.removeAttribute("id");
+      clone.style.transform = "none";
+      const page = document.createElement("div");
+      page.className = "print-page";
+      page.appendChild(clone);
+      root.appendChild(page);
+    });
+    document.body.appendChild(root);
+    renderPage(cur);
+    return root;
+  }
+
+  async function exportPdf(indices) {
+    if (document.fonts) { try { await document.fonts.ready; } catch (e) {} }
+    if ($("autoColor").checked) { await ensureColors(coverImgSrc()); }
+    const root = buildPrintRoot(indices);
+    const cleanup = () => {
+      root.remove();
+      window.removeEventListener("afterprint", cleanup);
+    };
+    window.addEventListener("afterprint", cleanup);
+    setTimeout(() => window.print(), 80);
+  }
+
+  function exportOne() { return exportPdf([index]); }
+  function exportAll() { return exportPdf(pages.map((_, i) => i)); }
+
+  input.addEventListener("input", () => rebuild(true));
+  $("theme").addEventListener("change", onThemeChange);
+  $("imageLayout").addEventListener("change", () => renderPage(index));
+  $("autoColor").addEventListener("change", () => refresh());
+  $("eyebrow").addEventListener("input", () => renderPage(index));
+  $("brand").addEventListener("input", () => renderPage(index));
+  $("prev").addEventListener("click", () => renderPage(index - 1));
+  $("next").addEventListener("click", () => renderPage(index + 1));
+  $("exportOne").addEventListener("click", exportOne);
+  $("exportAll").addEventListener("click", exportAll);
+  $("loadSample").addEventListener("click", () => { input.value = SAMPLE; rebuild(false); });
+  window.addEventListener("resize", fit);
+
+  // 图框内拖拽平移：全局监听一次，避免重复绑定
+  document.addEventListener("mousemove", (e) => {
+    if (!drag) return;
+    const k = fitScale || 1;
+    drag.st.x = drag.ox + (e.clientX - drag.sx) / k;
+    drag.st.y = drag.oy + (e.clientY - drag.sy) / k;
+    applyXform(drag.box, drag.img, drag.st);
+  });
+  document.addEventListener("mouseup", () => { drag = null; });
+
+  populateLayoutOptions($("theme").value);
+  input.value = SAMPLE;
+  rebuild(false);
+})();
