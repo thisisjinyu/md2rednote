@@ -23,6 +23,10 @@
   background:var(--card-bg); box-shadow:inset 0 0 0 1px var(--card-rule);
 }
 
+/* -------------------- 封面栏目：markdown 顶部 :: 行 → .md-eyebrow（图标 + 英文） -------------------- */
+.card[data-theme="kinfolk"].role-cover .md-eyebrow { display:flex; align-items:center; gap:12px; font-size:22px; font-weight:500; letter-spacing:4px; text-transform:uppercase; color:var(--card-accent); margin:0 0 28px; }
+.card[data-theme="kinfolk"].role-cover .md-eyebrow img { width:28px; height:28px; flex:none; object-fit:contain; display:block; }
+
 /* -------------------- 封面：旧 3 方案专属排版 -------------------- */
 .card.role-cover.cv-kinfolk-airy .li-content { justify-content:center; padding:72px 88px; display:flex; flex-direction:column; }
 .card.role-cover.cv-kinfolk-airy .card-body { flex:0 1 auto; display:block; text-align:right; }
@@ -66,10 +70,9 @@
 
 /* ====================================================================
    NEW COVER STYLES — 新增封面样式（精致加粗风格，统一标记 .cv-bold）
-   注：“上图大标题”与“全幅压底大字”已拆到 cover-bigtop.css / cover-fullbg.css
+   封面栏目一律用 markdown 顶部 :: 行（.md-eyebrow），正文「栏目」字段不再上封面。
+   “上图大标题”与“全幅压底大字”已拆到 cover-bigtop.css / cover-fullbg.css。
    ==================================================================== */
-.card[data-theme="kinfolk"].role-cover.cv-bold .card-eyebrow { display:flex; margin-bottom:30px; }
-.card[data-theme="kinfolk"].role-cover.cv-bold .card-eyebrow::after { display:none; }
 .card.role-cover.cv-bold .card-body h1 { font-family:var(--font-serif); font-weight:700; }
 .card.role-cover.cv-bold .card-body mark { background:linear-gradient(transparent 54%, color-mix(in srgb, var(--card-accent) 40%, transparent) 54%); color:inherit; padding:0 4px; }
 
@@ -80,6 +83,8 @@
 .card.role-cover.cv-kinfolk-colorblock .li-content { order:1; width:55%; flex:none; background:var(--card-accent); color:#fff; justify-content:center; padding:104px 72px; position:relative; overflow:hidden; }
 .card.role-cover.cv-kinfolk-colorblock .card-body { position:relative; z-index:1; }
 .card.role-cover.cv-kinfolk-colorblock .card-eyebrow { color:rgba(255,255,255,0.85); }
+.card.role-cover.cv-kinfolk-colorblock .md-eyebrow { color:rgba(255,255,255,0.9); }
+.card.role-cover.cv-kinfolk-colorblock .md-eyebrow img { filter:brightness(0) invert(1); }
 .card.role-cover.cv-kinfolk-colorblock .card-body h1 { color:#fff; font-size:80px; line-height:1.12; margin:0 0 22px; }
 .card.role-cover.cv-kinfolk-colorblock .card-body h2 { color:rgba(255,255,255,0.92); font-weight:400; font-size:30px; }
 .card.role-cover.cv-kinfolk-colorblock .card-body p { color:rgba(255,255,255,0.9); font-weight:300; }
