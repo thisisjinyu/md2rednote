@@ -4,9 +4,6 @@
    load 顺序：themes 之后、kinfolk 之前。
    ==================================================================== */
 
-/* -------- 正文：文字层定位（供 .card-anchor 等叠放） -------- */
-.card.role-body .card-body { position:relative; z-index:1; }
-
 /* -------- 正文有图（.bf）：文字在上、末尾图片收进版心成固定图框 --------
    图框自动填满文字与页脚之间；框内图片 object-fit:cover，可拖拽平移+滚轮缩放（逻辑在 app.js）。 */
 .card.role-body.bf .card-body { display:flex; flex-direction:column; }
@@ -23,9 +20,6 @@
   transform-origin:center center; will-change:transform; cursor:grab;
 }
 .card.role-body.bf .card-body .body-figure img:active { cursor:grabbing; }
-
-/* -------- 封面：无图时内容竖向居中 -------- */
-.card.role-cover:not(.has-img) .card-body { display:flex; flex-direction:column; justify-content:center; }
 
 /* -------- 尾页：内容居中收尾 -------- */
 .card.role-end .card-body { display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; }

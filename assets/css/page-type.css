@@ -25,11 +25,3 @@
 .card.role-end .card-body p { font-size:34px; line-height:1.55; color:var(--card-dim); margin:0 0 18px; }
 .card.role-end .card-body strong { color:var(--card-accent); }
 .card.role-end .card-body blockquote { font-size:36px; font-style:italic; border:none; padding:0; margin:28px 0 0; }
-
-/* -------- 无图正文页：浅色巨大序号沉右下，消费留白 -------- */
-.card-anchor {
-  position:absolute; right:78px; bottom:148px; z-index:0;
-  font-family:var(--font-serif); font-weight:700; font-style:normal;
-  font-size:300px; line-height:0.78; letter-spacing:-4px;
-  color:var(--card-accent); opacity:0.10; pointer-events:none; user-select:none;
-}
