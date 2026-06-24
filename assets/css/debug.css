@@ -18,30 +18,34 @@
 }
 
 /* ====================================================================
-   GRID OVERLAY — 连续单线网格参考（仅预览可见，导出不含）
+   MODULAR GRID OVERLAY — 独立描边方块（仅预览可见，导出不含）
    挂在 .card-frame 上（不进入导出克隆的 .card），顶栏「网格」勾选框控制，默认隐藏。
-   之前的模块化网格（格子间留 24px gutter）会让十字路口中间留个小空洞（四个角碰不到一起），
-   改为连续单线后横竖线贯通，所有十字路口都是干净的 + 。设计稿 1080×1440的固定参数：
-     · 正方形格子 = 180×180px；页边距 = 90px（四边严格相等）；5 列 × 7 行
-       校验：5×180+2×90=1080；7×180+2×90=1440
-   实现：overlay = 版心框（内缩 90px）；重复背景每个 tile = 一个格子，在 tile 起始处画一根
-   贯通细线（竖线满高、横线满宽），交叉处自然成实心 + ；外四边由 border 画。百分比仅为随预览缩放。
-   tile 占比：列 180/900=20%，行 180/1260=14.2857%
+   做法：用 5×7=35 个独立的带边框格子（而非贯通背景线），每个格子的线只画在自己四边、
+   不延伸进间隙，所以间隙里没有线、十字路口不再交叉（只剩四个角）。外加一圈连续外边框。
+   设计稿 1080×1440 的固定参数（基于 8px）：
+     · 正方形格子 = 160×160px；gutter = 24px；5 列 × 7 行
+     · 页边距：左右 92px / 上下 88px；校验 5×160+4×24+2×92=1080；7×160+6×24+2×88=1440
+   实现：overlay = 版心框（内缩 92/88）为 grid 容器；5 列 7 行 1fr，column-gap 24/896=2.6786%、
+   row-gap 24/1264=1.8987%（这样 1fr 格子恰好 160×160 正方形）；百分比仅为随预览缩放。
    ==================================================================== */
 .card-frame { position: relative; }
 .grid-overlay {
   position: absolute;
-  top: 6.25%;       /* 90 / 1440 */
-  bottom: 6.25%;
-  left: 8.3333%;    /* 90 / 1080 */
-  right: 8.3333%;
-  display: none; pointer-events: none; z-index: 40;
-  --ln: rgba(54, 166, 255, 0.7);
+  top: 6.1111%;     /* 88 / 1440 */
+  bottom: 6.1111%;
+  left: 8.5185%;    /* 92 / 1080 */
+  right: 8.5185%;
+  box-sizing: border-box;
+  display: none;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+  column-gap: 2.6786%;   /* 24 / 896 */
+  row-gap: 1.8987%;      /* 24 / 1264 */
   border: 1.5px solid rgba(54, 166, 255, 0.85);
-  background-image:
-    linear-gradient(to right, var(--ln) 0 1.2%, transparent 1.2% 100%),
-    linear-gradient(to bottom, var(--ln) 0 1.2%, transparent 1.2% 100%);
-  background-size: 20% 14.2857%;
-  background-position: 0 0;
+  pointer-events: none; z-index: 40;
 }
-body:has(#gridToggle:checked) .grid-overlay { display: block; }
+body:has(#gridToggle:checked) .grid-overlay { display: grid; }
+.grid-overlay > i {
+  box-sizing: border-box;
+  border: 1.5px solid rgba(54, 166, 255, 0.7);
+}
