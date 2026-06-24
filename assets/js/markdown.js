@@ -33,6 +33,9 @@
         closeList();
         const lv = m[1].length;
         html += `<h${lv}>${inline(m[2])}</h${lv}>`;
+      } else if ((m = line.match(/^::\s+(.*)$/))) {
+        closeList();
+        html += `<div class="md-eyebrow">${inline(m[1])}</div>`;
       } else if ((m = line.match(/^!\[([^\]]*)\]\(([^)\s]+)\)\s*$/))) {
         closeList();
         const alt = m[1].trim();

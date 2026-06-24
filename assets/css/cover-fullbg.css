@@ -12,3 +12,5 @@
 .card.role-cover.cv-kinfolk-fullbg .card-body h2 { color:rgba(255,255,255,0.9); font-weight:400; font-size:33px; margin:0 0 12px; }
 .card.role-cover.cv-kinfolk-fullbg .card-body p { color:rgba(255,255,255,0.88); font-weight:300; font-size:30px; }
 .card.role-cover.cv-kinfolk-fullbg .card-body mark { background:transparent; color:#f0c4aa; }
+.card.role-cover.cv-kinfolk-fullbg .md-eyebrow { color:rgba(255,255,255,0.92); }
+.card.role-cover.cv-kinfolk-fullbg .md-eyebrow img { filter:brightness(0) invert(1); }
