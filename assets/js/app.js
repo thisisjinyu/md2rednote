@@ -5,7 +5,6 @@
   // 底层构图：top / bottom / split / frame / module / bg / none
   const COVER_VARIANTS = {
     kinfolk: [
-      { id: "airy", label: "极简留白", base: "top" },
       { id: "square", label: "居中方图", base: "frame" },
       { id: "half", label: "左右半幅", base: "split" },
       { id: "bigtop", label: "上图大标题", base: "top", bold: true },

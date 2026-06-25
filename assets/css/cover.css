@@ -1,6 +1,6 @@
 /* ====================================================================
    cover.css · 封面方案（负责封面的展示）
-   方案：极简留白/居中方图/左右半幅/上图大标题/全幅压底/大色块/超大数字/高亮大标题/竖排标题。
+   方案：居中方图/左右半幅/上图大标题/全幅压底/大色块/超大数字/高亮大标题/竖排标题。
    加载顺序：kinfolk.css 之后，确保覆盖封面基础层。
    ==================================================================== */
 
@@ -8,23 +8,14 @@
 .card.role-cover.cv-bold .card-body h1 { font-family: var(--font-serif); font-weight: 700; }
 .card.role-cover.cv-bold .card-body mark { background: linear-gradient(transparent 54%, color-mix(in srgb, var(--card-accent) 40%, transparent) 54%); color: inherit; padding: 0 4px; }
 
-/* -------- 极简留白 airy / 居中方图 square / 左右半幅 half：构图 -------- */
-.cv-kinfolk-airy.layout-top .card-media { height: 45%; }
-.cv-kinfolk-airy .card-media img { filter: brightness(1.05) saturate(0.82); }
+/* -------- 居中方图 square / 左右半幅 half：构图 -------- */
 .cv-kinfolk-square.layout-frame { padding: 130px 120px; display: flex; flex-direction: column; }
 .cv-kinfolk-square .card-media { width: 520px; height: 520px; margin: 0 auto 0 0; }
 .cv-kinfolk-half.layout-split .card-media { width: 45%; }
 .cv-kinfolk-half.layout-split .li-content { padding: 120px 76px; }
 .card.cv-kinfolk-half .li-content { justify-content: center; }
 
-/* -------- airy / square / half：排版 -------- */
-.card.role-cover.cv-kinfolk-airy .li-content { justify-content: center; padding: 72px 88px; display: flex; flex-direction: column; }
-.card.role-cover.cv-kinfolk-airy .card-body { flex: 0 1 auto; display: block; text-align: right; }
-.card.role-cover.cv-kinfolk-airy .card-body h1 { margin: 0 0 32px; font-size: 88px; font-weight: 400; letter-spacing: 1px; line-height: 1.16; text-align: left; }
-.card.role-cover.cv-kinfolk-airy .card-body h1 em { font-weight: 400; color: var(--card-accent); }
-.card.role-cover.cv-kinfolk-airy .card-body h2 { margin: 0 0 26px; font-size: 42px; font-weight: 300; line-height: 1.3; color: var(--card-dim); }
-.card.role-cover.cv-kinfolk-airy .card-body blockquote { margin: 0 0 24px; padding: 0; border: none; font-style: italic; font-weight: 400; font-size: 34px; line-height: 1.45; letter-spacing: 2px; color: var(--card-dim); }
-.card.role-cover.cv-kinfolk-airy .card-body p { margin: 0 0 14px; max-width: 100%; font-size: 27px; font-weight: 300; line-height: 1.7; letter-spacing: 0.3px; color: var(--card-dim); }
+/* -------- square / half：排版 -------- */
 .card.role-cover.cv-kinfolk-square .card-body { margin-top: auto; align-self: flex-end; max-width: 80%; text-align: right; }
 .card.role-cover.cv-kinfolk-square .card-body h1 { font-size: 54px; font-weight: 400; letter-spacing: 2px; }
 .card.role-cover.cv-kinfolk-half .card-body h1 { font-size: 52px; font-weight: 400; letter-spacing: 1px; line-height: 1.25; }
