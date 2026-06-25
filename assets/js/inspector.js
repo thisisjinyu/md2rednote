@@ -1,5 +1,6 @@
 /* 调试面板 · HTML 框展示当前页卡片内部真实渲染的 HTML（含文字与内联标签）；
-   CSS 框展示这些标签命中的规则（按标签分组）。封面/正文/尾页切换时随 #card 自动刷新，与 app.js 解耦。 */
+   CSS 框只展示 HTML 框里作为独立节点输出的那些标签命中的规则（被折叠进行内的内联标签不单独列出）。
+   封面/正文/尾页切换时随 #card 自动刷新，与 app.js 解耦。 */
 (function () {
   var card = document.getElementById('card');
   var codeHtml = document.getElementById('codeHtml');
@@ -9,7 +10,8 @@
   var VOID = { img: 1, br: 1, hr: 1, input: 1, meta: 1, link: 1, source: 1 };
   var INLINE = { strong: 1, em: 1, mark: 1, a: 1, code: 1, span: 1, sub: 1, sup: 1, i: 1, b: 1, u: 1, s: 1, del: 1, br: 1, img: 1 };
 
-  /* ---------- HTML 面板：输出卡片内部真实渲染的 HTML（含文字、内联标签），按层缩进 ---------- */
+  /* ---------- HTML 面板：输出卡片内部真实渲染的 HTML（含文字、内联标签），按层缩进。
+     每个作为独立节点输出的元素同时记入 acc，供 CSS 面板使用（两框始终一致） ---------- */
   function elAttrs(node) {
     var attrs = '';
     Array.prototype.forEach.call(node.attributes, function (a) {
@@ -18,13 +20,14 @@
     return attrs;
   }
   function collapse(s) { return s.replace(/\s+/g, ' '); }
-  function prettyNode(node, depth) {
+  function prettyNode(node, depth, acc) {
     var pad = '  '.repeat(depth);
     if (node.nodeType === 3) {
       var txt = collapse(node.textContent).trim();
       return txt ? pad + txt + '\n' : '';
     }
     if (node.nodeType !== 1) return '';
+    if (acc) acc.push(node);
     var tag = node.tagName.toLowerCase();
     var open = '<' + tag + elAttrs(node) + '>';
     if (VOID[tag]) return pad + open + '\n';
@@ -38,7 +41,7 @@
       return n.nodeType === 1 || (n.nodeType === 3 && n.textContent.trim());
     });
     var out = pad + open + '\n';
-    kids.forEach(function (k) { out += prettyNode(k, depth + 1); });
+    kids.forEach(function (k) { out += prettyNode(k, depth + 1, acc); });
     return out + pad + '</' + tag + '>\n';
   }
 
@@ -73,16 +76,17 @@
   }
 
   function update() {
-    /* 1) 卡片内部的直接子元素作为顶层，递归输出真实 HTML */
+    /* 1) 卡片内部的直接子元素作为顶层，递归输出真实 HTML；同时收集展示出的元素 */
     var rootKids = Array.prototype.filter.call(card.childNodes, function (n) { return n.nodeType === 1; });
+    var displayed = [];
     try {
       var html = '';
-      rootKids.forEach(function (k) { html += prettyNode(k, 0); });
+      rootKids.forEach(function (k) { html += prettyNode(k, 0, displayed); });
       codeHtml.textContent = html || '（空）';
     } catch (e) { codeHtml.textContent = card.innerHTML; }
 
-    /* 2) 只针对 HTML 框里展示的那些标签（卡片内部元素，不含 .card 包裹层）按顺序分组输出 CSS */
-    var els = Array.prototype.slice.call(card.querySelectorAll('*'));
+    /* 2) 只针对 HTML 框里展示出的那些标签（不含被折叠的内联标签与 .card 包裹层）按顺序分组输出 CSS */
+    var els = displayed;
     var allRules = [];
     Array.prototype.forEach.call(document.styleSheets, function (sheet) {
       var rules = null;
