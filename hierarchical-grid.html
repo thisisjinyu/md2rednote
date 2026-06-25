@@ -3,127 +3,279 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>8 套版式示意 · 封面方案 × 正文 × 尾页（3:4）</title>
+<title>8 套层级网格 · hierarchical grid（同一内容·3:4）</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/css/base.css" />
-<link rel="stylesheet" href="assets/css/kinfolk.css" />
-<link rel="stylesheet" href="assets/css/cover.css" />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
 <style>
+  :root{--paper:#f7f5f0;--ink:#16140f;--muted:#7d7766;--accent:#d24b2f;--sans:'Noto Sans SC',system-ui,sans-serif;--display:'Sora','Noto Sans SC',sans-serif}
   *{box-sizing:border-box}
-  body{margin:0;background:#23211e;color:#ece7df;font-family:'Noto Sans SC',system-ui,-apple-system,sans-serif;padding:42px 24px 80px;line-height:1.6}
-  .top{max-width:1120px;margin:0 auto 36px}
-  h1.title{font-family:'Playfair Display','Noto Serif SC',serif;font-weight:700;font-size:30px;margin:0 0 12px;letter-spacing:.5px}
-  .lead{color:#b3ac9f;font-size:14px;max-width:860px;margin:0 0 6px}
-  .lead b{color:#ece7df;font-weight:500}
-  .sets{max-width:1120px;margin:0 auto;display:flex;flex-direction:column;gap:42px}
-  .set-hd{display:flex;align-items:baseline;gap:12px;margin-bottom:18px;border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:12px}
-  .set-hd .no{font:600 13px/1 'SFMono-Regular',Menlo,Consolas,monospace;color:#d8a07f;border:1px solid #d8a07f;border-radius:999px;padding:5px 9px;flex:none}
-  .set-hd h2{font-size:18px;margin:0;font-weight:500}
-  .set-hd .en{color:#8f877a;font-size:12.5px;font-family:'SFMono-Regular',Menlo,Consolas,monospace}
-  .set-hd .cap{color:#a9a195;font-size:12.5px;margin:0 0 0 auto;max-width:540px;text-align:right}
-  .row{display:flex;flex-wrap:wrap;gap:24px}
-  .cell{margin:0;display:flex;flex-direction:column;align-items:center;gap:9px}
-  .card-scale{--s:.3;width:calc(1080px * var(--s));height:calc(1440px * var(--s));position:relative;overflow:hidden;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.38);flex:none;background:#f3efe8}
-  .card-scale > .card{transform:scale(var(--s));transform-origin:top left}
-  .card{--font-sans:'Noto Sans SC',sans-serif}
-  figcaption{font-size:12px;color:#9a9286;letter-spacing:2px}
-  .foot{max-width:1120px;margin:36px auto 0;color:#8f877a;font-size:12.5px}
-  @media(max-width:760px){.set-hd{flex-wrap:wrap}.set-hd .cap{margin:8px 0 0;text-align:left;max-width:none}}
+  body{margin:0;background:#211f1c;color:#ece7df;font-family:var(--sans);padding:42px 24px 80px;line-height:1.6}
+  .top{max-width:1180px;margin:0 auto 34px}
+  h1.title{font-family:var(--display);font-weight:800;font-size:30px;margin:0 0 12px;letter-spacing:.4px}
+  .lead{color:#b3ac9f;font-size:14px;max-width:880px;margin:0 0 6px}
+  .lead b{color:#ece7df;font-weight:600}
+  .gallery{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:34px 26px;justify-items:center}
+  .cell{margin:0;display:flex;flex-direction:column;align-items:center;gap:11px;width:100%}
+  .stage{--s:.314;width:calc(1080px * var(--s));height:calc(1440px * var(--s));overflow:hidden;border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.4);background:var(--paper)}
+  .stage .hg{transform:scale(var(--s));transform-origin:top left}
+  figcaption{display:flex;flex-direction:column;gap:3px;text-align:center;max-width:340px}
+  figcaption b{font-family:var(--display);font-weight:600;font-size:14px;color:#f1ddd6}
+  figcaption b i{font-style:normal;color:var(--accent)}
+  figcaption span{font-size:12.5px;color:#9a9286;line-height:1.5}
+
+  /* ---- the hierarchical-grid card ---- */
+  .hg{position:relative;width:1080px;height:1440px;background:var(--paper);display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(8,1fr)}
+  .hg::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:6;background:
+    repeating-linear-gradient(to right, transparent 0, transparent calc(100%/6 - 1px), rgba(22,20,15,.055) calc(100%/6 - 1px), rgba(22,20,15,.055) calc(100%/6)),
+    repeating-linear-gradient(to bottom, transparent 0, transparent calc(100%/8 - 1px), rgba(22,20,15,.055) calc(100%/8 - 1px), rgba(22,20,15,.055) calc(100%/8))}
+  .hg > *{padding:30px 34px;display:flex;flex-direction:column;justify-content:flex-start;box-shadow:inset 0 0 0 1px rgba(22,20,15,.05);overflow:hidden;min-width:0}
+
+  .b-eyebrow{grid-area:ey;flex-direction:row;align-items:center;gap:16px;font-weight:600;font-size:23px;letter-spacing:.2em;color:var(--accent)}
+  .b-eyebrow::before{content:"";width:38px;height:2px;background:var(--accent);flex:none}
+  .b-title{grid-area:ti;justify-content:flex-end;font-family:var(--sans);font-weight:900;font-size:96px;line-height:1.02;letter-spacing:-.01em;color:var(--ink)}
+  .b-sub{grid-area:su;justify-content:center;font-weight:500;font-size:40px;line-height:1.25;color:var(--ink)}
+  .b-lead{grid-area:le;justify-content:flex-start;font-weight:400;font-size:29px;line-height:1.55;color:var(--muted)}
+  .b-stat{grid-area:st;background:var(--accent);color:#fff;align-items:flex-start;justify-content:center;gap:8px}
+  .b-stat .num{font-family:var(--display);font-weight:800;font-size:128px;line-height:.82}
+  .b-stat .unit{font-weight:500;font-size:30px;letter-spacing:.04em;opacity:.92}
+  .b-list{grid-area:li;justify-content:center}
+  .b-list ol{list-style:none;margin:0;padding:0;width:100%;display:flex;flex-direction:column;gap:22px;counter-reset:i}
+  .b-list li{counter-increment:i;display:flex;flex-direction:column;gap:3px}
+  .b-list li::before{content:counter(i,decimal-leading-zero);font-family:var(--display);font-weight:800;font-size:24px;color:var(--accent)}
+  .b-list b{font-weight:700;font-size:33px;line-height:1.2;color:var(--ink)}
+  .b-list span{font-weight:400;font-size:23px;color:var(--muted)}
+  .b-quote{grid-area:qu;position:relative;justify-content:center;font-weight:700;font-size:48px;line-height:1.3;color:var(--ink)}
+  .b-brand{grid-area:br;flex-direction:row;align-items:center;justify-content:flex-start;font-weight:600;font-size:27px;letter-spacing:.16em;color:var(--ink)}
+  .b-img{grid-area:im;padding:0;box-shadow:inset 0 0 0 1px rgba(22,20,15,.05)}
+  .b-img img{width:100%;height:100%;object-fit:cover;display:block}
+
+  /* ---- L1 顶部主视觉 ---- */
+  .l1{grid-template-areas:
+    "ey ey ey ey ey ey"
+    "ti ti ti ti ti ti"
+    "ti ti ti ti ti ti"
+    "le le le le st st"
+    "li li li li li li"
+    "li li li li li li"
+    "qu qu qu qu qu qu"
+    "br br br br br br"}
+  .l1 .b-title{font-size:106px}
+  .l1 .b-stat .num{font-size:96px}
+
+  /* ---- L2 左栏统领 ---- */
+  .l2{grid-template-areas:
+    "ey ey su su su su"
+    "ti ti le le le le"
+    "ti ti le le le le"
+    "ti ti li li li li"
+    "ti ti li li li li"
+    "ti ti li li li li"
+    "ti ti qu qu qu qu"
+    "br br qu qu qu qu"}
+  .l2 .b-title{background:var(--accent);color:#fff;font-size:80px;justify-content:flex-end}
+  .l2 .b-eyebrow{background:var(--accent);color:#fff}
+  .l2 .b-eyebrow::before{background:#fff}
+  .l2 .b-brand{background:var(--accent);color:#fff}
+
+  /* ---- L3 巨数聚焦 ---- */
+  .l3{grid-template-areas:
+    "ey ey ey ey ey ey"
+    "st st st ti ti ti"
+    "st st st ti ti ti"
+    "st st st ti ti ti"
+    "st st st le le le"
+    "li li li li li li"
+    "li li li li li li"
+    "br br br br br br"}
+  .l3 .b-stat{align-items:center;justify-content:center}
+  .l3 .b-stat .num{font-size:300px}
+  .l3 .b-stat .unit{font-size:38px}
+  .l3 .b-title{font-size:72px}
+  .l3 .b-list ol{flex-direction:row;gap:34px}
+  .l3 .b-list li{flex:1}
+
+  /* ---- L4 居中对称 ---- */
+  .l4{grid-template-areas:
+    ". ey ey ey ey ."
+    ". ti ti ti ti ."
+    ". ti ti ti ti ."
+    ". le le le le ."
+    "li li li li li li"
+    "li li li li li li"
+    ". qu qu qu qu ."
+    "br br br br br br"}
+  .l4 .b-eyebrow{justify-content:center}
+  .l4 .b-eyebrow::before{display:none}
+  .l4 .b-title{justify-content:center;text-align:center;font-size:84px}
+  .l4 .b-lead{text-align:center;align-items:center;justify-content:center}
+  .l4 .b-list ol{flex-direction:row;gap:30px}
+  .l4 .b-list li{flex:1;text-align:center;align-items:center}
+  .l4 .b-quote{justify-content:center;text-align:center}
+  .l4 .b-brand{justify-content:center}
+
+  /* ---- L5 非对称 L 形 ---- */
+  .l5{grid-template-areas:
+    "ey ey ey im im im"
+    "ti ti ti im im im"
+    "ti ti ti im im im"
+    "ti ti ti qu qu qu"
+    "le le le qu qu qu"
+    "li li li qu qu qu"
+    "li li li qu qu qu"
+    "br br br br br br"}
+  .l5 .b-title{font-size:78px}
+  .l5 .b-quote{background:var(--accent);color:#fff;font-size:54px;align-items:flex-start;justify-content:flex-end}
+
+  /* ---- L6 图像主导 ---- */
+  .l6{grid-template-areas:
+    "im im im im im im"
+    "im im im im im im"
+    "im im im im im im"
+    "ey ey ey ey ey ey"
+    "ti ti ti ti ti ti"
+    "le le le li li li"
+    "le le le li li li"
+    "br br br br br br"}
+  .l6 .b-title{font-size:90px}
+
+  /* ---- L7 阶梯递进 ---- */
+  .l7{grid-template-areas:
+    "ey ey .  .  .  ."
+    "ti ti ti ti .  ."
+    ".  su su su su ."
+    ".  .  le le le le"
+    ".  li li li li ."
+    ".  .  .  qu qu qu"
+    ".  .  .  qu qu qu"
+    "br br br br br br"}
+  .l7 .b-title{font-size:80px}
+  .l7 .b-quote{background:var(--accent);color:#fff;font-size:46px;align-items:flex-end}
+
+  /* ---- L8 引述压底 ---- */
+  .l8{grid-template-areas:
+    "ey ey ey ey ey ey"
+    "ti ti ti ti li li"
+    "ti ti ti ti li li"
+    "le le le le li li"
+    "qu qu qu qu qu qu"
+    "qu qu qu qu qu qu"
+    "qu qu qu qu qu qu"
+    "br br br br br br"}
+  .l8 .b-title{font-size:76px}
+  .l8 .b-quote{background:var(--accent);color:#fff;font-weight:800;font-size:88px;align-items:flex-end;padding:56px}
+  .l8 .b-quote::before{content:"“";position:absolute;top:-10px;left:40px;font-family:var(--display);font-size:200px;line-height:1;opacity:.22}
 </style>
 </head>
 <body>
   <div class="top">
-    <h1 class="title">8 套版式示意 · 封面 × 正文 × 尾页</h1>
-    <p class="lead">每一套都是完整的 <b>3:4（1080×1440）</b> Kinfolk 三联页：<b>一个封面方案 + 共享的正文页 + 共享的尾页</b>。八套的区别在于封面的<b>层级排布</b>（你现有的 8 种封面方案），正文与尾页保持一致。</p>
-    <p class="lead">这里直接引用你的 <b>base.css / kinfolk.css / cover.css</b> 渲染真实卡片（缩小预览）；为静态展示，未开启「图片取色」，用的是默认暖调配色。</p>
+    <h1 class="title">8 套层级网格 · hierarchical grid</h1>
+    <p class="lead">同一组内容（眉标 / 主标题 / 副标 / 导语 / 数字 / 三条清单 / 引述 / 署名 / 图），在同一个 <b>6×8 模块网格</b> 上，通过不同的<b>跨格与权重</b>生成 8 种完全不同的层级关系。</p>
+    <p class="lead">只根据<b>内容</b>重新设计，不沿用之前的视觉样式；深色细线为 3:4（1080×1440）的底层网格，用以看清哪些区块被放大、占据主导。</p>
   </div>
 
-  <div class="sets">
+  <div class="gallery">
 
-    <!-- 1 居中方图 square -->
-    <section class="set">
-      <div class="set-hd"><span class="no">01</span><h2>居中方图</h2><span class="en">square</span><p class="cap">方形图靠上，标题右对齐压在下方留白——图与字主次分明。</p></div>
-      <div class="row">
-        <figure class="cell"><div class="card-scale"><article class="card role-cover has-img layout-frame cv-kinfolk-square" data-theme="kinfolk"><div class="card-media"><img src="https://images.pexels.com/photos/6617496/pexels-photo-6617496.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="" crossorigin="anonymous"></div><div class="card-eyebrow">NUTRITION / 营养笔记</div><div class="card-body"><h1>少吃一口糖，身体会谢谢你</h1><h2>21 天温和减糖计划</h2><p>不靠硬扑，而是重新认识食物。三个不费力的小改变，从今天开始。</p></div><div class="card-foot"><span class="card-brand">@津玉不良言</span></div></article></div><figcaption>封面</figcaption></figure>
-        <figure class="cell"><div class="card-scale"><article class="card role-body bf" data-theme="kinfolk"><div class="card-head"><div class="card-eyebrow">NUTRITION / 营养笔记</div><div class="card-progress kind-dots"><span class="pg active"></span><span class="pg"></span></div></div><div class="card-body"><div class="body-text"><h2>三个温柔的开始</h2><ul><li>把含糖饮料换成<strong>气泡水 + 柠檬</strong></li><li>主食里掺一半<strong>糙米与豆类</strong></li><li>嘴馅时先喝一杯水，<mark>等十分钟</mark></li></ul></div><div class="body-figure"><img src="https://images.pexels.com/photos/27850094/pexels-photo-27850094.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="" crossorigin="anonymous"></div></div><div class="card-foot"><span class="card-brand">@津玉不良言</span></div></article></div><figcaption>正文</figcaption></figure>
-        <figure class="cell"><div class="card-scale"><article class="card role-body role-end bf" data-theme="kinfolk"><div class="card-eyebrow">NUTRITION / 营养笔记</div><div class="card-body"><div class="body-text"><h1>从今天开始</h1><h2>给身体多一点温柔</h2><p>少吃一口糖，不是剥夺，而是更懂得照顾自己。</p><p>如果这份计划帮到你，点亮<strong>收藏</strong>，明天接着看。</p><blockquote>关注 · 一起慢慢变好</blockquote></div><div class="body-figure is-empty"></div></div><div class="card-foot"><span class="card-brand">@津玉不良言</span></div></article></div><figcaption>尾页</figcaption></figure>
-      </div>
-    </section>
+    <figure class="cell">
+      <div class="stage"><div class="hg l1">
+        <div class="b-eyebrow">NUTRITION · 营养笔记</div>
+        <div class="b-title">少吃一口糖，身体会谢谢你</div>
+        <div class="b-lead">不靠硬扑，而是重新认识食物。三个不费力的小改变，从今天开始。</div>
+        <div class="b-stat"><div class="num">21</div><div class="unit">天计划</div></div>
+        <div class="b-list"><ol><li><b>气泡水 + 柠檬</b><span>替换含糖饮料</span></li><li><b>糙米与豆类</b><span>主食掺一半</span></li><li><b>先喝水，等十分钟</b><span>嘴馅时</span></li></ol></div>
+        <div class="b-quote">关注 · 一起慢慢变好</div>
+        <div class="b-brand">@津玉不良言</div>
+      </div></div>
+      <figcaption><b><i>01</i> 顶部主视觉</b><span>标题占据顶部主区，信息向下逐级递减。</span></figcaption>
+    </figure>
 
-    <!-- 2 左右半幅 half -->
-    <section class="set">
-      <div class="set-hd"><span class="no">02</span><h2>左右半幅</h2><span class="en">half</span><p class="cap">左图右文各占半幅，竖向分界线统领对齐。</p></div>
-      <div class="row">
-        <figure class="cell"><div class="card-scale"><article class="card role-cover has-img layout-split cv-kinfolk-half" data-theme="kinfolk"><div class="card-media"><img src="https://images.pexels.com/photos/6617496/pexels-photo-6617496.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="" crossorigin="anonymous"></div><div class="li-content"><div class="card-eyebrow">NUTRITION / 营养笔记</div><div class="card-body"><h1>少吃一口糖，身体会谢谢你</h1><h2>21 天温和减糖计划</h2><p>不靠硬扑，而是重新认识食物。三个不费力的小改变，从今天开始。</p></div><div class="card-foot"><span class="card-brand">@津玉不良言</span></div></div></article></div><figcaption>封面</figcaption></figure>
-        <figure class="cell"><div class="card-scale"><article class="card role-body bf" data-theme="kinfolk"><div class="card-head"><div class="card-eyebrow">NUTRITION / 营养笔记</div><div class="card-progress kind-dots"><span class="pg active"></span><span class="pg"></span></div></div><div class="card-body"><div class="body-text"><h2>三个温柔的开始</h2><ul><li>把含糖饮料换成<strong>气泡水 + 柠檬</strong></li><li>主食里掺一半<strong>糙米与豆类</strong></li><li>嘴馅时先喝一杯水，<mark>等十分钟</mark></li></ul></div><div class="body-figure"><img src="https://images.pexels.com/photos/27850094/pexels-photo-27850094.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="" crossorigin="anonymous"></div></div><div class="card-foot"><span class="card-brand">@津玉不良言</span></div></article></div><figcaption>正文</figcaption></figure>
-        <figure class="cell"><div class="card-scale"><article class="card role-body role-end bf" data-theme="kinfolk"><div class="card-eyebrow">NUTRITION / 营养笔记</div><div class="card-body"><div class="body-text"><h1>从今天开始</h1><h2>给身体多一点温柔</h2><p>少吃一口糖，不是剥夺，而是更懂得照顾自己。</p><p>如果这份计划帮到你，点亮<strong>收藏</strong>，明天接着看。</p><blockquote>关注 · 一起慢慢变好</blockquote></div><div class="body-figure is-empty"></div></div><div class="card-foot"><span class="card-brand">@津玉不良言</span></div></article></div><figcaption>尾页</figcaption></figure>
-      </div>
-    </section>
+    <figure class="cell">
+      <div class="stage"><div class="hg l2">
+        <div class="b-eyebrow">NUTRITION</div>
+        <div class="b-sub">21 天温和减糖计划</div>
+        <div class="b-title">少吃一口糖</div>
+        <div class="b-lead">不靠硬扑，而是重新认识食物。三个不费力的小改变。</div>
+        <div class="b-list"><ol><li><b>气泡水 + 柠檬</b><span>替换含糖饮料</span></li><li><b>糙米与豆类</b><span>主食掺一半</span></li><li><b>先喝水，等十分钟</b><span>嘴馅时</span></li></ol></div>
+        <div class="b-quote">关注 · 一起慢慢变好</div>
+        <div class="b-brand">@津玉不良言</div>
+      </div></div>
+      <figcaption><b><i>02</i> 左栏统领</b><span>左侧色块大标题统领，右侧模块化堆叠。</span></figcaption>
+    </figure>
 
-    <!-- 3 上图大标题 bigtop -->
-    <section class="set">
-      <div class="set-hd"><span class="no">03</span><h2>上图大标题</h2><span class="en">bigtop</span><p class="cap">大图占上 56%，下方左对齐大标题逐级展开。</p></div>
-      <div class="row">
-        <figure class="cell"><div class="card-scale"><article class="card role-cover has-img layout-top cv-kinfolk-bigtop cv-bold" data-theme="kinfolk"><div class="card-media"><img src="https://images.pexels.com/photos/6617496/pexels-photo-6617496.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="" crossorigin="anonymous"></div><div class="li-content"><div class="card-eyebrow">NUTRITION / 营养笔记</div><div class="card-body"><h1>少吃一口糖</h1><h2>21 天温和减糖计划</h2><p>不靠硬扑，而是重新认识食物。</p></div><div class="card-foot"><span class="card-brand">@津玉不良言</span></div></div></article></div><figcaption>封面</figcaption></figure>
-        <figure class="cell"><div class="card-scale"><article class="card role-body bf" data-theme="kinfolk"><div class="card-head"><div class="card-eyebrow">NUTRITION / 营养笔记</div><div class="card-progress kind-dots"><span class="pg active"></span><span class="pg"></span></div></div><div class="card-body"><div class="body-text"><h2>三个温柔的开始</h2><ul><li>把含糖饮料换成<strong>气泡水 + 柠檬</strong></li><li>主食里掺一半<strong>糙米与豆类</strong></li><li>嘴馅时先喝一杯水，<mark>等十分钟</mark></li></ul></div><div class="body-figure"><img src="https://images.pexels.com/photos/27850094/pexels-photo-27850094.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="" crossorigin="anonymous"></div></div><div class="card-foot"><span class="card-brand">@津玉不良言</span></div></article></div><figcaption>正文</figcaption></figure>
-        <figure class="cell"><div class="card-scale"><article class="card role-body role-end bf" data-theme="kinfolk"><div class="card-eyebrow">NUTRITION / 营养笔记</div><div class="card-body"><div class="body-text"><h1>从今天开始</h1><h2>给身体多一点温柔</h2><p>少吃一口糖，不是剥夺，而是更懂得照顾自己。</p><p>如果这份计划帮到你，点亮<strong>收藏</strong>，明天接着看。</p><blockquote>关注 · 一起慢慢变好</blockquote></div><div class="body-figure is-empty"></div></div><div class="card-foot"><span class="card-brand">@津玉不良言</span></div></article></div><figcaption>尾页</figcaption></figure>
-      </div>
-    </section>
+    <figure class="cell">
+      <div class="stage"><div class="hg l3">
+        <div class="b-eyebrow">NUTRITION · 营养笔记</div>
+        <div class="b-stat"><div class="num">21</div><div class="unit">天温和减糖</div></div>
+        <div class="b-title">少吃一口糖，身体会谢谢你</div>
+        <div class="b-lead">不靠硬扑，而是重新认识食物。</div>
+        <div class="b-list"><ol><li><b>气泡水 + 柠檬</b><span>替换含糖饮料</span></li><li><b>糙米与豆类</b><span>主食掺一半</span></li><li><b>先喝水 · 等十分钟</b><span>嘴馅时</span></li></ol></div>
+        <div class="b-brand">@津玉不良言</div>
+      </div></div>
+      <figcaption><b><i>03</i> 巨数聚焦</b><span>超大数字作为视觉锚点，标题与说明环绕。</span></figcaption>
+    </figure>
 
-    <!-- 4 全幅压底大字 fullbg -->
-    <section class="set">
-      <div class="set-hd"><span class="no">04</span><h2>全幅压底大字</h2><span class="en">fullbg</span><p class="cap">满幅背景图压暗，标题压在底部，层级最强。</p></div>
-      <div class="row">
-        <figure class="cell"><div class="card-scale"><article class="card role-cover has-img layout-bg cv-kinfolk-fullbg cv-bold" data-theme="kinfolk"><div class="card-media"><img src="https://images.pexels.com/photos/6617496/pexels-photo-6617496.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="" crossorigin="anonymous"></div><div class="li-content"><div class="li-panel"><div class="card-eyebrow">NUTRITION / 营养笔记</div><div class="card-body"><h1>少吃一口糖</h1><h2>21 天温和减糖计划</h2><p>不靠硬扑，重新认识食物。</p></div></div><div class="card-foot"><span class="card-brand">@津玉不良言</span></div></div></article></div><figcaption>封面</figcaption></figure>
-        <figure class="cell"><div class="card-scale"><article class="card role-body bf" data-theme="kinfolk"><div class="card-head"><div class="card-eyebrow">NUTRITION / 营养笔记</div><div class="card-progress kind-dots"><span class="pg active"></span><span class="pg"></span></div></div><div class="card-body"><div class="body-text"><h2>三个温柔的开始</h2><ul><li>把含糖饮料换成<strong>气泡水 + 柠檬</strong></li><li>主食里掺一半<strong>糙米与豆类</strong></li><li>嘴馅时先喝一杯水，<mark>等十分钟</mark></li></ul></div><div class="body-figure"><img src="https://images.pexels.com/photos/27850094/pexels-photo-27850094.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="" crossorigin="anonymous"></div></div><div class="card-foot"><span class="card-brand">@津玉不良言</span></div></article></div><figcaption>正文</figcaption></figure>
-        <figure class="cell"><div class="card-scale"><article class="card role-body role-end bf" data-theme="kinfolk"><div class="card-eyebrow">NUTRITION / 营养笔记</div><div class="card-body"><div class="body-text"><h1>从今天开始</h1><h2>给身体多一点温柔</h2><p>少吃一口糖，不是剥夺，而是更懂得照顾自己。</p><p>如果这份计划帮到你，点亮<strong>收藏</strong>，明天接着看。</p><blockquote>关注 · 一起慢慢变好</blockquote></div><div class="body-figure is-empty"></div></div><div class="card-foot"><span class="card-brand">@津玉不良言</span></div></article></div><figcaption>尾页</figcaption></figure>
-      </div>
-    </section>
+    <figure class="cell">
+      <div class="stage"><div class="hg l4">
+        <div class="b-eyebrow">NUTRITION · 营养笔记</div>
+        <div class="b-title">少吃一口糖，身体会谢谢你</div>
+        <div class="b-lead">不靠硬扑，而是重新认识食物。</div>
+        <div class="b-list"><ol><li><b>气泡水</b><span>替换含糖饮料</span></li><li><b>糙米豆类</b><span>主食掺一半</span></li><li><b>等十分钟</b><span>嘴馅先喝水</span></li></ol></div>
+        <div class="b-quote">关注 · 一起慢慢变好</div>
+        <div class="b-brand">@津玉不良言</div>
+      </div></div>
+      <figcaption><b><i>04</i> 居中对称</b><span>主标题居中聚焦，支撑信息上下对称分布。</span></figcaption>
+    </figure>
 
-    <!-- 5 大色块标题 colorblock -->
-    <section class="set">
-      <div class="set-hd"><span class="no">05</span><h2>大色块标题</h2><span class="en">colorblock</span><p class="cap">强调色块承载白色大标题，与右侧图片形成对比。</p></div>
-      <div class="row">
-        <figure class="cell"><div class="card-scale"><article class="card role-cover has-img layout-split cv-kinfolk-colorblock cv-bold" data-theme="kinfolk"><div class="card-media"><img src="https://images.pexels.com/photos/6617496/pexels-photo-6617496.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="" crossorigin="anonymous"></div><div class="li-content"><div class="card-eyebrow">NUTRITION / 营养笔记</div><div class="card-body"><h1>少吃一口糖</h1><h2>21 天温和减糖计划</h2><p>重新认识食物，从今天开始。</p></div><div class="card-foot"><span class="card-brand">@津玉不良言</span></div></div></article></div><figcaption>封面</figcaption></figure>
-        <figure class="cell"><div class="card-scale"><article class="card role-body bf" data-theme="kinfolk"><div class="card-head"><div class="card-eyebrow">NUTRITION / 营养笔记</div><div class="card-progress kind-dots"><span class="pg active"></span><span class="pg"></span></div></div><div class="card-body"><div class="body-text"><h2>三个温柔的开始</h2><ul><li>把含糖饮料换成<strong>气泡水 + 柠檬</strong></li><li>主食里掺一半<strong>糙米与豆类</strong></li><li>嘴馅时先喝一杯水，<mark>等十分钟</mark></li></ul></div><div class="body-figure"><img src="https://images.pexels.com/photos/27850094/pexels-photo-27850094.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="" crossorigin="anonymous"></div></div><div class="card-foot"><span class="card-brand">@津玉不良言</span></div></article></div><figcaption>正文</figcaption></figure>
-        <figure class="cell"><div class="card-scale"><article class="card role-body role-end bf" data-theme="kinfolk"><div class="card-eyebrow">NUTRITION / 营养笔记</div><div class="card-body"><div class="body-text"><h1>从今天开始</h1><h2>给身体多一点温柔</h2><p>少吃一口糖，不是剥夺，而是更懂得照顾自己。</p><p>如果这份计划帮到你，点亮<strong>收藏</strong>，明天接着看。</p><blockquote>关注 · 一起慢慢变好</blockquote></div><div class="body-figure is-empty"></div></div><div class="card-foot"><span class="card-brand">@津玉不良言</span></div></article></div><figcaption>尾页</figcaption></figure>
-      </div>
-    </section>
+    <figure class="cell">
+      <div class="stage"><div class="hg l5">
+        <div class="b-eyebrow">NUTRITION</div>
+        <div class="b-title">少吃一口糖，身体会谢谢你</div>
+        <div class="b-img"><img src="https://images.pexels.com/photos/6617496/pexels-photo-6617496.jpeg?auto=compress&cs=tinysrgb&w=1200" alt=""></div>
+        <div class="b-lead">三个不费力的小改变，从今天开始。</div>
+        <div class="b-list"><ol><li><b>气泡水 + 柠檬</b><span>替换含糖饮料</span></li><li><b>糙米与豆类</b><span>主食掺一半</span></li></ol></div>
+        <div class="b-quote">关注 · 一起慢慢变好</div>
+        <div class="b-brand">@津玉不良言</div>
+      </div></div>
+      <figcaption><b><i>05</i> 非对称 L 形</b><span>标题与图片错位咬合，引述块平衡右下。</span></figcaption>
+    </figure>
 
-    <!-- 6 超大数字 bignum -->
-    <section class="set">
-      <div class="set-hd"><span class="no">06</span><h2>超大数字</h2><span class="en">bignum</span><p class="cap">抽取标题数字做巨幅主视觉，余字弱化为引导。</p></div>
-      <div class="row">
-        <figure class="cell"><div class="card-scale"><article class="card role-cover has-img layout-split cv-kinfolk-bignum cv-bold" data-theme="kinfolk"><div class="card-media"><img src="https://images.pexels.com/photos/6617496/pexels-photo-6617496.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="" crossorigin="anonymous"></div><div class="li-content"><div class="card-eyebrow">NUTRITION / 营养笔记</div><div class="card-body"><div class="cv-bignum-block"><div class="cv-num">21</div><div class="cv-num-lead">天温和减糖</div></div><h2>少吃一口糖，身体会谢谢你</h2><p>三个不费力的小改变，从今天开始。</p></div><div class="card-foot"><span class="card-brand">@津玉不良言</span></div></div></article></div><figcaption>封面</figcaption></figure>
-        <figure class="cell"><div class="card-scale"><article class="card role-body bf" data-theme="kinfolk"><div class="card-head"><div class="card-eyebrow">NUTRITION / 营养笔记</div><div class="card-progress kind-dots"><span class="pg active"></span><span class="pg"></span></div></div><div class="card-body"><div class="body-text"><h2>三个温柔的开始</h2><ul><li>把含糖饮料换成<strong>气泡水 + 柠檬</strong></li><li>主食里掺一半<strong>糙米与豆类</strong></li><li>嘴馅时先喝一杯水，<mark>等十分钟</mark></li></ul></div><div class="body-figure"><img src="https://images.pexels.com/photos/27850094/pexels-photo-27850094.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="" crossorigin="anonymous"></div></div><div class="card-foot"><span class="card-brand">@津玉不良言</span></div></article></div><figcaption>正文</figcaption></figure>
-        <figure class="cell"><div class="card-scale"><article class="card role-body role-end bf" data-theme="kinfolk"><div class="card-eyebrow">NUTRITION / 营养笔记</div><div class="card-body"><div class="body-text"><h1>从今天开始</h1><h2>给身体多一点温柔</h2><p>少吃一口糖，不是剥夺，而是更懂得照顾自己。</p><p>如果这份计划帮到你，点亮<strong>收藏</strong>，明天接着看。</p><blockquote>关注 · 一起慢慢变好</blockquote></div><div class="body-figure is-empty"></div></div><div class="card-foot"><span class="card-brand">@津玉不良言</span></div></article></div><figcaption>尾页</figcaption></figure>
-      </div>
-    </section>
+    <figure class="cell">
+      <div class="stage"><div class="hg l6">
+        <div class="b-img"><img src="https://images.pexels.com/photos/6617496/pexels-photo-6617496.jpeg?auto=compress&cs=tinysrgb&w=1200" alt=""></div>
+        <div class="b-eyebrow">NUTRITION · 营养笔记</div>
+        <div class="b-title">少吃一口糖</div>
+        <div class="b-lead">不靠硬扑，重新认识食物。</div>
+        <div class="b-list"><ol><li><b>气泡水 + 柠檬</b><span>替换含糖饮料</span></li><li><b>糙米与豆类</b><span>主食掺一半</span></li></ol></div>
+        <div class="b-brand">@津玉不良言</div>
+      </div></div>
+      <figcaption><b><i>06</i> 图像主导</b><span>大图压顶建立第一层级，文字模块承接其下。</span></figcaption>
+    </figure>
 
-    <!-- 7 高亮大标题·纯文字 bigtitle -->
-    <section class="set">
-      <div class="set-hd"><span class="no">07</span><h2>高亮大标题·纯文字</h2><span class="en">bigtitle</span><p class="cap">无图，仅靠超大标题与留白建立层级。</p></div>
-      <div class="row">
-        <figure class="cell"><div class="card-scale"><article class="card role-cover cv-kinfolk-bigtitle cv-bold" data-theme="kinfolk"><div class="card-eyebrow">NUTRITION / 营养笔记</div><div class="card-body"><h1>少吃一口糖，身体会谢谢你</h1><h2>21 天温和减糖计划</h2><p>不靠硬扑，而是重新认识食物。三个不费力的小改变，从今天开始。</p></div><div class="card-foot"><span class="card-brand">@津玉不良言</span></div></article></div><figcaption>封面</figcaption></figure>
-        <figure class="cell"><div class="card-scale"><article class="card role-body bf" data-theme="kinfolk"><div class="card-head"><div class="card-eyebrow">NUTRITION / 营养笔记</div><div class="card-progress kind-dots"><span class="pg active"></span><span class="pg"></span></div></div><div class="card-body"><div class="body-text"><h2>三个温柔的开始</h2><ul><li>把含糖饮料换成<strong>气泡水 + 柠檬</strong></li><li>主食里掺一半<strong>糙米与豆类</strong></li><li>嘴馅时先喝一杯水，<mark>等十分钟</mark></li></ul></div><div class="body-figure"><img src="https://images.pexels.com/photos/27850094/pexels-photo-27850094.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="" crossorigin="anonymous"></div></div><div class="card-foot"><span class="card-brand">@津玉不良言</span></div></article></div><figcaption>正文</figcaption></figure>
-        <figure class="cell"><div class="card-scale"><article class="card role-body role-end bf" data-theme="kinfolk"><div class="card-eyebrow">NUTRITION / 营养笔记</div><div class="card-body"><div class="body-text"><h1>从今天开始</h1><h2>给身体多一点温柔</h2><p>少吃一口糖，不是剥夺，而是更懂得照顾自己。</p><p>如果这份计划帮到你，点亮<strong>收藏</strong>，明天接着看。</p><blockquote>关注 · 一起慢慢变好</blockquote></div><div class="body-figure is-empty"></div></div><div class="card-foot"><span class="card-brand">@津玉不良言</span></div></article></div><figcaption>尾页</figcaption></figure>
-      </div>
-    </section>
+    <figure class="cell">
+      <div class="stage"><div class="hg l7">
+        <div class="b-eyebrow">NUTRITION</div>
+        <div class="b-title">少吃一口糖</div>
+        <div class="b-sub">21 天温和减糖计划</div>
+        <div class="b-lead">三个不费力的小改变，从今天开始。</div>
+        <div class="b-list"><ol><li><b>气泡水 + 柠檬</b><span>替换含糖饮料</span></li><li><b>糙米与豆类</b><span>主食掺一半</span></li></ol></div>
+        <div class="b-quote">关注 · 一起慢慢变好</div>
+        <div class="b-brand">@津玉不良言</div>
+      </div></div>
+      <figcaption><b><i>07</i> 阶梯递进</b><span>信息块沿对角线阶梯展开，层级随位置递减。</span></figcaption>
+    </figure>
 
-    <!-- 8 竖排标题 vtitle -->
-    <section class="set">
-      <div class="set-hd"><span class="no">08</span><h2>竖排标题</h2><span class="en">vtitle</span><p class="cap">竖排标题靠左，窄幅图片陪衬，东方式留白。</p></div>
-      <div class="row">
-        <figure class="cell"><div class="card-scale"><article class="card role-cover has-img layout-split cv-kinfolk-vtitle cv-bold" data-theme="kinfolk"><div class="card-media"><img src="https://images.pexels.com/photos/6617496/pexels-photo-6617496.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="" crossorigin="anonymous"></div><div class="li-content"><div class="card-eyebrow">NUTRITION / 营养笔记</div><div class="card-body"><h1>少吃一口糖</h1><h2>21 天温和减糖计划</h2><p>重新认识食物。</p></div><div class="card-foot"><span class="card-brand">@津玉不良言</span></div></div></article></div><figcaption>封面</figcaption></figure>
-        <figure class="cell"><div class="card-scale"><article class="card role-body bf" data-theme="kinfolk"><div class="card-head"><div class="card-eyebrow">NUTRITION / 营养笔记</div><div class="card-progress kind-dots"><span class="pg active"></span><span class="pg"></span></div></div><div class="card-body"><div class="body-text"><h2>三个温柔的开始</h2><ul><li>把含糖饮料换成<strong>气泡水 + 柠檬</strong></li><li>主食里掺一半<strong>糙米与豆类</strong></li><li>嘴馅时先喝一杯水，<mark>等十分钟</mark></li></ul></div><div class="body-figure"><img src="https://images.pexels.com/photos/27850094/pexels-photo-27850094.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="" crossorigin="anonymous"></div></div><div class="card-foot"><span class="card-brand">@津玉不良言</span></div></article></div><figcaption>正文</figcaption></figure>
-        <figure class="cell"><div class="card-scale"><article class="card role-body role-end bf" data-theme="kinfolk"><div class="card-eyebrow">NUTRITION / 营养笔记</div><div class="card-body"><div class="body-text"><h1>从今天开始</h1><h2>给身体多一点温柔</h2><p>少吃一口糖，不是剥夺，而是更懂得照顾自己。</p><p>如果这份计划帮到你，点亮<strong>收藏</strong>，明天接着看。</p><blockquote>关注 · 一起慢慢变好</blockquote></div><div class="body-figure is-empty"></div></div><div class="card-foot"><span class="card-brand">@津玉不良言</span></div></article></div><figcaption>尾页</figcaption></figure>
-      </div>
-    </section>
+    <figure class="cell">
+      <div class="stage"><div class="hg l8">
+        <div class="b-eyebrow">NUTRITION · 营养笔记</div>
+        <div class="b-title">少吃一口糖</div>
+        <div class="b-list"><ol><li><b>气泡水</b><span>换揉含糖饮料</span></li><li><b>糙米豆类</b><span>主食掺半</span></li><li><b>等十分钟</b><span>嘴馅时</span></li></ol></div>
+        <div class="b-lead">不靠硬扑，而是重新认识食物。</div>
+        <div class="b-quote">关注 · 一起慢慢变好</div>
+        <div class="b-brand">@津玉不良言</div>
+      </div></div>
+      <figcaption><b><i>08</i> 引述压底</b><span>顶部信息轻量，底部巨幅引述形成强收束。</span></figcaption>
+    </figure>
 
   </div>
-
-  <p class="foot">说明：八套共享同一套正文与尾页，仅封面方案不同。如需真实取色、拖拽缩放与导出 PDF，请回到生成器主页逐页预览。</p>
 </body>
 </html>
