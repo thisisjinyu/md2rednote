@@ -1,5 +1,6 @@
 /* 调试面板 · HTML 框展示当前页卡片内部真实渲染的 HTML（含文字与内联标签）；
-   CSS 框只展示 HTML 框里作为独立节点输出的那些标签命中的规则（被折叠进行内的内联标签不单独列出）。
+   CSS 框只针对 HTML 框里作为独立节点输出的标签，把命中的多条规则合并成一个精简声明块
+   （后者/!important 覆盖前者，去掉选择器噪声，按 property: value 逐行显示）。
    封面/正文/尾页切换时随 #card 自动刷新，与 app.js 解耦。 */
 (function () {
   var card = document.getElementById('card');
@@ -45,7 +46,7 @@
     return out + pad + '</' + tag + '>\n';
   }
 
-  /* ---------- CSS 面板：收集全部规则（含 @media/@supports 嵌套），再按展示的标签逐个匹配并去重 ---------- */
+  /* ---------- CSS 面板：收集全部规则（含 @media/@supports 嵌套），再按展示的标签合并声明 ---------- */
   function baseSelector(sel) {
     return sel.replace(/::[a-zA-Z-]+(\([^)]*\))?/g, '').trim();
   }
@@ -57,6 +58,12 @@
       try { if (el.matches(base)) return true; } catch (e) {}
     }
     return false;
+  }
+  /* 从规则 cssText 抽出声明数组（保留作者的缩写形式，如 margin: 0 0 26px） */
+  function declsOf(cssText) {
+    var i = cssText.indexOf('{'), j = cssText.lastIndexOf('}');
+    if (i < 0 || j < 0) return [];
+    return cssText.slice(i + 1, j).split(';').map(function (s) { return s.trim(); }).filter(Boolean);
   }
   function flattenRules(ruleList, cond, acc) {
     Array.prototype.forEach.call(ruleList, function (rule) {
@@ -85,7 +92,7 @@
       codeHtml.textContent = html || '（空）';
     } catch (e) { codeHtml.textContent = card.innerHTML; }
 
-    /* 2) 只针对 HTML 框里展示出的那些标签（不含被折叠的内联标签与 .card 包裹层）按顺序分组输出 CSS */
+    /* 2) 只针对 HTML 框里展示出的标签，把命中规则合并为一个精简声明块 */
     var els = displayed;
     var allRules = [];
     Array.prototype.forEach.call(document.styleSheets, function (sheet) {
@@ -93,20 +100,25 @@
       try { rules = sheet.cssRules; } catch (e) { return; }
       if (rules) flattenRules(rules, '', allRules);
     });
-    var used = {};
     var groups = [];
     els.forEach(function (el) {
-      var matched = [];
+      var map = {}, order = [];
       for (var i = 0; i < allRules.length; i++) {
-        if (used[i]) continue;
-        if (selectorHits(allRules[i].sel, el)) { used[i] = 1; matched.push(allRules[i]); }
+        if (!selectorHits(allRules[i].sel, el)) continue;
+        declsOf(allRules[i].css).forEach(function (d) {
+          var ci = d.indexOf(':');
+          if (ci < 0) return;
+          var name = d.slice(0, ci).trim();
+          var value = d.slice(ci + 1).trim();
+          var prev = map[name];
+          if (prev && /!important/.test(prev) && !/!important/.test(value)) return;
+          if (!(name in map)) order.push(name);
+          map[name] = value;
+        });
       }
-      if (matched.length) {
-        var body = matched.map(function (r) {
-          return r.cond ? r.cond + ' {\n  ' + r.css + '\n}' : r.css;
-        }).join('\n');
-        groups.push('/* ' + elLabel(el) + ' */\n' + body);
-      }
+      if (!order.length) return;
+      var lines = order.map(function (n) { return '  ' + n + ': ' + map[n] + ';'; }).join('\n');
+      groups.push(elLabel(el) + ' {\n' + lines + '\n}');
     });
     codeCss.textContent = groups.length ? groups.join('\n\n') : '（未匹配到样式规则）';
   }
