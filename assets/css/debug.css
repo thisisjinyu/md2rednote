@@ -18,6 +18,15 @@
 }
 
 /* ====================================================================
+   INSPECTOR 联动高亮 — 点击「展示 / HTML / CSS」任一处，另两处对应部分高亮
+   ==================================================================== */
+.code-view .insp-h, .code-view .insp-c { cursor: pointer; border-radius: 3px; }
+.code-view .insp-h:hover, .code-view .insp-c:hover { background: rgba(54, 166, 255, 0.12); }
+.code-view .insp-active { background: rgba(54, 166, 255, 0.22); box-shadow: 0 0 0 1px rgba(54, 166, 255, 0.55); }
+.card [data-insp-idx] { cursor: pointer; }
+.card .insp-active { outline: 2px solid rgba(54, 166, 255, 0.92); outline-offset: 1px; }
+
+/* ====================================================================
    MODULAR GRID OVERLAY — 独立描边方块 + Excel 式编号（仅预览可见，导出不含）
    挂在 .card-frame 上（不进入导出克隆的 .card），顶栏「网格」勾选框控制显隐，默认隐藏。
    具体几何（inset / 模板 / 间距 / 格子与编号）由 grid.js 按选定列数动态计算并写入 inline，以保证格子恒为正方形。
