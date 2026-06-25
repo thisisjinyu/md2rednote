@@ -1,6 +1,6 @@
 /* 调试面板 · HTML 框展示当前页卡片内部真实渲染的 HTML（含文字与内联标签）；
    CSS 框只针对 HTML 框里作为独立节点输出的标签，把命中的多条规则合并成一个精简声明块
-   （后者/!important 覆盖前者，去掉选择器噪声，按 property: value 逐行显示）。
+   （后者/!important 覆盖前者，去掉选择器噪声，每个标签单行显示）。
    封面/正文/尾页切换时随 #card 自动刷新，与 app.js 解耦。 */
 (function () {
   var card = document.getElementById('card');
@@ -92,7 +92,7 @@
       codeHtml.textContent = html || '（空）';
     } catch (e) { codeHtml.textContent = card.innerHTML; }
 
-    /* 2) 只针对 HTML 框里展示出的标签，把命中规则合并为一个精简声明块 */
+    /* 2) 只针对 HTML 框里展示出的标签，把命中规则合并为一个精简声明块（单行） */
     var els = displayed;
     var allRules = [];
     Array.prototype.forEach.call(document.styleSheets, function (sheet) {
@@ -117,10 +117,10 @@
         });
       }
       if (!order.length) return;
-      var lines = order.map(function (n) { return '  ' + n + ': ' + map[n] + ';'; }).join('\n');
-      groups.push(elLabel(el) + ' {\n' + lines + '\n}');
+      var decls = order.map(function (n) { return n + ': ' + map[n] + ';'; }).join(' ');
+      groups.push(elLabel(el) + ' { ' + decls + ' }');
     });
-    codeCss.textContent = groups.length ? groups.join('\n\n') : '（未匹配到样式规则）';
+    codeCss.textContent = groups.length ? groups.join('\n') : '（未匹配到样式规则）';
   }
 
   var raf = 0;
