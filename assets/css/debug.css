@@ -24,7 +24,8 @@
 .code-view .insp-h:hover, .code-view .insp-c:hover { background: rgba(54, 166, 255, 0.12); }
 .code-view .insp-active { background: rgba(54, 166, 255, 0.22); box-shadow: 0 0 0 1px rgba(54, 166, 255, 0.55); }
 .card [data-insp-idx] { cursor: pointer; }
-.card .insp-active { outline: 2px solid rgba(54, 166, 255, 0.92); outline-offset: 1px; }
+/* 展示卡片高亮：左右两条边线（inset box-shadow，不挤动布局）+ 浅蓝半透明填充 */
+.card .insp-active { background: rgba(54, 166, 255, 0.13); box-shadow: inset 2px 0 0 rgba(54, 166, 255, 0.92), inset -2px 0 0 rgba(54, 166, 255, 0.92); }
 
 /* ====================================================================
    MODULAR GRID OVERLAY — 独立描边方块 + Excel 式编号（仅预览可见，导出不含）
