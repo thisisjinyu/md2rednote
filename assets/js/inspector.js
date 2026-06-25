@@ -1,5 +1,5 @@
-/* 调试面板 · 只展示当前页卡片「内部标签」的结构，以及这些标签对应的 CSS 规则（按标签分组）。
-   封面/正文/尾页切换时随 #card 内容自动刷新，与 app.js 解耦。 */
+/* 调试面板 · HTML 框展示当前页卡片内部真实渲染的 HTML（含文字与内联标签）；
+   CSS 框展示这些标签命中的规则（按标签分组）。封面/正文/尾页切换时随 #card 自动刷新，与 app.js 解耦。 */
 (function () {
   var card = document.getElementById('card');
   var codeHtml = document.getElementById('codeHtml');
@@ -7,8 +7,9 @@
   if (!card || !codeHtml || !codeCss) return;
   var q = String.fromCharCode(34);
   var VOID = { img: 1, br: 1, hr: 1, input: 1, meta: 1, link: 1, source: 1 };
+  var INLINE = { strong: 1, em: 1, mark: 1, a: 1, code: 1, span: 1, sub: 1, sup: 1, i: 1, b: 1, u: 1, s: 1, del: 1, br: 1, img: 1 };
 
-  /* ---------- HTML 面板：只输出卡片内部的标签骨架（不含 #card 包裹层、不展开正文文字） ---------- */
+  /* ---------- HTML 面板：输出卡片内部真实渲染的 HTML（含文字、内联标签），按层缩进 ---------- */
   function elAttrs(node) {
     var attrs = '';
     Array.prototype.forEach.call(node.attributes, function (a) {
@@ -16,21 +17,28 @@
     });
     return attrs;
   }
-  function prettyTags(node, depth) {
-    if (node.nodeType !== 1) return '';
+  function collapse(s) { return s.replace(/\s+/g, ' '); }
+  function prettyNode(node, depth) {
     var pad = '  '.repeat(depth);
+    if (node.nodeType === 3) {
+      var txt = collapse(node.textContent).trim();
+      return txt ? pad + txt + '\n' : '';
+    }
+    if (node.nodeType !== 1) return '';
     var tag = node.tagName.toLowerCase();
     var open = '<' + tag + elAttrs(node) + '>';
     if (VOID[tag]) return pad + open + '\n';
     var elKids = Array.prototype.filter.call(node.childNodes, function (n) { return n.nodeType === 1; });
-    var hasText = Array.prototype.some.call(node.childNodes, function (n) {
-      return n.nodeType === 3 && n.textContent.trim();
-    });
-    if (elKids.length === 0) {
-      return pad + open + (hasText ? '\u2026' : '') + '</' + tag + '>\n';
+    var allInline = elKids.every(function (k) { return INLINE[k.tagName.toLowerCase()]; });
+    if (allInline) {
+      var inner = collapse(node.innerHTML).trim();
+      return pad + open + inner + '</' + tag + '>\n';
     }
+    var kids = Array.prototype.filter.call(node.childNodes, function (n) {
+      return n.nodeType === 1 || (n.nodeType === 3 && n.textContent.trim());
+    });
     var out = pad + open + '\n';
-    elKids.forEach(function (k) { out += prettyTags(k, depth + 1); });
+    kids.forEach(function (k) { out += prettyNode(k, depth + 1); });
     return out + pad + '</' + tag + '>\n';
   }
 
@@ -65,12 +73,12 @@
   }
 
   function update() {
-    /* 1) 卡片内部的直接子元素作为顶层，递归输出标签骨架 */
+    /* 1) 卡片内部的直接子元素作为顶层，递归输出真实 HTML */
     var rootKids = Array.prototype.filter.call(card.childNodes, function (n) { return n.nodeType === 1; });
     try {
       var html = '';
-      rootKids.forEach(function (k) { html += prettyTags(k, 0); });
-      codeHtml.textContent = html || '\uff08空）';
+      rootKids.forEach(function (k) { html += prettyNode(k, 0); });
+      codeHtml.textContent = html || '（空）';
     } catch (e) { codeHtml.textContent = card.innerHTML; }
 
     /* 2) 只针对 HTML 框里展示的那些标签（卡片内部元素，不含 .card 包裹层）按顺序分组输出 CSS */
@@ -96,7 +104,7 @@
         groups.push('/* ' + elLabel(el) + ' */\n' + body);
       }
     });
-    codeCss.textContent = groups.length ? groups.join('\n\n') : '\uff08未匹配到样式规则）';
+    codeCss.textContent = groups.length ? groups.join('\n\n') : '（未匹配到样式规则）';
   }
 
   var raf = 0;
