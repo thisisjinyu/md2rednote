@@ -124,9 +124,10 @@
 /* ====================================================================
    页结构：正文有图固定图框 / 尾页居中（与风格无关的骨架）
    .bf 由 app.js 加在每个正文页与尾页（useBox = isBody || isEnd）。
+   图框机制（body-text 不伸缩）仅用于正文页；尾页由 kinfolk.css 重新居中。
    ==================================================================== */
 .card.role-body.bf .card-body { display: flex; flex-direction: column; }
-.card.role-body.bf .card-body .body-text { flex: 0 0 auto; }
+.card.role-body.bf:not(.role-end) .card-body .body-text { flex: 0 0 auto; }
 .card.role-body.bf .card-body .body-text > *:first-child { margin-top: 0; }
 .card.role-body.bf .card-body .body-text > *:last-child { margin-bottom: 0; }
 .card.role-body.bf .card-body .body-figure { flex: 1 1 auto; min-height: 0; position: relative; overflow: hidden; margin-top: 40px; margin-bottom: 33px; border-radius: 8px; background: #e9e6df; }

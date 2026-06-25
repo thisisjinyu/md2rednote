@@ -58,7 +58,7 @@
 /* -------- 尾页 role-end -------- */
 .card.role-end .card-body { justify-content:center; align-items:stretch; text-align:left; }
 .card.role-end .card-body .body-figure { display:none; }
-.card.role-end.bf .card-body .body-text { flex:1 1 auto; display:flex; flex-direction:column; justify-content:center; }
+.card.role-end .card-body .body-text { flex:1 1 auto; display:flex; flex-direction:column; justify-content:center; }
 .card.role-end .card-eyebrow { justify-content:flex-start; }
 .card.role-end .card-body h1 { position:relative; padding-top:42px; font-size:72px; font-weight:600; line-height:1.22; letter-spacing:2px; margin:0 0 28px; }
 .card.role-end .card-body h1::before { content:''; position:absolute; left:0; top:0; width:64px; height:1px; background:var(--card-accent); }
