@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>8 套层级网格 · hierarchical grid（同一内容·3:4）</title>
+<title>8 套层级网格 · hierarchical grid（晨间仪式·3:4）</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
 <style>
-  :root{--paper:#f7f5f0;--ink:#16140f;--muted:#7d7766;--accent:#d24b2f;--sans:'Noto Sans SC',system-ui,sans-serif;--display:'Sora','Noto Sans SC',sans-serif}
+  :root{--paper:#f7f5f0;--ink:#16140f;--muted:#7d7766;--accent:#c3742c;--sans:'Noto Sans SC',system-ui,sans-serif;--display:'Sora','Noto Sans SC',sans-serif}
   *{box-sizing:border-box}
   body{margin:0;background:#211f1c;color:#ece7df;font-family:var(--sans);padding:42px 24px 80px;line-height:1.6}
   .top{max-width:1180px;margin:0 auto 34px}
@@ -31,21 +31,23 @@
     repeating-linear-gradient(to bottom, transparent 0, transparent calc(100%/8 - 1px), rgba(22,20,15,.055) calc(100%/8 - 1px), rgba(22,20,15,.055) calc(100%/8))}
   .hg > *{padding:30px 34px;display:flex;flex-direction:column;justify-content:flex-start;box-shadow:inset 0 0 0 1px rgba(22,20,15,.05);overflow:hidden;min-width:0}
 
-  .b-eyebrow{grid-area:ey;flex-direction:row;align-items:center;gap:16px;font-weight:600;font-size:23px;letter-spacing:.2em;color:var(--accent)}
+  .b-eyebrow{grid-area:ey;flex-direction:row;align-items:center;gap:16px;font-weight:600;font-size:22px;letter-spacing:.18em;color:var(--accent)}
   .b-eyebrow::before{content:"";width:38px;height:2px;background:var(--accent);flex:none}
-  .b-title{grid-area:ti;justify-content:flex-end;font-family:var(--sans);font-weight:900;font-size:96px;line-height:1.02;letter-spacing:-.01em;color:var(--ink)}
-  .b-sub{grid-area:su;justify-content:center;font-weight:500;font-size:40px;line-height:1.25;color:var(--ink)}
+  .b-title{grid-area:ti;justify-content:flex-end;font-family:var(--sans);font-weight:900;font-size:96px;line-height:1.04;letter-spacing:-.01em;color:var(--ink)}
+  .b-title mark{background:none;color:var(--accent);font-style:normal}
+  .b-sub{grid-area:su;justify-content:center;font-weight:500;font-size:38px;line-height:1.25;color:var(--ink)}
   .b-lead{grid-area:le;justify-content:flex-start;font-weight:400;font-size:29px;line-height:1.55;color:var(--muted)}
   .b-stat{grid-area:st;background:var(--accent);color:#fff;align-items:flex-start;justify-content:center;gap:8px}
   .b-stat .num{font-family:var(--display);font-weight:800;font-size:128px;line-height:.82}
   .b-stat .unit{font-weight:500;font-size:30px;letter-spacing:.04em;opacity:.92}
   .b-list{grid-area:li;justify-content:center}
-  .b-list ol{list-style:none;margin:0;padding:0;width:100%;display:flex;flex-direction:column;gap:22px;counter-reset:i}
-  .b-list li{counter-increment:i;display:flex;flex-direction:column;gap:3px}
-  .b-list li::before{content:counter(i,decimal-leading-zero);font-family:var(--display);font-weight:800;font-size:24px;color:var(--accent)}
-  .b-list b{font-weight:700;font-size:33px;line-height:1.2;color:var(--ink)}
-  .b-list span{font-weight:400;font-size:23px;color:var(--muted)}
-  .b-quote{grid-area:qu;position:relative;justify-content:center;font-weight:700;font-size:48px;line-height:1.3;color:var(--ink)}
+  .b-list ol{list-style:none;margin:0;padding:0;width:100%;display:flex;flex-direction:column;gap:16px;counter-reset:i}
+  .b-list li{counter-increment:i;display:flex;align-items:baseline;gap:14px;font-weight:600;font-size:30px;line-height:1.25;color:var(--ink)}
+  .b-list li::before{content:counter(i,decimal-leading-zero);font-family:var(--display);font-weight:800;font-size:22px;color:var(--accent);flex:none}
+  .l1 .b-list ol,.l3 .b-list ol,.l7 .b-list ol{display:grid;grid-template-columns:1fr 1fr;gap:16px 30px}
+  .l4 .b-list ol{display:grid;grid-template-columns:repeat(3,1fr);gap:18px 22px}
+  .l4 .b-list li,.l7 .b-list li{font-size:25px}
+  .b-quote{grid-area:qu;position:relative;justify-content:center;font-weight:700;font-size:46px;line-height:1.3;color:var(--ink)}
   .b-brand{grid-area:br;flex-direction:row;align-items:center;justify-content:flex-start;font-weight:600;font-size:27px;letter-spacing:.16em;color:var(--ink)}
   .b-img{grid-area:im;padding:0;box-shadow:inset 0 0 0 1px rgba(22,20,15,.05)}
   .b-img img{width:100%;height:100%;object-fit:cover;display:block}
@@ -60,7 +62,7 @@
     "li li li li li li"
     "qu qu qu qu qu qu"
     "br br br br br br"}
-  .l1 .b-title{font-size:106px}
+  .l1 .b-title{font-size:100px}
   .l1 .b-stat .num{font-size:96px}
 
   /* ---- L2 左栏统领 ---- */
@@ -73,7 +75,8 @@
     "ti ti li li li li"
     "ti ti qu qu qu qu"
     "br br qu qu qu qu"}
-  .l2 .b-title{background:var(--accent);color:#fff;font-size:80px;justify-content:flex-end}
+  .l2 .b-title{background:var(--accent);color:#fff;font-size:74px;justify-content:flex-end}
+  .l2 .b-title mark{color:#fff;text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:6px}
   .l2 .b-eyebrow{background:var(--accent);color:#fff}
   .l2 .b-eyebrow::before{background:#fff}
   .l2 .b-brand{background:var(--accent);color:#fff}
@@ -90,10 +93,8 @@
     "br br br br br br"}
   .l3 .b-stat{align-items:center;justify-content:center}
   .l3 .b-stat .num{font-size:300px}
-  .l3 .b-stat .unit{font-size:38px}
-  .l3 .b-title{font-size:72px}
-  .l3 .b-list ol{flex-direction:row;gap:34px}
-  .l3 .b-list li{flex:1}
+  .l3 .b-stat .unit{font-size:36px}
+  .l3 .b-title{font-size:68px}
 
   /* ---- L4 居中对称 ---- */
   .l4{grid-template-areas:
@@ -107,10 +108,9 @@
     "br br br br br br"}
   .l4 .b-eyebrow{justify-content:center}
   .l4 .b-eyebrow::before{display:none}
-  .l4 .b-title{justify-content:center;text-align:center;font-size:84px}
+  .l4 .b-title{justify-content:center;text-align:center;font-size:80px}
   .l4 .b-lead{text-align:center;align-items:center;justify-content:center}
-  .l4 .b-list ol{flex-direction:row;gap:30px}
-  .l4 .b-list li{flex:1;text-align:center;align-items:center}
+  .l4 .b-list li{flex-direction:column;align-items:center;gap:4px;text-align:center}
   .l4 .b-quote{justify-content:center;text-align:center}
   .l4 .b-brand{justify-content:center}
 
@@ -124,8 +124,8 @@
     "li li li qu qu qu"
     "li li li qu qu qu"
     "br br br br br br"}
-  .l5 .b-title{font-size:78px}
-  .l5 .b-quote{background:var(--accent);color:#fff;font-size:54px;align-items:flex-start;justify-content:flex-end}
+  .l5 .b-title{font-size:70px}
+  .l5 .b-quote{background:var(--accent);color:#fff;font-size:50px;align-items:flex-start;justify-content:flex-end}
 
   /* ---- L6 图像主导 ---- */
   .l6{grid-template-areas:
@@ -137,7 +137,7 @@
     "le le le li li li"
     "le le le li li li"
     "br br br br br br"}
-  .l6 .b-title{font-size:90px}
+  .l6 .b-title{font-size:84px}
 
   /* ---- L7 阶梯递进 ---- */
   .l7{grid-template-areas:
@@ -149,8 +149,8 @@
     ".  .  .  qu qu qu"
     ".  .  .  qu qu qu"
     "br br br br br br"}
-  .l7 .b-title{font-size:80px}
-  .l7 .b-quote{background:var(--accent);color:#fff;font-size:46px;align-items:flex-end}
+  .l7 .b-title{font-size:74px}
+  .l7 .b-quote{background:var(--accent);color:#fff;font-size:44px;align-items:flex-end}
 
   /* ---- L8 引述压底 ---- */
   .l8{grid-template-areas:
@@ -162,28 +162,29 @@
     "qu qu qu qu qu qu"
     "qu qu qu qu qu qu"
     "br br br br br br"}
-  .l8 .b-title{font-size:76px}
-  .l8 .b-quote{background:var(--accent);color:#fff;font-weight:800;font-size:88px;align-items:flex-end;padding:56px}
+  .l8 .b-title{font-size:70px}
+  .l8 .b-list li{font-size:25px}
+  .l8 .b-quote{background:var(--accent);color:#fff;font-weight:800;font-size:82px;align-items:flex-end;padding:56px}
   .l8 .b-quote::before{content:"“";position:absolute;top:-10px;left:40px;font-family:var(--display);font-size:200px;line-height:1;opacity:.22}
 </style>
 </head>
 <body>
   <div class="top">
     <h1 class="title">8 套层级网格 · hierarchical grid</h1>
-    <p class="lead">同一组内容（眉标 / 主标题 / 副标 / 导语 / 数字 / 三条清单 / 引述 / 署名 / 图），在同一个 <b>6×8 模块网格</b> 上，通过不同的<b>跨格与权重</b>生成 8 种完全不同的层级关系。</p>
-    <p class="lead">只根据<b>内容</b>重新设计，不沿用之前的视觉样式；深色细线为 3:4（1080×1440）的底层网格，用以看清哪些区块被放大、占据主导。</p>
+    <p class="lead">以 <b>assets/md/sample.md</b>《改变人生的 6 个晨间仪式》为内容，在同一个 <b>6×8 模块网格</b> 上，通过不同的<b>跨格与权重</b>生成 8 种完全不同的层级关系。</p>
+    <p class="lead">只根据<b>内容</b>重新设计；深色细线为 3:4（1080×1440）的底层网格，用以看清哪些区块被放大、占据主导。</p>
   </div>
 
   <div class="gallery">
 
     <figure class="cell">
       <div class="stage"><div class="hg l1">
-        <div class="b-eyebrow">NUTRITION · 营养笔记</div>
-        <div class="b-title">少吃一口糖，身体会谢谢你</div>
-        <div class="b-lead">不靠硬扑，而是重新认识食物。三个不费力的小改变，从今天开始。</div>
-        <div class="b-stat"><div class="num">21</div><div class="unit">天计划</div></div>
-        <div class="b-list"><ol><li><b>气泡水 + 柠檬</b><span>替换含糖饮料</span></li><li><b>糙米与豆类</b><span>主食掺一半</span></li><li><b>先喝水，等十分钟</b><span>嘴馅时</span></li></ol></div>
-        <div class="b-quote">关注 · 一起慢慢变好</div>
+        <div class="b-eyebrow">MORNING RITUAL · 晨间仪式</div>
+        <div class="b-title">改变人生的<mark>6 个</mark>晨间仪式</div>
+        <div class="b-lead">真正改变生活的，是日复一日、温柔而具体的小事。</div>
+        <div class="b-stat"><div class="num">6</div><div class="unit">个仪式</div></div>
+        <div class="b-list"><ol><li>先去晒晒晨光</li><li>每周早起 15 分钟</li><li>给闹钟贴个目标</li><li>一碗燕麦加维 C</li><li>20 分钟冥想</li><li>一杯白茶加蜂蜜</li></ol></div>
+        <div class="b-quote">改变不需要狠，只需要稳。</div>
         <div class="b-brand">@津玉不良言</div>
       </div></div>
       <figcaption><b><i>01</i> 顶部主视觉</b><span>标题占据顶部主区，信息向下逐级递减。</span></figcaption>
@@ -191,12 +192,12 @@
 
     <figure class="cell">
       <div class="stage"><div class="hg l2">
-        <div class="b-eyebrow">NUTRITION</div>
-        <div class="b-sub">21 天温和减糖计划</div>
-        <div class="b-title">少吃一口糖</div>
-        <div class="b-lead">不靠硬扑，而是重新认识食物。三个不费力的小改变。</div>
-        <div class="b-list"><ol><li><b>气泡水 + 柠檬</b><span>替换含糖饮料</span></li><li><b>糙米与豆类</b><span>主食掺一半</span></li><li><b>先喝水，等十分钟</b><span>嘴馅时</span></li></ol></div>
-        <div class="b-quote">关注 · 一起慢慢变好</div>
+        <div class="b-eyebrow">MORNING RITUAL</div>
+        <div class="b-sub">早起党的温柔自救指南</div>
+        <div class="b-title">改变人生的<mark>6 个</mark>晨间仪式</div>
+        <div class="b-lead">不必六个全做，挑一个开始就好；改变不需要狠，只需要稳。</div>
+        <div class="b-list"><ol><li>先去晒晒晨光</li><li>每周早起 15 分钟</li><li>给闹钟贴个目标</li><li>一碗燕麦加维 C</li><li>20 分钟冥想</li><li>一杯白茶加蜂蜜</li></ol></div>
+        <div class="b-quote">先安顿好自己，再去安顿这一天。</div>
         <div class="b-brand">@津玉不良言</div>
       </div></div>
       <figcaption><b><i>02</i> 左栏统领</b><span>左侧色块大标题统领，右侧模块化堆叠。</span></figcaption>
@@ -204,11 +205,11 @@
 
     <figure class="cell">
       <div class="stage"><div class="hg l3">
-        <div class="b-eyebrow">NUTRITION · 营养笔记</div>
-        <div class="b-stat"><div class="num">21</div><div class="unit">天温和减糖</div></div>
-        <div class="b-title">少吃一口糖，身体会谢谢你</div>
-        <div class="b-lead">不靠硬扑，而是重新认识食物。</div>
-        <div class="b-list"><ol><li><b>气泡水 + 柠檬</b><span>替换含糖饮料</span></li><li><b>糙米与豆类</b><span>主食掺一半</span></li><li><b>先喝水 · 等十分钟</b><span>嘴馅时</span></li></ol></div>
+        <div class="b-eyebrow">MORNING RITUAL · 晨间仪式</div>
+        <div class="b-stat"><div class="num">6</div><div class="unit">个晨间仪式</div></div>
+        <div class="b-title">改变人生的晨间仪式</div>
+        <div class="b-lead">早起党的温柔自救指南。</div>
+        <div class="b-list"><ol><li>先去晒晒晨光</li><li>每周早起 15 分钟</li><li>给闹钟贴个目标</li><li>一碗燕麦加维 C</li><li>20 分钟冥想</li><li>一杯白茶加蜂蜜</li></ol></div>
         <div class="b-brand">@津玉不良言</div>
       </div></div>
       <figcaption><b><i>03</i> 巨数聚焦</b><span>超大数字作为视觉锚点，标题与说明环绕。</span></figcaption>
@@ -216,11 +217,11 @@
 
     <figure class="cell">
       <div class="stage"><div class="hg l4">
-        <div class="b-eyebrow">NUTRITION · 营养笔记</div>
-        <div class="b-title">少吃一口糖，身体会谢谢你</div>
-        <div class="b-lead">不靠硬扑，而是重新认识食物。</div>
-        <div class="b-list"><ol><li><b>气泡水</b><span>替换含糖饮料</span></li><li><b>糙米豆类</b><span>主食掺一半</span></li><li><b>等十分钟</b><span>嘴馅先喝水</span></li></ol></div>
-        <div class="b-quote">关注 · 一起慢慢变好</div>
+        <div class="b-eyebrow">MORNING RITUAL · 晨间仪式</div>
+        <div class="b-title">改变人生的<mark>6 个</mark>晨间仪式</div>
+        <div class="b-lead">早起党的温柔自救指南。</div>
+        <div class="b-list"><ol><li>晒晒晨光</li><li>早起 15 分</li><li>贴个目标</li><li>燕麦加维 C</li><li>20 分冥想</li><li>白茶蜂蜜</li></ol></div>
+        <div class="b-quote">改变不需要狠，只需要稳。</div>
         <div class="b-brand">@津玉不良言</div>
       </div></div>
       <figcaption><b><i>04</i> 居中对称</b><span>主标题居中聚焦，支撑信息上下对称分布。</span></figcaption>
@@ -228,12 +229,12 @@
 
     <figure class="cell">
       <div class="stage"><div class="hg l5">
-        <div class="b-eyebrow">NUTRITION</div>
-        <div class="b-title">少吃一口糖，身体会谢谢你</div>
-        <div class="b-img"><img src="https://images.pexels.com/photos/6617496/pexels-photo-6617496.jpeg?auto=compress&cs=tinysrgb&w=1200" alt=""></div>
-        <div class="b-lead">三个不费力的小改变，从今天开始。</div>
-        <div class="b-list"><ol><li><b>气泡水 + 柠檬</b><span>替换含糖饮料</span></li><li><b>糙米与豆类</b><span>主食掺一半</span></li></ol></div>
-        <div class="b-quote">关注 · 一起慢慢变好</div>
+        <div class="b-eyebrow">MORNING RITUAL</div>
+        <div class="b-title">改变人生的<mark>6 个</mark>晨间仪式</div>
+        <div class="b-img"><img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=80" alt=""></div>
+        <div class="b-lead">日复一日、温柔而具体的小事。</div>
+        <div class="b-list"><ol><li>先去晒晒晨光</li><li>每周早起 15 分钟</li><li>给闹钟贴个目标</li></ol></div>
+        <div class="b-quote">先安顿好自己，再去安顿这一天。</div>
         <div class="b-brand">@津玉不良言</div>
       </div></div>
       <figcaption><b><i>05</i> 非对称 L 形</b><span>标题与图片错位咬合，引述块平衡右下。</span></figcaption>
@@ -241,11 +242,11 @@
 
     <figure class="cell">
       <div class="stage"><div class="hg l6">
-        <div class="b-img"><img src="https://images.pexels.com/photos/6617496/pexels-photo-6617496.jpeg?auto=compress&cs=tinysrgb&w=1200" alt=""></div>
-        <div class="b-eyebrow">NUTRITION · 营养笔记</div>
-        <div class="b-title">少吃一口糖</div>
-        <div class="b-lead">不靠硬扑，重新认识食物。</div>
-        <div class="b-list"><ol><li><b>气泡水 + 柠檬</b><span>替换含糖饮料</span></li><li><b>糙米与豆类</b><span>主食掺一半</span></li></ol></div>
+        <div class="b-img"><img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=80" alt=""></div>
+        <div class="b-eyebrow">MORNING RITUAL · 晨间仪式</div>
+        <div class="b-title"><mark>6 个</mark>晨间仪式</div>
+        <div class="b-lead">早起党的温柔自救指南。</div>
+        <div class="b-list"><ol><li>先去晒晒晨光</li><li>每周早起 15 分</li><li>20 分钟冥想</li></ol></div>
         <div class="b-brand">@津玉不良言</div>
       </div></div>
       <figcaption><b><i>06</i> 图像主导</b><span>大图压顶建立第一层级，文字模块承接其下。</span></figcaption>
@@ -253,12 +254,12 @@
 
     <figure class="cell">
       <div class="stage"><div class="hg l7">
-        <div class="b-eyebrow">NUTRITION</div>
-        <div class="b-title">少吃一口糖</div>
-        <div class="b-sub">21 天温和减糖计划</div>
-        <div class="b-lead">三个不费力的小改变，从今天开始。</div>
-        <div class="b-list"><ol><li><b>气泡水 + 柠檬</b><span>替换含糖饮料</span></li><li><b>糙米与豆类</b><span>主食掺一半</span></li></ol></div>
-        <div class="b-quote">关注 · 一起慢慢变好</div>
+        <div class="b-eyebrow">MORNING RITUAL</div>
+        <div class="b-title"><mark>6 个</mark>晨间仪式</div>
+        <div class="b-sub">早起党的温柔自救指南</div>
+        <div class="b-lead">日复一日、温柔而具体的小事。</div>
+        <div class="b-list"><ol><li>晒晒晨光</li><li>早起 15 分</li><li>贴个目标</li><li>燕麦加维 C</li><li>20 分冥想</li><li>白茶蜂蜜</li></ol></div>
+        <div class="b-quote">改变不需要狠，只需要稳。</div>
         <div class="b-brand">@津玉不良言</div>
       </div></div>
       <figcaption><b><i>07</i> 阶梯递进</b><span>信息块沿对角线阶梯展开，层级随位置递减。</span></figcaption>
@@ -266,11 +267,11 @@
 
     <figure class="cell">
       <div class="stage"><div class="hg l8">
-        <div class="b-eyebrow">NUTRITION · 营养笔记</div>
-        <div class="b-title">少吃一口糖</div>
-        <div class="b-list"><ol><li><b>气泡水</b><span>换揉含糖饮料</span></li><li><b>糙米豆类</b><span>主食掺半</span></li><li><b>等十分钟</b><span>嘴馅时</span></li></ol></div>
-        <div class="b-lead">不靠硬扑，而是重新认识食物。</div>
-        <div class="b-quote">关注 · 一起慢慢变好</div>
+        <div class="b-eyebrow">MORNING RITUAL · 晨间仪式</div>
+        <div class="b-title">改变人生的<mark>6 个</mark>晨间仪式</div>
+        <div class="b-list"><ol><li>晒晒晨光</li><li>早起 15 分</li><li>贴个目标</li><li>燕麦维 C</li><li>20 分冥想</li><li>白茶蜂蜜</li></ol></div>
+        <div class="b-lead">不必六个全做，挑一个开始就好。</div>
+        <div class="b-quote">把早晨，过成你喜欢的样子。</div>
         <div class="b-brand">@津玉不良言</div>
       </div></div>
       <figcaption><b><i>08</i> 引述压底</b><span>顶部信息轻量，底部巨幅引述形成强收束。</span></figcaption>
