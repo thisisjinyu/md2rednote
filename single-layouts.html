@@ -170,20 +170,23 @@ body{font-family:'Noto Sans SC',sans-serif;background:#eceae3;color:var(--ink);p
 .lay-blob .feat span{font-size:23px;margin-top:3px}
 .lay-blob .brand{position:absolute;left:74px;bottom:100px;font:italic 600 30px/1.4 'Playfair Display';color:var(--sage-deep);z-index:2}
 
-/* 17 斜角图框 + 三角 */
-.lay-tri{position:relative;background:#f6f3ec}
-.lay-tri .pic{position:absolute;inset:0;background:var(--hero) center/cover;clip-path:polygon(540px 48px,1000px 48px,1040px 92px,1040px 1144px,1000px 1188px,330px 1188px);z-index:1}
-.lay-tri .tri{position:absolute;left:0;bottom:0;width:1080px;height:380px;background:var(--sage);clip-path:polygon(0 38%,0 100%,100% 100%);z-index:2}
-.lay-tri .txt{position:absolute;left:74px;top:150px;width:440px;display:flex;flex-direction:column;gap:22px;z-index:3}
-.lay-tri .h-title{color:var(--sage-deep);font-size:72px;line-height:1.22}
-.lay-tri .h-sub{color:var(--muted);font-size:30px;font-weight:500}
-.lay-tri .feats{position:absolute;left:74px;top:608px;width:300px;display:flex;flex-direction:column;gap:30px;z-index:3}
-.lay-tri .feat{display:flex;align-items:center;gap:18px}
-.lay-tri .feat .ic{flex:0 0 auto;width:58px;height:58px;border-radius:50%;background:var(--sage-soft);color:var(--sage-deep);display:grid;place-items:center}
-.lay-tri .feat .ic svg{width:30px;height:30px}
-.lay-tri .feat b{display:block;font:600 27px/1.1 'Noto Sans SC';color:var(--ink)}
-.lay-tri .feat span{display:block;font:400 21px/1.2 'Noto Sans SC';color:var(--muted);margin-top:3px}
-.lay-tri .brand{position:absolute;left:74px;bottom:92px;z-index:3;font:italic 600 32px/1.42 'Playfair Display';color:#fff}
+/* 17 斜线分割 */
+.lay-slash{position:relative;background:#f7f4ee}
+.lay-slash .pic{position:absolute;inset:0;background:var(--hero) center/cover;clip-path:polygon(720px 0,1080px 0,1080px 1440px,360px 1440px);z-index:1}
+.lay-slash .line{position:absolute;inset:0;width:1080px;height:1440px;z-index:2;pointer-events:none}
+.lay-slash .txt{position:absolute;left:80px;top:104px;width:560px;display:flex;flex-direction:column;gap:18px;z-index:3}
+.lay-slash .h-title{color:var(--sage-deep);font-size:66px;line-height:1.24}
+.lay-slash .h-sub{color:var(--muted);font-size:30px;font-weight:500}
+.lay-slash .feats{position:absolute;left:80px;top:372px;width:340px;display:flex;flex-direction:column;gap:44px;z-index:3}
+.lay-slash .feats .rail{position:absolute;left:31px;top:34px;bottom:34px;width:2px;background:#cdd9b2;z-index:0}
+.lay-slash .feat{display:flex;align-items:center;gap:22px;position:relative;z-index:1}
+.lay-slash .feat .ic{flex:0 0 auto;width:64px;height:64px;border-radius:50%;background:#fff;border:2px solid #cdd9b2;color:var(--sage-deep);display:grid;place-items:center}
+.lay-slash .feat .ic svg{width:30px;height:30px}
+.lay-slash .feat b{display:block;font:600 30px/1.1 'Noto Sans SC';color:var(--ink)}
+.lay-slash .feat span{display:block;font:400 22px/1.2 'Noto Sans SC';color:var(--muted);margin-top:4px}
+.lay-slash .start{position:absolute;left:80px;bottom:120px;z-index:3}
+.lay-slash .start b{display:block;font:700 56px/1 'Playfair Display';letter-spacing:.16em;color:var(--sage-deep)}
+.lay-slash .start span{display:block;margin-top:14px;font:400 24px/1.5 'Noto Sans SC';color:var(--muted)}
 </style>
 </head>
 <body>
@@ -191,6 +194,7 @@ body{font-family:'Noto Sans SC',sans-serif;background:#eceae3;color:var(--ink);p
 <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2.1 2.1M16.9 16.9 19 19M19 5l-2.1 2.1M7.1 16.9 5 19"/></symbol>
 <symbol id="i-cup" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h11v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V8Z"/><path d="M16 9h2.5a2.5 2.5 0 0 1 0 5H16"/><path d="M8 3c-.5 1 .5 1.5 0 2.5M11 3c-.5 1 .5 1.5 0 2.5"/></symbol>
 <symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20c8 1 15-4 16-16C12 4 5 9 4 20Z"/><path d="M4 20C7 14 11 10 16 7"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.5-9.2-9C1.3 8 3 4.8 6.2 4.8 8 4.8 9.3 6 12 8.4 14.7 6 16 4.8 17.8 4.8 21 4.8 22.7 8 21.2 11 19 15.5 12 20 12 20Z"/></symbol>
 </defs></svg>
 
 <div class="page-hd">
@@ -232,7 +236,7 @@ body{font-family:'Noto Sans SC',sans-serif;background:#eceae3;color:var(--ink);p
 
 <figure class="cell"><figcaption><span class="num">16</span> 有机画框 <small>· 温柔波浪边 + 悬浮图框</small></figcaption><div class="stage"><div class="card lay-blob"><div class="blob-br"></div><div class="pic"></div><svg class="deco-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor"><use href="#i-leaf"/></svg><svg class="branch" viewBox="0 0 300 84" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 64 C90 22 210 22 296 54"/><path d="M74 40 q12 -18 32 -16 q-8 17 -32 16"/><path d="M156 30 q12 -18 32 -16 q-8 17 -32 16"/></svg><span class="badge">16</span><div class="txt"><h2 class="h-title">改变人生的<br>6 个晨间仪式</h2><p class="h-sub">营养 · 运动 · 睡眠</p><div class="feat-list"><div class="feat"><i class="ic"><svg><use href="#i-sun"/></svg></i><div><b>早起留白</b><span>15 分钟</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-leaf"/></svg></i><div><b>静坐冥想</b><span>安定心绪</span></div></div></div></div><div class="brand">Your morning.<br>Your life.</div></div></div></figure>
 
-<figure class="cell"><figcaption><span class="num">17</span> 斜角图框 + 三角 <small>· 夹角 clip-path</small></figcaption><div class="stage"><div class="card lay-tri"><div class="pic"></div><div class="tri"></div><div class="txt"><h2 class="h-title">改变人生的<br>6 个晨间仪式</h2><p class="h-sub">把早晨，过成喜欢的样子</p></div><div class="feats"><div class="feat"><i class="ic"><svg><use href="#i-sun"/></svg></i><div><b>早起留白</b><span>给自己 15 分钟</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-cup"/></svg></i><div><b>一杯温水</b><span>温柔唤醒身体</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-leaf"/></svg></i><div><b>静坐冥想</b><span>安定一天心绪</span></div></div></div><div class="brand">Better food<br>Better you</div></div></div></figure>
+<figure class="cell"><figcaption><span class="num">17</span> 斜线分割 <small>· 对角线 + 时间轴</small></figcaption><div class="stage"><div class="card lay-slash"><div class="pic"></div><svg class="line" viewBox="0 0 1080 1440" preserveAspectRatio="none" fill="none" stroke="#8a9a5b"><line x1="690" y1="0" x2="330" y2="1440" stroke-width="4"/></svg><div class="txt"><h2 class="h-title">改变人生的<br>6 个晨间仪式</h2><p class="h-sub">营养均衡 · 元气满满</p></div><div class="feats"><div class="rail"></div><div class="feat"><i class="ic"><svg><use href="#i-sun"/></svg></i><div><b>早起留白</b><span>给自己 15 分钟</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-cup"/></svg></i><div><b>一杯温水</b><span>温柔唤醒身体</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-leaf"/></svg></i><div><b>静坐冥想</b><span>安定一天心绪</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-heart"/></svg></i><div><b>记录感恩</b><span>遇见更好的自己</span></div></div></div><div class="start"><b>START</b><span>美好的一天，从清晨仪式开始</span></div></div></div></figure>
 
 </div>
 </body>
