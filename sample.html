@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小红书多巴胺海报引擎 (字体引擎更新版)</title>
+<!-- ================= 字体系统 (Typography System) ================= -->
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@400;700;900&family=Playfair+Display:ital,wght@0,700;1,700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Noto+Serif+SC:wght@300;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-lite-webfont@1.1.0/style.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/smiley-sans@2.0.1/font.css" />
+<!-- ================= 样式表（抽离至 sample-theme/） ================= -->
+<link rel="stylesheet" href="sample-theme/sample-base.css">
+<link rel="stylesheet" href="sample-theme/sample-wl.css">
+<link rel="stylesheet" href="sample-theme/sample-he.css">
+<link rel="stylesheet" href="sample-theme/sample-re.css">
+<link rel="stylesheet" href="sample-theme/sample-dr.css">
+<link rel="stylesheet" href="sample-theme/sample-mb.css">
+</head>
+<body>
+
+<div class="grid-view">
+  <div data-include="sample-html/sample-wl.html"></div>
+  <div data-include="sample-html/sample-he.html"></div>
+  <div data-include="sample-html/sample-re.html"></div>
+  <div data-include="sample-html/sample-dr.html"></div>
+  <div data-include="sample-html/sample-mb.html"></div>
+</div>
+
+<script>
+  // 把 [data-include] 占位符替换为对应 partial 文件内容
+  // 注意：file:// 协议下 fetch 会被 CORS 拒绝，请用 Live Server 等本地 http 环境打开
+  (async () => {
+    for (const slot of document.querySelectorAll('[data-include]')) {
+      try {
+        const res = await fetch(slot.dataset.include);
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        slot.outerHTML = await res.text();
+      } catch (err) {
+        slot.innerHTML = '<pre style="color:#ff6b6b;padding:20px">加载失败: ' + slot.dataset.include + ' (' + err.message + ')</pre>';
+      }
+    }
+  })();
+</script>
+
+</body>
+</html>
