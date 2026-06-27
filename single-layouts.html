@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>单图版式画廊 · md2rednote</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@500;600;700;900&family=Playfair+Display:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+ --hero:url("https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=80");
+ --sage:#8a9a5b;--sage-deep:#5f6b45;--sage-soft:#e7ecd9;
+ --cream:#f3efe6;--paper:#fbfaf7;--ink:#2c2e27;--muted:#7c8070;--line:#e3e0d6;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans SC',sans-serif;background:#eceae3;color:var(--ink);padding:56px 40px 110px}
+.page-hd{text-align:center;max-width:1100px;margin:0 auto 56px}
+.page-hd h1{font:900 46px/1.2 'Noto Serif SC';letter-spacing:.02em}
+.page-hd p{margin-top:14px;color:var(--muted);font-size:18px;letter-spacing:.04em}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:52px 36px;max-width:1520px;margin:0 auto}
+.cell figcaption{display:flex;align-items:center;gap:10px;margin-bottom:14px;font-size:15px;font-weight:600;color:#41443a}
+.cell figcaption .num{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;font-size:13px;font-weight:700}
+.cell figcaption small{font-weight:400;color:var(--muted)}
+.stage{--s:.315;width:calc(1080px*var(--s));height:calc(1440px*var(--s));overflow:hidden;border-radius:14px;box-shadow:0 14px 34px rgba(40,40,30,.16);background:#fff}
+.card{width:1080px;height:1440px;transform:scale(var(--s));transform-origin:top left;position:relative;overflow:hidden;background:var(--paper)}
+.eyebrow{font:600 26px/1 'Noto Sans SC';letter-spacing:.42em;text-transform:uppercase;color:var(--sage-deep)}
+.h-title{font:800 96px/1.16 'Noto Serif SC';color:var(--ink)}
+.h-sub{font:400 36px/1.5 'Noto Sans SC';color:var(--muted)}
+.feat-list{display:flex;flex-direction:column;gap:34px}
+.feat{display:flex;align-items:center;gap:26px}
+.feat .ic{flex:0 0 auto;width:74px;height:74px;border-radius:50%;display:grid;place-items:center;background:var(--sage-soft);color:var(--sage-deep)}
+.feat .ic svg{width:38px;height:38px}
+.feat b{display:block;font:600 36px/1.1 'Noto Sans SC';color:var(--ink)}
+.feat span{display:block;font:400 27px/1.2 'Noto Sans SC';color:var(--muted);margin-top:6px}
+
+/* 01 上下结构 */
+.lay-tb{display:flex;flex-direction:column}
+.lay-tb .top{flex:0 0 62%;background:var(--sage);padding:100px 84px 0;display:flex;flex-direction:column;gap:32px}
+.lay-tb .eyebrow{color:#e9efd6}.lay-tb .h-title{color:#fff}.lay-tb .h-sub{color:#eef2e2}
+.lay-tb .feat .ic{background:rgba(255,255,255,.18);color:#fff}.lay-tb .feat b{color:#fff}.lay-tb .feat span{color:#e2e8d2}
+.lay-tb .pic{flex:1;background:var(--hero) center/cover}
+
+/* 02 左右分栏 */
+.lay-lr{display:flex}
+.lay-lr .left{flex:0 0 54%;padding:0 74px;display:flex;flex-direction:column;justify-content:center;gap:36px;background:var(--paper)}
+.lay-lr .right{flex:1;background:var(--hero) center/cover}
+
+/* 03 全图叠字 */
+.lay-full{background:var(--hero) center/cover;display:flex;flex-direction:column;justify-content:space-between;padding:100px 84px}
+.lay-full::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,22,16,.62),rgba(20,22,16,.12) 45%,rgba(20,22,16,.72));z-index:0}
+.lay-full>*{position:relative;z-index:1}
+.lay-full .eyebrow{color:#e7ecd9}.lay-full .h-title{color:#fff}.lay-full .h-sub{color:#eef1e6}
+.lay-full .top-grp{display:flex;flex-direction:column;gap:28px}
+.lay-full .feat-list{flex-direction:row;gap:34px}
+.lay-full .feat{flex-direction:column;align-items:center;text-align:center;gap:14px;flex:1}
+.lay-full .feat .ic{background:rgba(255,255,255,.2);color:#fff}.lay-full .feat b{color:#fff}.lay-full .feat span{color:#dfe4d4}
+
+/* 04 图框留白 */
+.lay-frame{background:var(--cream);padding:80px;display:flex;flex-direction:column;gap:46px}
+.lay-frame .frame{flex:0 0 54%;border-radius:20px;background:var(--hero) center/cover;box-shadow:0 18px 40px rgba(0,0,0,.16)}
+.lay-frame .txt{display:flex;flex-direction:column;gap:24px}
+.lay-frame .feat-list{flex-direction:row;gap:30px;margin-top:4px}
+.lay-frame .feat{flex-direction:column;align-items:center;text-align:center;gap:12px;flex:1}
+
+/* 05 侧边色带 */
+.lay-side{position:relative;background:var(--hero) center/cover}
+.lay-side .band{position:absolute;top:0;bottom:0;left:0;width:47%;background:rgba(95,107,69,.94);padding:0 62px;display:flex;flex-direction:column;justify-content:center;gap:32px}
+.lay-side .eyebrow{color:#dde6c5}.lay-side .h-title{color:#fff;font-size:84px}.lay-side .h-sub{color:#eef2e2}
+.lay-side .feat .ic{background:rgba(255,255,255,.18);color:#fff}.lay-side .feat b{color:#fff}.lay-side .feat span{color:#e2e8d2}
+
+/* 06 圆形裁切 */
+.lay-circle{background:var(--cream);padding:90px 80px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:38px}
+.lay-circle .circ{width:600px;height:600px;border-radius:50%;background:var(--hero) center/cover;box-shadow:0 20px 44px rgba(0,0,0,.18);border:14px solid #fff}
+.lay-circle .feat-list{flex-direction:row;gap:36px;margin-top:6px}
+.lay-circle .feat{flex-direction:column;align-items:center;text-align:center;gap:12px}
+
+/* 07 半圆拱顶 */
+.lay-arch{display:flex;flex-direction:column;background:var(--paper)}
+.lay-arch .dome{flex:0 0 60%;background:var(--hero) center/cover;border-bottom-left-radius:50% 26%;border-bottom-right-radius:50% 26%}
+.lay-arch .txt{flex:1;padding:54px 84px;display:flex;flex-direction:column;align-items:center;text-align:center;justify-content:center;gap:28px}
+.lay-arch .feat-list{flex-direction:row;gap:34px}
+.lay-arch .feat{flex-direction:column;align-items:center;text-align:center;gap:12px}
+
+/* 08 斜切构图 */
+.lay-diag{position:relative;background:var(--sage-deep)}
+.lay-diag .pic{position:absolute;top:0;left:0;right:0;height:64%;background:var(--hero) center/cover;clip-path:polygon(0 0,100% 0,100% 78%,0 100%)}
+.lay-diag .content{position:absolute;left:0;right:0;bottom:0;height:44%;padding:0 84px 86px;display:flex;flex-direction:column;justify-content:flex-end;gap:26px}
+.lay-diag .eyebrow{color:#dde6c5}.lay-diag .h-title{color:#fff}.lay-diag .h-sub{color:#eef2e2}
+.lay-diag .feat-list{flex-direction:row;gap:34px}
+.lay-diag .feat{flex-direction:column;align-items:center;text-align:center;gap:12px}
+.lay-diag .feat .ic{background:rgba(255,255,255,.18);color:#fff}.lay-diag .feat b{color:#fff}.lay-diag .feat span{color:#e2e8d2}
+
+/* 09 卡片叠层 */
+.lay-stack{background:var(--cream);display:grid;place-items:center}
+.lay-stack .wrap{position:relative;width:720px;height:1060px}
+.lay-stack .wrap::before,.lay-stack .wrap::after{content:"";position:absolute;inset:0;border-radius:26px}
+.lay-stack .wrap::before{transform:rotate(-6deg) translateY(10px);background:var(--sage-soft);box-shadow:0 14px 30px rgba(0,0,0,.12)}
+.lay-stack .wrap::after{transform:rotate(4deg);background:#fff;box-shadow:0 14px 30px rgba(0,0,0,.1)}
+.lay-stack .face{position:relative;z-index:2;width:100%;height:100%;border-radius:26px;overflow:hidden;background:#fff;box-shadow:0 22px 48px rgba(0,0,0,.2);display:flex;flex-direction:column}
+.lay-stack .face .pic{flex:0 0 56%;background:var(--hero) center/cover}
+.lay-stack .face .txt{flex:1;padding:46px 54px;display:flex;flex-direction:column;justify-content:center;gap:20px}
+.lay-stack .face .h-title{font-size:68px}
+
+/* 10 渐变大字 */
+.lay-grad{background:linear-gradient(155deg,#f1f3e9 0%,#dde6c8 60%,#cdd9b2 100%);padding:100px 84px;display:flex;flex-direction:column;gap:40px}
+.lay-grad .h-title{font-size:104px}
+.lay-grad .feat-list{flex-direction:row;gap:30px}
+.lay-grad .feat{flex-direction:column;align-items:center;text-align:center;gap:12px;flex:1}
+.lay-grad .pic{flex:1;border-radius:22px;background:var(--hero) center/cover;box-shadow:0 16px 36px rgba(0,0,0,.16)}
+
+/* 11 纵向流程 */
+.lay-steps{background:var(--paper);padding:88px 84px;display:flex;flex-direction:column;gap:36px}
+.lay-steps .pic{flex:0 0 32%;border-radius:18px;background:var(--hero) center/cover}
+.lay-steps .steps{display:flex;flex-direction:column;gap:28px}
+.lay-steps .step{display:flex;gap:26px;align-items:center}
+.lay-steps .step .no{flex:0 0 auto;width:84px;font:800 48px/1 'Noto Serif SC';color:var(--sage)}
+.lay-steps .step b{display:block;font:600 38px/1.1 'Noto Sans SC';color:var(--ink)}
+.lay-steps .step span{display:block;font:400 27px/1.2 'Noto Sans SC';color:var(--muted);margin-top:6px}
+
+/* 12 杂志风 */
+.lay-mag{background:#fff;padding:80px;display:flex;flex-direction:column}
+.lay-mag .mast{font:900 150px/.9 'Playfair Display';letter-spacing:.02em;color:var(--ink);border-bottom:4px solid var(--ink);padding-bottom:22px}
+.lay-mag .kicker{display:flex;justify-content:space-between;font:600 24px 'Noto Sans SC';letter-spacing:.28em;text-transform:uppercase;color:var(--muted);margin:24px 0 50px}
+.lay-mag .body{display:flex;gap:46px;flex:1}
+.lay-mag .col-l{flex:0 0 46%;display:flex;flex-direction:column;justify-content:center;gap:26px}
+.lay-mag .col-l .h-title{font-size:76px}
+.lay-mag .col-r{flex:1;background:var(--hero) center/cover;border-radius:8px}
+
+/* 13 暗色摄影 */
+.lay-dark{background:#1c1e18;display:flex;flex-direction:column}
+.lay-dark .pic{flex:0 0 52%;background:var(--hero) center/cover}
+.lay-dark .txt{flex:1;padding:76px 84px;display:flex;flex-direction:column;justify-content:center;gap:28px}
+.lay-dark .eyebrow{color:#c9d3a8}.lay-dark .h-title{color:#fff}.lay-dark .h-sub{color:#cfcdc2}
+.lay-dark .feat-list{flex-direction:row;gap:34px}
+.lay-dark .feat{flex-direction:column;align-items:center;text-align:center;gap:12px;flex:1}
+.lay-dark .feat .ic{background:rgba(255,255,255,.12);color:#dfe6c8}.lay-dark .feat b{color:#fff}.lay-dark .feat span{color:#b9b8ad}
+
+/* 14 弧形遮罩 */
+.lay-arc{position:relative;background:var(--hero) center/cover;overflow:hidden}
+.lay-arc .sweep{position:absolute;left:-12%;right:-12%;bottom:-6%;height:58%;background:rgba(95,107,69,.95);border-radius:50% 50% 0 0/34% 34% 0 0}
+.lay-arc .content{position:absolute;left:0;right:0;bottom:0;height:52%;padding:0 84px 84px;display:flex;flex-direction:column;justify-content:flex-end;gap:24px;z-index:2}
+.lay-arc .eyebrow{color:#dde6c5}.lay-arc .h-title{color:#fff}.lay-arc .h-sub{color:#eef2e2}
+.lay-arc .feat-list{flex-direction:row;gap:34px}
+.lay-arc .feat{flex-direction:column;align-items:center;text-align:center;gap:12px}
+.lay-arc .feat .ic{background:rgba(255,255,255,.18);color:#fff}.lay-arc .feat b{color:#fff}.lay-arc .feat span{color:#e2e8d2}
+
+/* 15 数据环 */
+.lay-ring{background:var(--paper);padding:88px 80px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:44px}
+.lay-ring .donut{position:relative;width:560px;height:560px;border-radius:50%;background:conic-gradient(var(--sage) 0 60deg,var(--sage-deep) 60deg 120deg,#a9b87f 120deg 180deg,var(--sage) 180deg 240deg,var(--sage-deep) 240deg 300deg,#a9b87f 300deg 360deg)}
+.lay-ring .donut::before{content:"";position:absolute;inset:70px;border-radius:50%;background:var(--hero) center/cover;box-shadow:inset 0 0 0 12px #fff,0 8px 22px rgba(0,0,0,.18)}
+.lay-ring .legend{display:flex;gap:40px}
+.lay-ring .legend .feat{flex-direction:column;align-items:center;text-align:center;gap:10px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2.1 2.1M16.9 16.9 19 19M19 5l-2.1 2.1M7.1 16.9 5 19"/></symbol>
+<symbol id="i-cup" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h11v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V8Z"/><path d="M16 9h2.5a2.5 2.5 0 0 1 0 5H16"/><path d="M8 3c-.5 1 .5 1.5 0 2.5M11 3c-.5 1 .5 1.5 0 2.5"/></symbol>
+<symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20c8 1 15-4 16-16C12 4 5 9 4 20Z"/><path d="M4 20C7 14 11 10 16 7"/></symbol>
+</defs></svg>
+
+<div class="page-hd">
+ <h1>单图版式画廊</h1>
+ <p>同一条文案《改变人生的 6 个晨间仪式》· 15 种 3:4 版式 · 纯比布局差异</p>
+</div>
+
+<div class="gallery">
+
+<figure class="cell"><figcaption><span class="num">01</span> 上下结构 <small>· 上文字色块 / 下图</small></figcaption><div class="stage"><div class="card lay-tb"><div class="top"><p class="eyebrow">Morning Ritual</p><h2 class="h-title">改变人生的<br>6 个晨间仪式</h2><p class="h-sub">把早晨，过成你喜欢的样子</p><div class="feat-list"><div class="feat"><i class="ic"><svg><use href="#i-sun"/></svg></i><div><b>早起留白</b><span>给自己 15 分钟</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-cup"/></svg></i><div><b>一杯温水</b><span>温柔唤醒身体</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-leaf"/></svg></i><div><b>静坐冥想</b><span>安定一天心绪</span></div></div></div></div><div class="pic"></div></div></div></figure>
+
+<figure class="cell"><figcaption><span class="num">02</span> 左右分栏 <small>· 左文 / 右图</small></figcaption><div class="stage"><div class="card lay-lr"><div class="left"><p class="eyebrow">Morning Ritual</p><h2 class="h-title">改变人生的<br>6 个晨间仪式</h2><p class="h-sub">把早晨，过成你喜欢的样子</p><div class="feat-list"><div class="feat"><i class="ic"><svg><use href="#i-sun"/></svg></i><div><b>早起留白</b><span>给自己 15 分钟</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-cup"/></svg></i><div><b>一杯温水</b><span>温柔唤醒身体</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-leaf"/></svg></i><div><b>静坐冥想</b><span>安定一天心绪</span></div></div></div></div><div class="right"></div></div></div></figure>
+
+<figure class="cell"><figcaption><span class="num">03</span> 全图叠字 <small>· 背景图 + 遮罩</small></figcaption><div class="stage"><div class="card lay-full"><div class="top-grp"><p class="eyebrow">Morning Ritual</p><h2 class="h-title">改变人生的<br>6 个晨间仪式</h2><p class="h-sub">把早晨，过成你喜欢的样子</p></div><div class="feat-list"><div class="feat"><i class="ic"><svg><use href="#i-sun"/></svg></i><div><b>早起留白</b><span>15 分钟</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-cup"/></svg></i><div><b>一杯温水</b><span>唤醒身体</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-leaf"/></svg></i><div><b>静坐冥想</b><span>安定心绪</span></div></div></div></div></div></figure>
+
+<figure class="cell"><figcaption><span class="num">04</span> 图框留白 <small>· 图片加边距</small></figcaption><div class="stage"><div class="card lay-frame"><div class="frame"></div><div class="txt"><p class="eyebrow">Morning Ritual</p><h2 class="h-title">改变人生的 6 个晨间仪式</h2><p class="h-sub">把早晨，过成你喜欢的样子</p></div><div class="feat-list"><div class="feat"><i class="ic"><svg><use href="#i-sun"/></svg></i><div><b>早起留白</b><span>15 分钟</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-cup"/></svg></i><div><b>一杯温水</b><span>唤醒身体</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-leaf"/></svg></i><div><b>静坐冥想</b><span>安定心绪</span></div></div></div></div></div></figure>
+
+<figure class="cell"><figcaption><span class="num">05</span> 侧边色带 <small>· 色块压图</small></figcaption><div class="stage"><div class="card lay-side"><div class="band"><p class="eyebrow">Morning Ritual</p><h2 class="h-title">改变人生的<br>6 个晨间仪式</h2><p class="h-sub">把早晨，过成喜欢的样子</p><div class="feat-list"><div class="feat"><i class="ic"><svg><use href="#i-sun"/></svg></i><div><b>早起留白</b><span>15 分钟</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-cup"/></svg></i><div><b>一杯温水</b><span>唤醒身体</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-leaf"/></svg></i><div><b>静坐冥想</b><span>安定心绪</span></div></div></div></div></div></div></figure>
+
+<figure class="cell"><figcaption><span class="num">06</span> 圆形裁切 <small>· 圆图 + 居中</small></figcaption><div class="stage"><div class="card lay-circle"><div class="circ"></div><p class="eyebrow">Morning Ritual</p><h2 class="h-title">改变人生的 6 个晨间仪式</h2><p class="h-sub">把早晨，过成你喜欢的样子</p><div class="feat-list"><div class="feat"><i class="ic"><svg><use href="#i-sun"/></svg></i><div><b>早起留白</b><span>15 分钟</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-cup"/></svg></i><div><b>一杯温水</b><span>唤醒身体</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-leaf"/></svg></i><div><b>静坐冥想</b><span>安定心绪</span></div></div></div></div></div></figure>
+
+<figure class="cell"><figcaption><span class="num">07</span> 半圆拱顶 <small>· 顶部弧形图</small></figcaption><div class="stage"><div class="card lay-arch"><div class="dome"></div><div class="txt"><p class="eyebrow">Morning Ritual</p><h2 class="h-title">改变人生的 6 个晨间仪式</h2><p class="h-sub">把早晨，过成你喜欢的样子</p><div class="feat-list"><div class="feat"><i class="ic"><svg><use href="#i-sun"/></svg></i><div><b>早起留白</b><span>15 分钟</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-cup"/></svg></i><div><b>一杯温水</b><span>唤醒身体</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-leaf"/></svg></i><div><b>静坐冥想</b><span>安定心绪</span></div></div></div></div></div></div></figure>
+
+<figure class="cell"><figcaption><span class="num">08</span> 斜切构图 <small>· 对角线分割</small></figcaption><div class="stage"><div class="card lay-diag"><div class="pic"></div><div class="content"><p class="eyebrow">Morning Ritual</p><h2 class="h-title">改变人生的 6 个晨间仪式</h2><div class="feat-list"><div class="feat"><i class="ic"><svg><use href="#i-sun"/></svg></i><div><b>早起留白</b><span>15 分钟</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-cup"/></svg></i><div><b>一杯温水</b><span>唤醒身体</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-leaf"/></svg></i><div><b>静坐冥想</b><span>安定心绪</span></div></div></div></div></div></div></figure>
+
+<figure class="cell"><figcaption><span class="num">09</span> 卡片叠层 <small>· 景深堆叠</small></figcaption><div class="stage"><div class="card lay-stack"><div class="wrap"><div class="face"><div class="pic"></div><div class="txt"><p class="eyebrow">Morning Ritual</p><h2 class="h-title">改变人生的 6 个晨间仪式</h2><p class="h-sub">把早晨，过成你喜欢的样子</p></div></div></div></div></div></figure>
+
+<figure class="cell"><figcaption><span class="num">10</span> 渐变大字 <small>· 色面 + 留白</small></figcaption><div class="stage"><div class="card lay-grad"><p class="eyebrow">Morning Ritual</p><h2 class="h-title">晨间<br>仪式</h2><p class="h-sub">把早晨，过成你喜欢的样子</p><div class="feat-list"><div class="feat"><i class="ic"><svg><use href="#i-sun"/></svg></i><div><b>早起留白</b><span>15 分钟</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-cup"/></svg></i><div><b>一杯温水</b><span>唤醒身体</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-leaf"/></svg></i><div><b>静坐冥想</b><span>安定心绪</span></div></div></div><div class="pic"></div></div></div></figure>
+
+<figure class="cell"><figcaption><span class="num">11</span> 纵向流程 <small>· 步骤引导</small></figcaption><div class="stage"><div class="card lay-steps"><p class="eyebrow">Morning Ritual</p><h2 class="h-title" style="font-size:76px">改变人生的 6 个晨间仪式</h2><div class="pic"></div><div class="steps"><div class="step"><span class="no">01</span><div><b>早起留白</b><span>给自己 15 分钟</span></div></div><div class="step"><span class="no">02</span><div><b>一杯温水</b><span>温柔唤醒身体</span></div></div><div class="step"><span class="no">03</span><div><b>静坐冥想</b><span>安定一天心绪</span></div></div></div></div></div></figure>
+
+<figure class="cell"><figcaption><span class="num">12</span> 杂志风 <small>· 大衡线刊头</small></figcaption><div class="stage"><div class="card lay-mag"><div class="mast">RITUAL</div><div class="kicker"><span>Morning Ritual</span><span>No.06</span></div><div class="body"><div class="col-l"><h2 class="h-title">改变人生的<br>6 个晨间仪式</h2><p class="h-sub">把早晨，过成你喜欢的样子</p></div><div class="col-r"></div></div></div></div></figure>
+
+<figure class="cell"><figcaption><span class="num">13</span> 暗色摄影 <small>· 深色底 + 亮字</small></figcaption><div class="stage"><div class="card lay-dark"><div class="pic"></div><div class="txt"><p class="eyebrow">Morning Ritual</p><h2 class="h-title">改变人生的 6 个晨间仪式</h2><p class="h-sub">把早晨，过成你喜欢的样子</p><div class="feat-list"><div class="feat"><i class="ic"><svg><use href="#i-sun"/></svg></i><div><b>早起留白</b><span>15 分钟</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-cup"/></svg></i><div><b>一杯温水</b><span>唤醒身体</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-leaf"/></svg></i><div><b>静坐冥想</b><span>安定心绪</span></div></div></div></div></div></div></figure>
+
+<figure class="cell"><figcaption><span class="num">14</span> 弧形遮罩 <small>· 曲面色块</small></figcaption><div class="stage"><div class="card lay-arc"><div class="sweep"></div><div class="content"><p class="eyebrow">Morning Ritual</p><h2 class="h-title">改变人生的 6 个晨间仪式</h2><div class="feat-list"><div class="feat"><i class="ic"><svg><use href="#i-sun"/></svg></i><div><b>早起留白</b><span>15 分钟</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-cup"/></svg></i><div><b>一杯温水</b><span>唤醒身体</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-leaf"/></svg></i><div><b>静坐冥想</b><span>安定心绪</span></div></div></div></div></div></div></figure>
+
+<figure class="cell"><figcaption><span class="num">15</span> 数据环 <small>· 环形 + 居中图</small></figcaption><div class="stage"><div class="card lay-ring"><p class="eyebrow">Morning Ritual</p><h2 class="h-title" style="font-size:80px">改变人生的 6 个晨间仪式</h2><div class="donut"></div><div class="legend"><div class="feat"><i class="ic"><svg><use href="#i-sun"/></svg></i><div><b>早起留白</b></div></div><div class="feat"><i class="ic"><svg><use href="#i-cup"/></svg></i><div><b>一杯温水</b></div></div><div class="feat"><i class="ic"><svg><use href="#i-leaf"/></svg></i><div><b>静坐冥想</b></div></div></div></div></div></figure>
+
+</div>
+</body>
+</html>
