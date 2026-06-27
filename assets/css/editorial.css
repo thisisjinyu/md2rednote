@@ -1,0 +1,110 @@
+/* ====================================================================
+   editorial.css · 风格（高端杂志 Editorial，源自 HE 健康饮食）
+   厚边框 + 衰线大标题 + 森绿强调色；HE01 配色为默认。
+   勾选「图片取色」时，app.js 会以封面图主色 inline 覆盖 --card-* 变量，
+   从而沿用同一套「根据图调色」逻辑。
+   加载顺序：cover.css 之后，覆盖 kinfolk 默认主题变量。
+   ==================================================================== */
+
+/* -------- 主题变量（HE01 森绿；取色开启时被 inline 覆盖） -------- */
+.card[data-theme="editorial"] {
+  --card-bg: #f8f7f3;
+  --card-bg-2: #f8f7f3;
+  --card-ink: #111111;
+  --card-dim: #6b6b6b;
+  --card-accent: #5a9e66;
+  --card-rule: rgba(17, 17, 17, 0.16);
+  --font-serif: 'Playfair Display', 'Noto Serif SC', Georgia, serif;
+  --font-cjk: 'Noto Serif SC', 'Noto Sans SC', sans-serif;
+  background: var(--card-bg);
+  color: var(--card-ink);
+  border: 24px solid var(--card-ink);
+  padding: 80px 76px 104px;
+}
+.card[data-theme="editorial"]::before { border: none; }
+
+/* -------- 通用排版 -------- */
+.card[data-theme="editorial"] .card-body strong { color: var(--card-accent); font-weight: 900; }
+.card[data-theme="editorial"] .card-body em { color: var(--card-accent); font-style: normal; }
+.card[data-theme="editorial"] .card-body mark { background: linear-gradient(transparent 56%, color-mix(in srgb, var(--card-accent) 36%, transparent) 56%); padding: 0 4px; }
+
+/* -------- 配图滤镜（杂志灰调） -------- */
+.card[data-theme="editorial"] .card-media img { filter: grayscale(18%) contrast(1.08); }
+.card[data-theme="editorial"] .card-body img { filter: grayscale(12%) contrast(1.05); }
+
+/* ===================== 封面 role-cover · 大标题下图 ===================== */
+/* 顶部栏目（masthead）→ 中部大标题 → 底部图片（base=bottom） */
+.card[data-theme="editorial"].role-cover .card-foot { display: none; }
+.card[data-theme="editorial"].role-cover.layout-bottom .card-media { height: 44%; }
+.card[data-theme="editorial"].role-cover .li-content { justify-content: center; padding: 72px 64px; }
+
+/* 顶栏目：始终显示（覆盖 kinfolk 对封面 eyebrow 的隐藏） */
+.card[data-theme="editorial"].role-cover .card-eyebrow {
+  display: flex; font-family: var(--font-serif); font-style: italic; font-weight: 700;
+  text-transform: none; letter-spacing: 1px; font-size: 28px; color: var(--card-ink);
+  margin-bottom: 40px; padding-bottom: 18px; border-bottom: 4px solid var(--card-ink);
+}
+.card[data-theme="editorial"].role-cover .card-eyebrow::after { display: none; }
+
+.card[data-theme="editorial"].role-cover .card-body { display: flex; flex-direction: column; justify-content: center; }
+.card[data-theme="editorial"].role-cover .card-body h1 {
+  font-family: 'Noto Serif SC', serif; font-weight: 900; font-size: 96px; line-height: 1.02;
+  letter-spacing: -2px; color: var(--card-ink); margin: 0 0 6px;
+}
+.card[data-theme="editorial"].role-cover .card-body h2 {
+  font-family: 'Noto Serif SC', serif; font-weight: 700; font-size: 40px; color: var(--card-accent);
+  margin: 26px 0 0; letter-spacing: 0; line-height: 1.3;
+}
+.card[data-theme="editorial"].role-cover .card-body p {
+  font-size: 30px; font-weight: 400; color: var(--card-dim); margin: 22px 0 0; line-height: 1.55;
+}
+.card[data-theme="editorial"].role-cover .card-media.is-empty {
+  background: var(--card-bg); box-shadow: inset 0 0 0 2px var(--card-rule);
+}
+/* markdown :: 栏目（若使用） */
+.card[data-theme="editorial"].role-cover .md-eyebrow {
+  display: flex; align-items: center; gap: 12px; font-family: var(--font-serif);
+  font-style: italic; font-weight: 700; font-size: 28px; color: var(--card-ink); margin: 0 0 32px;
+}
+
+/* ===================== 正文 role-body ===================== */
+.card[data-theme="editorial"].role-body { background: var(--card-bg); }
+.card[data-theme="editorial"].role-body .card-head {
+  border-bottom: 4px solid var(--card-ink); padding-bottom: 18px; margin-bottom: 40px;
+}
+.card[data-theme="editorial"].role-body .card-eyebrow {
+  font-family: var(--font-serif); font-style: italic; font-weight: 700; text-transform: none;
+  letter-spacing: 0.5px; font-size: 26px; color: var(--card-ink); margin-bottom: 0;
+}
+.card[data-theme="editorial"].role-body .card-eyebrow::after { display: none; }
+.card[data-theme="editorial"].role-body .card-progress.kind-numbers { font-family: 'Inter', 'Noto Sans SC', sans-serif; gap: 8px; }
+.card[data-theme="editorial"].role-body .card-progress.kind-numbers .pg { font-size: 18px; font-weight: 800; letter-spacing: 1px; color: var(--card-dim); }
+.card[data-theme="editorial"].role-body .card-progress.kind-numbers .pg.active { font-size: 18px; color: var(--card-accent); }
+.card[data-theme="editorial"].role-body .card-body h1 { font-family: 'Noto Serif SC', serif; font-size: 76px; font-weight: 900; line-height: 1.06; margin: 0 0 24px; }
+.card[data-theme="editorial"].role-body .card-body h2 { font-family: 'Noto Serif SC', serif; font-size: 52px; font-weight: 700; line-height: 1.2; margin: 0 0 28px; }
+.card[data-theme="editorial"].role-body .card-body h2:first-child { margin-top: 0; }
+.card[data-theme="editorial"].role-body .card-body h3 { font-size: 36px; font-weight: 700; color: var(--card-accent); margin: 28px 0 14px; }
+.card[data-theme="editorial"].role-body .card-body p { font-size: 32px; font-weight: 400; line-height: 1.7; margin: 0 0 26px; }
+.card[data-theme="editorial"].role-body .card-body li { font-size: 31px; line-height: 1.6; }
+.card[data-theme="editorial"].role-body .card-body ul li::before { background: var(--card-accent); }
+.card[data-theme="editorial"].role-body .card-body ol li::before { color: var(--card-accent); }
+.card[data-theme="editorial"].role-body .card-body blockquote {
+  font-family: 'Noto Serif SC', serif; font-style: italic; font-size: 30px; line-height: 1.5;
+  padding-left: 24px; border-left: 4px solid var(--card-accent); color: var(--card-ink); margin: 32px 0;
+}
+.card[data-theme="editorial"].role-body .card-foot {
+  border-top: 4px solid var(--card-ink); padding-top: 22px; font-family: var(--font-serif);
+  font-style: italic; font-size: 22px; color: var(--card-ink); letter-spacing: 0; text-transform: none;
+}
+.card[data-theme="editorial"].role-body .card-body .body-figure.is-empty {
+  background: var(--card-bg); box-shadow: inset 0 0 0 2px var(--card-rule);
+}
+
+/* ===================== 尾页 role-end ===================== */
+.card[data-theme="editorial"].role-end .card-body { justify-content: center; align-items: stretch; text-align: left; }
+.card[data-theme="editorial"].role-end .card-body .body-figure { display: none; }
+.card[data-theme="editorial"].role-end .card-eyebrow { justify-content: flex-start; }
+.card[data-theme="editorial"].role-end .card-body h1 { font-size: 84px; font-weight: 900; line-height: 1.1; margin: 0 0 24px; }
+.card[data-theme="editorial"].role-end .card-body h2 { font-size: 36px; font-weight: 700; color: var(--card-accent); margin: 0 0 28px; }
+.card[data-theme="editorial"].role-end .card-body p { font-size: 30px; font-weight: 400; line-height: 1.7; color: var(--card-dim); }
+.card[data-theme="editorial"].role-end .card-foot { display: flex; }

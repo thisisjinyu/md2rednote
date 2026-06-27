@@ -14,11 +14,15 @@
       { id: "bigtitle", label: "高亮大标题·纯文字", base: "none", bold: true },
       { id: "vtitle", label: "竖排标题", base: "split", bold: true },
     ],
+    editorial: [
+      { id: "bigtitle_img", label: "大标题下图", base: "bottom", bold: true },
+    ],
   };
 
   // 各风格页码进度的视觉类型：dots/dashes/bars/numbers/arrows
   const PROGRESS_KIND = {
     kinfolk: "dots",
+    editorial: "numbers",
   };
 
   // 示例：首页=封面（标题/副标题/描述 + 末尾图片），中间=正文，末页=尾页

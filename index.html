@@ -3,15 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>md2rednote · Markdown → 小红书图文（Kinfolk 精简版）</title>
-  <meta name="description" content="把 Markdown 一键排版成北欧极简 Kinfolk 风格的小红书竖版图片。纯 HTML+CSS+JS，零框架。" />
+  <title>md2rednote · Markdown → 小红书图文</title>
+  <meta name="description" content="把 Markdown 一键排版成小红书竖版图片。纯 HTML+CSS+JS，零框架。" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500;1,700&family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/style.css" />
   <link rel="stylesheet" href="assets/css/base.css" />
   <link rel="stylesheet" href="assets/css/kinfolk.css" />
   <link rel="stylesheet" href="assets/css/cover.css" />
+  <link rel="stylesheet" href="assets/css/editorial.css" />
   <link rel="stylesheet" href="assets/css/debug.css" />
   <style>
     /* 导出 PDF：浏览器原生打印，矢量输出，每张卡片占一页（与卡片同比 1080×1440） */
@@ -36,10 +37,11 @@
         <span>风格</span>
         <select id="theme">
           <option value="kinfolk" selected>北欧极简 Kinfolk</option>
+          <option value="editorial">高端杂志 Editorial</option>
         </select>
       </label>
       <label class="field">
-        <span>封面方案</span>
+        <span>方案</span>
         <select id="imageLayout"></select>
       </label>
       <label class="field field-check">
@@ -99,7 +101,7 @@
         <button id="loadSample" class="btn btn-ghost">载入示例</button>
       </div>
       <textarea id="input" spellcheck="false" placeholder="在这里粘贴 Markdown，用 --- 分页"></textarea>
-      <p class="hint">用单独一行的 <code>---</code> 分页 · 首页为封面、末页为尾页，中间为正文 · 图片在每页<strong>末尾用 ![](图片链接) 插入</strong>，无图则显示占位框 · 支持 # 标题、**加粗**、*斜体*、&gt; 引用、- 列表、==高亮== · 封面方案随风格切换（仅作用于首页） · 勾选“图片取色”按封面图主色生成 6:3:1 配色 · 勾选“网格”叠加 8 列参考网格（格子为正方形、带 Excel 式编号，不进导出） · 导出为 PDF：在打印对话框选“另存为 PDF”，边距选“无”</p>
+      <p class="hint">用单独一行的 <code>---</code> 分页 · 首页为封面、末页为尾页，中间为正文 · 图片在每页<strong>末尾用 ![](图片链接) 插入</strong>，无图则显示占位框 · 支持 # 标题、**加粗**、*斜体*、&gt; 引用、- 列表、==高亮== · 方案随风格切换（仅作用于首页） · 勾选“图片取色”按封面图主色生成 6:3:1 配色 · 勾选“网格”叠加 8 列参考网格（格子为正方形、带 Excel 式编号，不进导出） · 导出为 PDF：在打印对话框选“另存为 PDF”，边距选“无”</p>
     </section>
   </main>
 
