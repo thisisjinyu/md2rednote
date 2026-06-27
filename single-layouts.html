@@ -153,17 +153,22 @@ body{font-family:'Noto Sans SC',sans-serif;background:#eceae3;color:var(--ink);p
 .lay-ring .legend .feat{flex-direction:column;align-items:center;text-align:center;gap:10px}
 
 /* 16 有机画框 */
-.lay-blob{position:relative;background:var(--paper)}
-.lay-blob .blob-accent{position:absolute;left:-70px;bottom:-70px;width:360px;height:360px;border-radius:42% 58% 50% 50%/55% 45% 55% 45%;background:var(--sage-soft);z-index:0}
-.lay-blob .deco-leaf{position:absolute;left:40px;bottom:48px;width:130px;height:130px;color:#c4d0a4;opacity:.7;transform:rotate(-12deg);z-index:0}
-.lay-blob .pic{position:absolute;inset:0;background:var(--hero) center/cover;clip-path:path("M560 0 L1080 0 L1080 1440 L470 1440 C510 1200 400 1040 510 880 C600 740 430 600 540 430 C600 250 510 160 560 0 Z");z-index:1}
-.lay-blob .badge{position:absolute;top:66px;left:70px;width:98px;height:74px;border-radius:50%;background:var(--sage-deep);color:#fff;display:grid;place-items:center;font:800 42px/1 'Noto Serif SC';z-index:3}
-.lay-blob .txt{position:absolute;left:70px;top:176px;width:380px;display:flex;flex-direction:column;gap:28px;z-index:2}
-.lay-blob .h-title{color:var(--sage-deep);font-size:86px}
-.lay-blob .h-sub{color:var(--muted)}
-.lay-blob .feat-list{gap:30px;margin-top:14px}
-.lay-blob .feat b{font-size:32px}.lay-blob .feat span{font-size:25px}
-.lay-blob .brand{position:absolute;left:72px;bottom:84px;font:italic 600 32px/1.3 'Playfair Display';color:var(--sage-deep);z-index:2}
+.lay-blob{position:relative;background:#f4f1e8}
+.lay-blob .blob-br{position:absolute;right:-70px;bottom:-90px;width:340px;height:260px;border-radius:50%;background:#dce6c6;z-index:0}
+.lay-blob .deco-leaf{position:absolute;left:40px;top:648px;width:172px;height:172px;color:#cdd9b2;opacity:.6;transform:rotate(8deg);z-index:0}
+.lay-blob .branch{position:absolute;left:300px;bottom:128px;width:300px;height:84px;color:#9bb06a;opacity:.85;z-index:1}
+.lay-blob .pic{position:absolute;inset:0;background:var(--hero) center/cover;clip-path:path("M560 40 L1006 40 Q1044 40 1044 78 L1044 1202 Q1044 1240 1006 1240 L540 1240 C470 1040 620 860 520 660 C450 500 620 300 560 40 Z");z-index:1}
+.lay-blob .badge{position:absolute;top:62px;left:72px;width:88px;height:88px;border-radius:50%;background:var(--sage-deep);color:#fff;display:grid;place-items:center;font:800 40px/1 'Noto Serif SC';z-index:3}
+.lay-blob .txt{position:absolute;left:74px;top:182px;width:392px;display:flex;flex-direction:column;gap:24px;z-index:2}
+.lay-blob .h-title{color:var(--sage-deep);font-size:58px;line-height:1.26}
+.lay-blob .h-sub{color:var(--muted);font-size:32px}
+.lay-blob .feat-list{flex-direction:row;gap:34px;margin-top:18px}
+.lay-blob .feat{flex-direction:column;align-items:flex-start;gap:12px}
+.lay-blob .feat .ic{width:64px;height:64px}
+.lay-blob .feat .ic svg{width:32px;height:32px}
+.lay-blob .feat b{font-size:28px}
+.lay-blob .feat span{font-size:23px;margin-top:3px}
+.lay-blob .brand{position:absolute;left:74px;bottom:100px;font:italic 600 30px/1.4 'Playfair Display';color:var(--sage-deep);z-index:2}
 </style>
 </head>
 <body>
@@ -210,7 +215,7 @@ body{font-family:'Noto Sans SC',sans-serif;background:#eceae3;color:var(--ink);p
 
 <figure class="cell"><figcaption><span class="num">15</span> 数据环 <small>· 环形 + 居中图</small></figcaption><div class="stage"><div class="card lay-ring"><p class="eyebrow">Morning Ritual</p><h2 class="h-title" style="font-size:80px">改变人生的 6 个晨间仪式</h2><div class="donut"></div><div class="legend"><div class="feat"><i class="ic"><svg><use href="#i-sun"/></svg></i><div><b>早起留白</b></div></div><div class="feat"><i class="ic"><svg><use href="#i-cup"/></svg></i><div><b>一杯温水</b></div></div><div class="feat"><i class="ic"><svg><use href="#i-leaf"/></svg></i><div><b>静坐冥想</b></div></div></div></div></div></figure>
 
-<figure class="cell"><figcaption><span class="num">16</span> 有机画框 <small>· 波浪边 clip-path</small></figcaption><div class="stage"><div class="card lay-blob"><div class="blob-accent"></div><svg class="deco-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor"><use href="#i-leaf"/></svg><div class="pic"></div><span class="badge">16</span><div class="txt"><h2 class="h-title">改变人生的<br>6 个晨间仪式</h2><p class="h-sub">把早晨，过成你喜欢的样子</p><div class="feat-list"><div class="feat"><i class="ic"><svg><use href="#i-sun"/></svg></i><div><b>早起留白</b><span>15 分钟</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-cup"/></svg></i><div><b>一杯温水</b><span>唤醒身体</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-leaf"/></svg></i><div><b>静坐冥想</b><span>安定心绪</span></div></div></div></div><div class="brand">Your morning.<br>Your life.</div></div></div></figure>
+<figure class="cell"><figcaption><span class="num">16</span> 有机画框 <small>· 温柔波浪边 + 悬浮图框</small></figcaption><div class="stage"><div class="card lay-blob"><div class="blob-br"></div><div class="pic"></div><svg class="deco-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor"><use href="#i-leaf"/></svg><svg class="branch" viewBox="0 0 300 84" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 64 C90 22 210 22 296 54"/><path d="M74 40 q12 -18 32 -16 q-8 17 -32 16"/><path d="M156 30 q12 -18 32 -16 q-8 17 -32 16"/></svg><span class="badge">16</span><div class="txt"><h2 class="h-title">改变人生的<br>6 个晨间仪式</h2><p class="h-sub">营养 · 运动 · 睡眠</p><div class="feat-list"><div class="feat"><i class="ic"><svg><use href="#i-sun"/></svg></i><div><b>早起留白</b><span>15 分钟</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-leaf"/></svg></i><div><b>静坐冥想</b><span>安定心绪</span></div></div></div></div><div class="brand">Your morning.<br>Your life.</div></div></div></figure>
 
 </div>
 </body>
