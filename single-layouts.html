@@ -169,6 +169,21 @@ body{font-family:'Noto Sans SC',sans-serif;background:#eceae3;color:var(--ink);p
 .lay-blob .feat b{font-size:28px}
 .lay-blob .feat span{font-size:23px;margin-top:3px}
 .lay-blob .brand{position:absolute;left:74px;bottom:100px;font:italic 600 30px/1.4 'Playfair Display';color:var(--sage-deep);z-index:2}
+
+/* 17 斜角图框 + 三角 */
+.lay-tri{position:relative;background:#f6f3ec}
+.lay-tri .pic{position:absolute;inset:0;background:var(--hero) center/cover;clip-path:polygon(540px 48px,1000px 48px,1040px 92px,1040px 1144px,1000px 1188px,330px 1188px);z-index:1}
+.lay-tri .tri{position:absolute;left:0;bottom:0;width:1080px;height:380px;background:var(--sage);clip-path:polygon(0 38%,0 100%,100% 100%);z-index:2}
+.lay-tri .txt{position:absolute;left:74px;top:150px;width:440px;display:flex;flex-direction:column;gap:22px;z-index:3}
+.lay-tri .h-title{color:var(--sage-deep);font-size:72px;line-height:1.22}
+.lay-tri .h-sub{color:var(--muted);font-size:30px;font-weight:500}
+.lay-tri .feats{position:absolute;left:74px;top:608px;width:300px;display:flex;flex-direction:column;gap:30px;z-index:3}
+.lay-tri .feat{display:flex;align-items:center;gap:18px}
+.lay-tri .feat .ic{flex:0 0 auto;width:58px;height:58px;border-radius:50%;background:var(--sage-soft);color:var(--sage-deep);display:grid;place-items:center}
+.lay-tri .feat .ic svg{width:30px;height:30px}
+.lay-tri .feat b{display:block;font:600 27px/1.1 'Noto Sans SC';color:var(--ink)}
+.lay-tri .feat span{display:block;font:400 21px/1.2 'Noto Sans SC';color:var(--muted);margin-top:3px}
+.lay-tri .brand{position:absolute;left:74px;bottom:92px;z-index:3;font:italic 600 32px/1.42 'Playfair Display';color:#fff}
 </style>
 </head>
 <body>
@@ -180,7 +195,7 @@ body{font-family:'Noto Sans SC',sans-serif;background:#eceae3;color:var(--ink);p
 
 <div class="page-hd">
  <h1>单图版式画廊</h1>
- <p>同一条文案《改变人生的 6 个晨间仪式》· 16 种 3:4 版式 · 纯比布局差异</p>
+ <p>同一条文案《改变人生的 6 个晨间仪式》· 17 种 3:4 版式 · 纯比布局差异</p>
 </div>
 
 <div class="gallery">
@@ -216,6 +231,8 @@ body{font-family:'Noto Sans SC',sans-serif;background:#eceae3;color:var(--ink);p
 <figure class="cell"><figcaption><span class="num">15</span> 数据环 <small>· 环形 + 居中图</small></figcaption><div class="stage"><div class="card lay-ring"><p class="eyebrow">Morning Ritual</p><h2 class="h-title" style="font-size:80px">改变人生的 6 个晨间仪式</h2><div class="donut"></div><div class="legend"><div class="feat"><i class="ic"><svg><use href="#i-sun"/></svg></i><div><b>早起留白</b></div></div><div class="feat"><i class="ic"><svg><use href="#i-cup"/></svg></i><div><b>一杯温水</b></div></div><div class="feat"><i class="ic"><svg><use href="#i-leaf"/></svg></i><div><b>静坐冥想</b></div></div></div></div></div></figure>
 
 <figure class="cell"><figcaption><span class="num">16</span> 有机画框 <small>· 温柔波浪边 + 悬浮图框</small></figcaption><div class="stage"><div class="card lay-blob"><div class="blob-br"></div><div class="pic"></div><svg class="deco-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor"><use href="#i-leaf"/></svg><svg class="branch" viewBox="0 0 300 84" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 64 C90 22 210 22 296 54"/><path d="M74 40 q12 -18 32 -16 q-8 17 -32 16"/><path d="M156 30 q12 -18 32 -16 q-8 17 -32 16"/></svg><span class="badge">16</span><div class="txt"><h2 class="h-title">改变人生的<br>6 个晨间仪式</h2><p class="h-sub">营养 · 运动 · 睡眠</p><div class="feat-list"><div class="feat"><i class="ic"><svg><use href="#i-sun"/></svg></i><div><b>早起留白</b><span>15 分钟</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-leaf"/></svg></i><div><b>静坐冥想</b><span>安定心绪</span></div></div></div></div><div class="brand">Your morning.<br>Your life.</div></div></div></figure>
+
+<figure class="cell"><figcaption><span class="num">17</span> 斜角图框 + 三角 <small>· 夹角 clip-path</small></figcaption><div class="stage"><div class="card lay-tri"><div class="pic"></div><div class="tri"></div><div class="txt"><h2 class="h-title">改变人生的<br>6 个晨间仪式</h2><p class="h-sub">把早晨，过成喜欢的样子</p></div><div class="feats"><div class="feat"><i class="ic"><svg><use href="#i-sun"/></svg></i><div><b>早起留白</b><span>给自己 15 分钟</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-cup"/></svg></i><div><b>一杯温水</b><span>温柔唤醒身体</span></div></div><div class="feat"><i class="ic"><svg><use href="#i-leaf"/></svg></i><div><b>静坐冥想</b><span>安定一天心绪</span></div></div></div><div class="brand">Better food<br>Better you</div></div></div></figure>
 
 </div>
 </body>
