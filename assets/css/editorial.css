@@ -38,6 +38,7 @@
    - 所有标签(页眉/标题)：左右贴网格左右 → left/right:68px
    - 页眉最底端贴网格顶端 → 底边在 y=134.125(=158.125-24)
    - 图片左上角=A5半高(卡外663.0625→639.0625)、右下角=H10半高(卡外1232.4375→底inset183.5625)
+   - 标题居中，H1=128，H2 在 H1 上方
    ==================================================================== */
 .card[data-theme="editorial"].role-cover.layout-bottom { display: block; padding: 0; }
 .card[data-theme="editorial"].role-cover.layout-bottom .li-content { display: contents; }
@@ -53,13 +54,13 @@
 .card[data-theme="editorial"].role-cover .card-eyebrow::after { display: none; }
 .card[data-theme="editorial"].role-cover .md-eyebrow { display: flex; align-items: center; gap: 12px; font-family: var(--font-serif); font-style: italic; font-weight: 700; font-size: 28px; color: var(--card-ink); margin: 0; }
 
-/* 标题标签：左右贴网格，纵向位于页眉底(网格顶)与图片顶之间，垂直居中 */
+/* 标题标签：左右贴网格，纵向位于页眉底(网格顶)与图片顶之间；水平居中，H2 在 H1 上方 */
 .card[data-theme="editorial"].role-cover .card-body {
   position: absolute; left: 68px; right: 68px; top: 134.125px; bottom: 752.9375px;
-  display: flex; flex-direction: column; justify-content: center;
+  display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
 }
-.card[data-theme="editorial"].role-cover .card-body h1 { font-family: 'Noto Serif SC', serif; font-weight: 900; font-size: 96px; line-height: 1.02; letter-spacing: -2px; color: var(--card-ink); margin: 0 0 6px; }
-.card[data-theme="editorial"].role-cover .card-body h2 { font-family: 'Noto Serif SC', serif; font-weight: 700; font-size: 40px; color: var(--card-accent); margin: 26px 0 0; letter-spacing: 0; line-height: 1.3; }
+.card[data-theme="editorial"].role-cover .card-body h1 { font-family: 'Noto Serif SC', serif; font-weight: 900; font-size: 128px; line-height: 1.02; letter-spacing: -2px; color: var(--card-ink); margin: 0; }
+.card[data-theme="editorial"].role-cover .card-body h2 { order: -1; font-family: 'Noto Serif SC', serif; font-weight: 700; font-size: 40px; color: var(--card-accent); margin: 0 0 20px; letter-spacing: 0; line-height: 1.3; }
 .card[data-theme="editorial"].role-cover .card-body p { font-size: 30px; font-weight: 400; color: var(--card-dim); margin: 22px 0 0; line-height: 1.55; }
 
 /* 图片：左上角 A5 半高、右下角 H10 半高，左右贴网格 */

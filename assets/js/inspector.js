@@ -1,4 +1,4 @@
-/* 调试面板 · HTML 框展示当前页卡片真实渲染的 HTML；CSS 框按命中标签合并为单行精简声明；
+/* 调试面板 · HTML 框展示当前页卡片真实渲染的 HTML（从卡片根节点起，含外框）；CSS 框按命中标签合并为单行精简声明；
    三栏联动：点击「展示 / HTML / CSS」任一处，另两处对应部分高亮（再点一下取消）。
    随 #card 自动刷新，与 app.js 解耦。所有对 #card 的标记/高亮写入都在 observer 断开期间进行，避免反馈循环。 */
 (function () {
@@ -88,21 +88,21 @@
 
   function update() {
     observer.disconnect();
-    /* 清掉上一轮的标记与高亮，保证重建状态干净 */
+    /* 清掉上一轮的标记与高亮（含卡片根节点自身），保证重建状态干净 */
+    card.removeAttribute('data-insp-idx');
+    card.classList.remove('insp-active');
     Array.prototype.forEach.call(card.querySelectorAll('[data-insp-idx]'), function (n) {
       n.removeAttribute('data-insp-idx');
       n.classList.remove('insp-active');
     });
     activeIdx = null;
 
-    /* 1) 卡片内部直接子元素作为顶层，递归输出真实 HTML；同时收集展示出的元素 */
-    var rootKids = Array.prototype.filter.call(card.childNodes, function (n) { return n.nodeType === 1; });
+    /* 1) 从卡片根节点（含 24px 外框）开始递归输出真实 HTML；同时收集展示出的元素 */
     var displayed = [];
     try {
-      var html = '';
-      rootKids.forEach(function (k) { html += prettyNode(k, 0, displayed); });
+      var html = prettyNode(card, 0, displayed);
       codeHtml.innerHTML = html || '（空）';
-    } catch (e) { codeHtml.textContent = card.innerHTML; }
+    } catch (e) { codeHtml.textContent = card.outerHTML; }
 
     /* 2) 只针对展示出的标签，把命中规则合并为一个单行声明块（同 idx 与 HTML 联动） */
     var els = displayed;
@@ -158,7 +158,11 @@
     Array.prototype.forEach.call(codeHtml.querySelectorAll('.insp-active'), function (n) { n.classList.remove('insp-active'); });
     Array.prototype.forEach.call(codeCss.querySelectorAll('.insp-active'), function (n) { n.classList.remove('insp-active'); });
     var ca = card.querySelectorAll('.insp-active');
-    if (ca.length) mutateCard(function () { Array.prototype.forEach.call(ca, function (n) { n.classList.remove('insp-active'); }); });
+    var cardActive = card.classList.contains('insp-active');
+    if (ca.length || cardActive) mutateCard(function () {
+      Array.prototype.forEach.call(ca, function (n) { n.classList.remove('insp-active'); });
+      if (cardActive) card.classList.remove('insp-active');
+    });
   }
   function setActive(idx) {
     if (idx != null && idx === activeIdx) { clearActive(); activeIdx = null; return; }
@@ -169,7 +173,7 @@
     addClass(hs, 'insp-active');
     var cs = codeCss.querySelectorAll('[data-idx=' + q + idx + q + ']');
     addClass(cs, 'insp-active');
-    var el = card.querySelector('[data-insp-idx=' + q + idx + q + ']');
+    var el = card.getAttribute('data-insp-idx') === idx ? card : card.querySelector('[data-insp-idx=' + q + idx + q + ']');
     if (el) mutateCard(function () { el.classList.add('insp-active'); });
     if (hs[0]) hs[0].scrollIntoView({ block: 'nearest' });
     if (cs[0]) cs[0].scrollIntoView({ block: 'nearest' });
