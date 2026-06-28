@@ -287,10 +287,10 @@
     const ink = hslToHex(bh, Math.min(bs * 0.75, 0.5), 0.20);
     const dim = hslToHex(bh, Math.min(bs * 0.5, 0.35), 0.46);
     const rule = hslToHex(bh, Math.min(bs * 0.42, 0.3), 0.72);
-    // 强调色：互补色相；去掉高饱和（不再 ×1.3 放大、下限不再锁 0.6），改为跟随主色并封顶到中低饱和
+    // 强调色：互补色相；饱和适中（比高饱和柔、比纯跟随主色鲜），明度略提避免发暗
     const ch = bh + 0.5;
-    const cs = clamp(bs0, 0.22, 0.5);
-    const accent = hslToHex(ch, cs, 0.46);
+    const cs = clamp(bs0 * 1.1, 0.4, 0.62);
+    const accent = hslToHex(ch, cs, 0.5);
     return { bg, bg2, ink, dim, rule, accent };
   }
 
@@ -326,6 +326,11 @@
   function applyColorsToCard() {
     const on = $("autoColor").checked;
     const url = coverImgSrc();
+    // 换图后随新图重新取色：当前封面图还没算过就先异步算，算完再回来应用（任何渲染路径都会随新图重算）
+    if (on && url && !(url in colorCache)) {
+      ensureColors(url).then(() => { if (coverImgSrc() === url) applyColorsToCard(); });
+      return;
+    }
     const pal = on && url ? colorCache[url] : null;
     if (pal) {
       card.style.setProperty("--card-bg", pal.bg);
@@ -395,7 +400,8 @@
       ? `<div class="body-text">${textHtml}</div><div class="body-figure${hasFig ? "" : " is-empty"}">${hasFig ? fig.imgHtml : ""}</div>`
       : textHtml;
     const bodyHtml = `<div class="card-body">${bodyInner}</div>`;
-    const footHtml = `<div class="card-foot"><span class="card-brand">${escapeAttr(brand)}</span></div>`;
+    // 页脚：品牌在左、页码在右（base.css 已预留 .page-no 样式）
+    const footHtml = `<div class="card-foot"><span class="card-brand">${escapeAttr(brand)}</span><span class="page-no">${no} / ${tot}</span></div>`;
 
     // 封面图框：取自本页 markdown 末尾图片；本页无图则显示占位框
     const media = useImg

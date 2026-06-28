@@ -39,10 +39,10 @@
    - 页眉最底端贴网格顶端 → 底边在 y=134.125(=158.125-24)
    - 图片左上角=A5半高(卡外663.0625→639.0625)、右下角=H10半高(卡外1232.4375→底inset183.5625)
    - 标题居中，H1=128，H2 在 H1 上方且斜体
+   - 页脚显示在图片下方留白处
    ==================================================================== */
 .card[data-theme="editorial"].role-cover.layout-bottom { display: block; padding: 0; }
 .card[data-theme="editorial"].role-cover.layout-bottom .li-content { display: contents; }
-.card[data-theme="editorial"].role-cover .card-foot { display: none; }
 
 /* 页眉 masthead：左右贴网格，底边贴网格顶端；不斜体 */
 .card[data-theme="editorial"].role-cover .card-eyebrow {
@@ -70,6 +70,15 @@
   border-radius: 14px; overflow: hidden;
 }
 .card[data-theme="editorial"].role-cover .card-media.is-empty { background: var(--card-bg); box-shadow: inset 0 0 0 2px var(--card-rule); border-radius: 14px; }
+
+/* 封面页脚：显示在图片下方留白处，品牌左、页码右 */
+.card[data-theme="editorial"].role-cover .card-foot {
+  position: absolute; left: 68px; right: 68px; bottom: 72px; margin: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: none; padding-top: 0;
+  font-family: var(--font-serif); font-style: italic; font-size: 24px; color: var(--card-ink); letter-spacing: 0; text-transform: none;
+}
+.card[data-theme="editorial"].role-cover .card-foot .page-no { font-style: normal; font-size: 24px; color: var(--card-ink); }
 
 /* ===================== 正文 role-body ===================== */
 .card[data-theme="editorial"].role-body { background: var(--card-bg); }
@@ -100,6 +109,7 @@
   border-top: 4px solid var(--card-ink); padding-top: 22px; font-family: var(--font-serif);
   font-style: italic; font-size: 22px; color: var(--card-ink); letter-spacing: 0; text-transform: none;
 }
+.card[data-theme="editorial"].role-body .card-foot .page-no { font-style: normal; color: var(--card-ink); }
 .card[data-theme="editorial"].role-body .card-body .body-figure.is-empty {
   background: var(--card-bg); box-shadow: inset 0 0 0 2px var(--card-rule);
 }

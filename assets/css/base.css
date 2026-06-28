@@ -68,7 +68,7 @@
 .card-body ul + blockquote, .card-body ol + blockquote { margin-top: 26px; }
 .card-body figure { margin: 0 0 28px; }
 .card-body img { width: 100%; border-radius: 8px; display: block; }
-.card-foot { position: absolute; left: 88px; right: 88px; bottom: 64px; display: flex; align-items: center; justify-content: flex-end; font-family: var(--font-sans); font-size: 22px; letter-spacing: 2px; color: var(--card-dim); border-top: 1px solid var(--card-rule); padding-top: 22px; }
+.card-foot { position: absolute; left: 88px; right: 88px; bottom: 64px; display: flex; align-items: center; justify-content: space-between; font-family: var(--font-sans); font-size: 22px; letter-spacing: 2px; color: var(--card-dim); border-top: 1px solid var(--card-rule); padding-top: 22px; }
 .card-foot .card-brand { font-family: var(--font-sans); }
 .card-foot .page-no { font-family: var(--font-serif); font-size: 26px; color: var(--card-ink); }
 
@@ -135,4 +135,4 @@
 .card.role-body.bf .card-body .body-figure img:active { cursor: grabbing; }
 .card.role-end .card-body { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
 .card.role-end .card-eyebrow { justify-content: center; }
-.card.role-end .card-foot { justify-content: flex-end; }
+.card.role-end .card-foot { justify-content: space-between; }
