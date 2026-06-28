@@ -28,6 +28,13 @@
 .card .insp-active { background: rgba(54, 166, 255, 0.13); box-shadow: inset 2px 0 0 rgba(54, 166, 255, 0.92), inset -2px 0 0 rgba(54, 166, 255, 0.92); }
 
 /* ====================================================================
+   CSS 面板·关键信息摘要：标签名 / 字段标签 / 色块
+   ==================================================================== */
+.code-view .insp-tag { color: #9ecbff; font-weight: 700; }
+.code-view .insp-k { display: inline-block; min-width: 3.6em; color: #6f7c8c; }
+.code-view .insp-sw { display: inline-block; width: 11px; height: 11px; border-radius: 2px; vertical-align: middle; margin: 0 4px 0 2px; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3); }
+
+/* ====================================================================
    MODULAR GRID OVERLAY — 独立描边方块 + Excel 式编号（仅预览可见，导出不含）
    挂在 .card-frame 上（不进入导出克隆的 .card），顶栏「网格」勾选框控制显隐，默认隐藏。
    具体几何（inset / 模板 / 间距 / 格子与编号）由 grid.js 按选定列数动态计算并写入 inline，以保证格子恒为正方形。
