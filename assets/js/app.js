@@ -287,8 +287,9 @@
     const ink = hslToHex(bh, Math.min(bs * 0.75, 0.5), 0.20);
     const dim = hslToHex(bh, Math.min(bs * 0.5, 0.35), 0.46);
     const rule = hslToHex(bh, Math.min(bs * 0.42, 0.3), 0.72);
+    // 强调色：互补色相；去掉高饱和（不再 ×1.3 放大、下限不再锁 0.6），改为跟随主色并封顶到中低饱和
     const ch = bh + 0.5;
-    const cs = clamp(bs0 * 1.3, 0.6, 0.92);
+    const cs = clamp(bs0, 0.22, 0.5);
     const accent = hslToHex(ch, cs, 0.46);
     return { bg, bg2, ink, dim, rule, accent };
   }
