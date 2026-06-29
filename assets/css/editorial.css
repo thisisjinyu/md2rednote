@@ -13,6 +13,7 @@
   --card-soft-ink: #262320;
   --card-dim: #6b6b6b;
   --card-accent: #5a9e66;
+  --card-pop: #5a9e66;
   --card-rule: rgba(17, 17, 17, 0.16);
   --font-serif: 'Playfair Display', 'Noto Serif SC', Georgia, serif;
   --font-cjk: 'Noto Serif SC', 'Noto Sans SC', sans-serif;
@@ -25,7 +26,7 @@
 
 /* -------- 通用排版 -------- */
 .card[data-theme="editorial"] .card-body strong { color: var(--card-accent); font-weight: 900; }
-.card[data-theme="editorial"] .card-body em { color: var(--card-accent); font-style: normal; }
+.card[data-theme="editorial"] .card-body em { color: var(--card-pop); font-style: normal; }
 .card[data-theme="editorial"] .card-body mark { background: linear-gradient(transparent 56%, color-mix(in srgb, var(--card-accent) 36%, transparent) 56%); padding: 0 4px; }
 
 /* -------- 配图滤镜（杂志灰调） -------- */
@@ -40,8 +41,9 @@
    - 页眉最底端贴网格顶端 → 底边在 y=134.125(=158.125-24)
    - 图片左上角=A5半高(卡外663.0625→639.0625)、右下角=H10半高(卡外1232.4375→底inset183.5625)
    - 标题居中，H1=128，H2 在 H1 上方且与 H1 同一字体
-   - 封面不要页脚
+   - 封面不要页脚；外边框用强调色
    ==================================================================== */
+.card[data-theme="editorial"].role-cover { border-color: var(--card-accent); }
 .card[data-theme="editorial"].role-cover.layout-bottom { display: block; padding: 0; }
 .card[data-theme="editorial"].role-cover.layout-bottom .li-content { display: contents; }
 

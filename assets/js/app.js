@@ -76,7 +76,7 @@
   let pages = [];
   let index = 0;
 
-  // 图片取色缓存：url -> 631 调色板 | null(失败)
+  // 图片取色缓存：url -> 调色板 | null(失败)
   const colorCache = {};
 
   // 预览缩放比例（屏幕像素 → 卡片像素换算用）
@@ -208,7 +208,7 @@
       const on = i === cur ? " active" : "";
       let glyph = "";
       if (kind === "numbers") glyph = String(i).padStart(2, "0");
-      else if (kind === "arrows") glyph = i === cur ? "▶" : "›";
+      else if (kind === "arrows") glyph = i === cur ? "\u25b6" : "\u203a";
       marks += `<span class="pg${on}">${glyph}</span>`;
     }
     return `<div class="card-progress kind-${kind}">${marks}</div>`;
@@ -250,7 +250,7 @@
     return "#" + to(r) + to(g) + to(b);
   }
 
-  // 从图片提取主色调 → 生成 6:3:1 调色板
+  // 从图片提取主色调 → 生成调色板（含多巴胺强调色 pop）
   function extractPalette(img) {
     const w = 64, h = 64;
     const c = document.createElement("canvas");
@@ -287,11 +287,14 @@
     const ink = hslToHex(bh, Math.min(bs * 0.75, 0.5), 0.20);
     const dim = hslToHex(bh, Math.min(bs * 0.5, 0.35), 0.46);
     const rule = hslToHex(bh, Math.min(bs * 0.42, 0.3), 0.72);
-    // 强调色：互补色相；饱和适中（比高饱和柔、比纯跟随主色鲜），明度略提避免发暗
+    // 强调色：互补色相；饱和适中，明度略提避免发暗
     const ch = bh + 0.5;
     const cs = clamp(bs0 * 1.1, 0.4, 0.62);
     const accent = hslToHex(ch, cs, 0.5);
-    return { bg, bg2, ink, dim, rule, accent };
+    // 多巴胺强调色 pop：同互补色相、高饱和、明度稍高，更鲜艳跳脱
+    const popS = clamp(bs0 * 1.5, 0.72, 0.95);
+    const pop = hslToHex(ch, popS, 0.54);
+    return { bg, bg2, ink, dim, rule, accent, pop };
   }
 
   function ensureColors(url) {
@@ -322,7 +325,7 @@
     return "";
   }
 
-  const PAL_VARS = ["--card-bg", "--card-bg-2", "--card-ink", "--card-dim", "--card-rule", "--card-accent"];
+  const PAL_VARS = ["--card-bg", "--card-bg-2", "--card-ink", "--card-dim", "--card-rule", "--card-accent", "--card-pop"];
   function applyColorsToCard() {
     const on = $("autoColor").checked;
     const url = coverImgSrc();
@@ -339,6 +342,7 @@
       card.style.setProperty("--card-dim", pal.dim);
       card.style.setProperty("--card-rule", pal.rule);
       card.style.setProperty("--card-accent", pal.accent);
+      card.style.setProperty("--card-pop", pal.pop);
     } else {
       PAL_VARS.forEach((v) => card.style.removeProperty(v));
     }
