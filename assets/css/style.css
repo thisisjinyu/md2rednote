@@ -59,10 +59,11 @@ body {
 .hint code { background: var(--panel-2); padding: 1px 5px; border-radius: 4px; }
 
 /* ---------- Preview ---------- */
-.preview-pane { display: flex; flex-direction: column; min-height: 0; }
-.stage { flex: 1; display: flex; align-items: center; justify-content: center; padding: 24px; min-height: 0; overflow: hidden; background: repeating-linear-gradient(45deg, rgba(255,255,255,0.012) 0 12px, transparent 12px 24px); }
-.card-frame { box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5); border-radius: 6px; overflow: hidden; }
-.pager { display: flex; align-items: center; justify-content: center; gap: 16px; padding: 14px; border-top: 1px solid var(--line); }
+/* 预览画布用「不是纯白的白色」背景，让深色卡片边框能看清 */
+.preview-pane { display: flex; flex-direction: column; min-height: 0; background: #e9e6e0; }
+.stage { flex: 1; display: flex; align-items: center; justify-content: center; padding: 24px; min-height: 0; overflow: hidden; background: repeating-linear-gradient(45deg, rgba(0,0,0,0.022) 0 12px, transparent 12px 24px), #e9e6e0; }
+.card-frame { box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28); border-radius: 6px; overflow: hidden; }
+.pager { display: flex; align-items: center; justify-content: center; gap: 16px; padding: 14px; border-top: 1px solid var(--line); background: var(--panel); color: var(--text); }
 .counter { font-family: var(--font-serif); font-size: 15px; letter-spacing: 1px; min-width: 80px; text-align: center; }
 
 /* ---------- Responsive ---------- */
