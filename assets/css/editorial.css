@@ -2,7 +2,7 @@
    editorial.css · 风格（高端杂志 Editorial，源自 HE 健康饮食）
    厚边框 + 衰线大标题 + 森绿强调色；HE01 配色为默认。
    勾选「图片取色」时 app.js 会以封面图主色 inline 覆盖 --card-* 变量。
-   边框：封面/正文/尾页统一 24px，颜色用强调色的浅版（L=75%，见 --card-border）。
+   边框：封面/正文/尾页统一 24px。颜色：封面用满强调色 --card-accent；正文/尾页用浅版 --card-border（L=75%）。
    文字色（固定、不随取色变）：
      --card-soft-ink = hsl(0,0%,5%)  → 标题（H1/H2/尾页标题）
      --card-body-ink = hsl(0,0%,10%) → 正文页除 H2/页眉/页脚 外的所有文字标签
@@ -26,7 +26,7 @@
   --card-accent: #5a9e66;
   --card-pop: #5a9e66;
   --card-rule: rgba(17, 17, 17, 0.16);
-  /* 边框色：取当前强调色（取色开启时为图片派生色），亮度压到 75% → 浅一倍 */
+  /* 浅边框色（仅正文/尾页用）：取当前强调色，亮度压到 75% → 浅一倍 */
   --card-border: hsl(from var(--card-accent) h s 75%);
   --font-serif: 'Playfair Display', 'Noto Serif SC', Georgia, serif;
   --font-cjk: 'Noto Serif SC', 'Noto Sans SC', sans-serif;
@@ -52,6 +52,8 @@
    标题 top134.125 bottom752.9375；图片 top639.0625 bottom183.5625。
    标题居中，H1=128 用 soft-ink(5%)；H1 中 strong/em 与 H2 用主色多巴胺色(pop)、不变。
    ==================================================================== */
+/* 封面边框保留满强调色（不变浅） */
+.card[data-theme="editorial"].role-cover { border-color: var(--card-accent); }
 .card[data-theme="editorial"].role-cover.layout-bottom { display: block; padding: 0; }
 .card[data-theme="editorial"].role-cover.layout-bottom .li-content { display: contents; }
 
