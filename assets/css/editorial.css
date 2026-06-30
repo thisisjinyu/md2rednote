@@ -3,7 +3,8 @@
    厚边框 + 衰线大标题 + 森绿强调色；HE01 配色为默认。
    勾选「图片取色」时 app.js 会以封面图主色 inline 覆盖 --card-* 变量。
    边框：正文与封面都用强调色；正文 24px，封面加厚到 40px（更大胆）。
-   注意：封面边框 40px 后，padding 盒原点从 24 移到 40，所以封面所有绝对定位值都在「卡外坐标-40」（比 24px 时再 -16）。
+   标题/页眉/页脚的字都用固定 #0f0f0f = hsl(0,0%,5.9%)（存于 --card-soft-ink，不随取色变）；封面强调字(pop)不变。
+   注意：封面边框 40px 后，padding 盒原点从 24 移到 40，所以封面所有绝对定位值都在「卡外坐标-40」。
    正文水平内边距 68px（+24 边框 = 92 外坐标）使所有内容对齐网格左右边。
    ==================================================================== */
 
@@ -12,7 +13,8 @@
   --card-bg: #f8f7f3;
   --card-bg-2: #f8f7f3;
   --card-ink: #111111;
-  --card-soft-ink: #262320;
+  /* 标题/页眉/页脚 专用固定色 = #0f0f0f（不在 PAL_VARS 里，不随图片取色变化） */
+  --card-soft-ink: hsl(0, 0%, 5.9%);
   --card-dim: #6b6b6b;
   --card-accent: #5a9e66;
   --card-pop: #5a9e66;
@@ -38,16 +40,16 @@
 /* ====================================================================
    封面 role-cover · 大标题下图（对齐 8×10 网格，边框 40px）
    网格（卡外坐标）：左92 右988 顶158.125 底1281.875；A5中663.0625，H10中1232.4375。
-   边框 40px → 绝对定位值 = 卡外坐标 - 40：left/right 52；页眉 bottom1241.875(底边@网格顶)；
-   标题 top118.125 bottom736.9375；图片 top623.0625(A5中) bottom167.5625(H10中)。
-   标题居中，H1=128；H1 中 strong/em 统一用主色多巴胺色；H2 也用主色多巴胺色、不斜体，在 H1 上方。
+   边框 40px → 绝对定位值 = 卡外坐标 - 40：left/right 52；页眉 bottom1241.875；
+   标题 top118.125 bottom736.9375；图片 top623.0625 bottom167.5625。
+   标题居中，H1=128 用固定 #0f0f0f；H1 中 strong/em 与 H2 用主色多巴胺色(pop)、不变。
    图片上方小圆角、下方方角；封面不要页脚。
    ==================================================================== */
 .card[data-theme="editorial"].role-cover { border-width: 40px; }
 .card[data-theme="editorial"].role-cover.layout-bottom { display: block; padding: 0; }
 .card[data-theme="editorial"].role-cover.layout-bottom .li-content { display: contents; }
 
-/* 页眉 masthead：左右贴网格，底边贴网格顶端；不斜体；非纯黑黑色字 */
+/* 页眉 masthead：左右贴网格，底边贴网格顶端；不斜体；#0f0f0f */
 .card[data-theme="editorial"].role-cover .card-eyebrow {
   position: absolute; left: 52px; right: 52px; bottom: 1241.875px; margin: 0;
   display: flex; align-items: flex-end; font-family: var(--font-serif); font-style: normal;
@@ -63,7 +65,7 @@
   display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
 }
 .card[data-theme="editorial"].role-cover .card-body h1 { font-family: 'Noto Serif SC', serif; font-weight: 900; font-size: 128px; line-height: 1.02; letter-spacing: -2px; color: var(--card-soft-ink); margin: 0; }
-/* H1 里的 strong(**粗体**) 与 em(*斜体*) 统一：同为主色多巴胺色、不斜体、续用 H1 字重 */
+/* H1 里的 strong(**粗体**) 与 em(*斜体*) 统一：同为主色多巴胺色、不斜体、续用 H1 字重（封面强调不变） */
 .card[data-theme="editorial"].role-cover .card-body h1 em,
 .card[data-theme="editorial"].role-cover .card-body h1 strong { color: var(--card-pop); font-style: normal; font-weight: inherit; }
 .card[data-theme="editorial"].role-cover .card-body h2 { order: -1; font-family: 'Noto Serif SC', serif; font-style: normal; font-weight: 700; font-size: 40px; color: var(--card-pop); margin: 0 0 20px; letter-spacing: 0; line-height: 1.3; }
@@ -81,7 +83,8 @@
 .card[data-theme="editorial"].role-cover .card-foot { display: none; }
 
 /* ===================== 正文 role-body =====================
-   边框 24px 强调色（比封面细，同色差异）；页眉页脚与其他标签都对齐网格左右边（随卡片 68px 内边距）；页脚位置与对齐方式同封面（left/right:68、bottom:72）；均不斜体。
+   边框 24px 强调色（比封面细，同色差异）；标题/页眉/页脚 用固定 #0f0f0f；
+   所有标签对齐网格左右边（随卡片 68px 内边距）；页脚不显示页码、品牌靠右；均不斜体。
    ===================== */
 .card[data-theme="editorial"].role-body { background: var(--card-bg); }
 .card[data-theme="editorial"].role-body .card-head {
@@ -89,14 +92,14 @@
 }
 .card[data-theme="editorial"].role-body .card-eyebrow {
   font-family: var(--font-serif); font-style: normal; font-weight: 700; text-transform: none;
-  letter-spacing: 0.5px; font-size: 26px; color: var(--card-ink); margin-bottom: 0;
+  letter-spacing: 0.5px; font-size: 26px; color: var(--card-soft-ink); margin-bottom: 0;
 }
 .card[data-theme="editorial"].role-body .card-eyebrow::after { display: none; }
 .card[data-theme="editorial"].role-body .card-progress.kind-numbers { font-family: 'Inter', 'Noto Sans SC', sans-serif; gap: 8px; }
 .card[data-theme="editorial"].role-body .card-progress.kind-numbers .pg { font-size: 18px; font-weight: 800; letter-spacing: 1px; color: var(--card-dim); }
-.card[data-theme="editorial"].role-body .card-progress.kind-numbers .pg.active { font-size: 18px; color: var(--card-accent); }
-.card[data-theme="editorial"].role-body .card-body h1 { font-family: 'Noto Serif SC', serif; font-size: 76px; font-weight: 900; line-height: 1.06; margin: 0 0 24px; }
-.card[data-theme="editorial"].role-body .card-body h2 { font-family: 'Noto Serif SC', serif; font-size: 52px; font-weight: 700; line-height: 1.2; margin: 0 0 28px; }
+.card[data-theme="editorial"].role-body .card-progress.kind-numbers .pg.active { font-size: 18px; color: var(--card-soft-ink); }
+.card[data-theme="editorial"].role-body .card-body h1 { font-family: 'Noto Serif SC', serif; font-size: 76px; font-weight: 900; line-height: 1.06; margin: 0 0 24px; color: var(--card-soft-ink); }
+.card[data-theme="editorial"].role-body .card-body h2 { font-family: 'Noto Serif SC', serif; font-size: 52px; font-weight: 700; line-height: 1.2; margin: 0 0 28px; color: var(--card-soft-ink); }
 .card[data-theme="editorial"].role-body .card-body h2:first-child { margin-top: 0; }
 .card[data-theme="editorial"].role-body .card-body h3 { font-size: 36px; font-weight: 700; color: var(--card-accent); margin: 28px 0 14px; }
 .card[data-theme="editorial"].role-body .card-body p { font-size: 32px; font-weight: 400; line-height: 1.7; margin: 0 0 26px; }
@@ -108,11 +111,10 @@
   padding-left: 24px; border-left: 4px solid var(--card-accent); color: var(--card-ink); margin: 32px 0;
 }
 .card[data-theme="editorial"].role-body .card-foot {
-  left: 68px; right: 68px; bottom: 72px;
+  left: 68px; right: 68px; bottom: 72px; justify-content: flex-end;
   border-top: 4px solid var(--card-ink); padding-top: 22px; font-family: var(--font-serif);
-  font-style: normal; font-size: 22px; color: var(--card-ink); letter-spacing: 0; text-transform: none;
+  font-style: normal; font-size: 22px; color: var(--card-soft-ink); letter-spacing: 0; text-transform: none;
 }
-.card[data-theme="editorial"].role-body .card-foot .page-no { font-style: normal; color: var(--card-ink); }
 .card[data-theme="editorial"].role-body .card-body .body-figure.is-empty {
   background: var(--card-bg); box-shadow: inset 0 0 0 2px var(--card-rule);
 }
@@ -121,7 +123,7 @@
 .card[data-theme="editorial"].role-end .card-body { justify-content: center; align-items: stretch; text-align: left; }
 .card[data-theme="editorial"].role-end .card-body .body-figure { display: none; }
 .card[data-theme="editorial"].role-end .card-eyebrow { justify-content: flex-start; }
-.card[data-theme="editorial"].role-end .card-body h1 { font-size: 84px; font-weight: 900; line-height: 1.1; margin: 0 0 24px; }
-.card[data-theme="editorial"].role-end .card-body h2 { font-size: 36px; font-weight: 700; color: var(--card-accent); margin: 0 0 28px; }
+.card[data-theme="editorial"].role-end .card-body h1 { font-size: 84px; font-weight: 900; line-height: 1.1; margin: 0 0 24px; color: var(--card-soft-ink); }
+.card[data-theme="editorial"].role-end .card-body h2 { font-size: 36px; font-weight: 700; color: var(--card-soft-ink); margin: 0 0 28px; }
 .card[data-theme="editorial"].role-end .card-body p { font-size: 30px; font-weight: 400; line-height: 1.7; color: var(--card-dim); }
 .card[data-theme="editorial"].role-end .card-foot { display: flex; }

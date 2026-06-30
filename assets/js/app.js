@@ -38,7 +38,7 @@
 
 - 把含糖饮料换成**气泡水 + 柠檬**
 - 主食里掺一半**糙米与豆类**
-- 嘴馋时先喝一杯水，==等十分钟==
+- 嘴馔时先喝一杯水，==等十分钟==
 
 ![](https://images.pexels.com/photos/27850094/pexels-photo-27850094.jpeg?auto=compress&cs=tinysrgb&w=1200)
 
@@ -199,16 +199,19 @@
     sel.value = hasPrev ? prev : (list.length ? list[0].id : "");
   }
 
-  // 页眉右上角页码进度：当前页用突出色，其他页弱化
+  // 页眉右上角页码进度：numbers 类型只显示当前页号；其他类型逐项标记、当前页高亮
   function buildProgress(theme, cur, tot) {
     if (tot < 1) return "";
     const kind = PROGRESS_KIND[theme] || "dots";
+    // numbers 类型：上面的页码只显示当前页的号码
+    if (kind === "numbers") {
+      return `<div class="card-progress kind-numbers"><span class="pg active">${String(cur).padStart(2, "0")}</span></div>`;
+    }
     let marks = "";
     for (let i = 1; i <= tot; i++) {
       const on = i === cur ? " active" : "";
       let glyph = "";
-      if (kind === "numbers") glyph = String(i).padStart(2, "0");
-      else if (kind === "arrows") glyph = i === cur ? "\u25b6" : "\u203a";
+      if (kind === "arrows") glyph = i === cur ? "\u25b6" : "\u203a";
       marks += `<span class="pg${on}">${glyph}</span>`;
     }
     return `<div class="card-progress kind-${kind}">${marks}</div>`;
@@ -404,8 +407,8 @@
       ? `<div class="body-text">${textHtml}</div><div class="body-figure${hasFig ? "" : " is-empty"}">${hasFig ? fig.imgHtml : ""}</div>`
       : textHtml;
     const bodyHtml = `<div class="card-body">${bodyInner}</div>`;
-    // 页脚：品牌在左、页码在右（base.css 已预留 .page-no 样式）
-    const footHtml = `<div class="card-foot"><span class="card-brand">${escapeAttr(brand)}</span><span class="page-no">${no} / ${tot}</span></div>`;
+    // 页脚：正文/尾页不显示页码，品牌靠右（页码改由顶部进度显示当前页号）
+    const footHtml = `<div class="card-foot"><span class="card-brand">${escapeAttr(brand)}</span></div>`;
 
     // 封面图框：取自本页 markdown 末尾图片；本页无图则显示占位框
     const media = useImg
