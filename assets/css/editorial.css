@@ -2,7 +2,8 @@
    editorial.css · 风格（高端杂志 Editorial，源自 HE 健康饮食）
    厚边框 + 衰线大标题 + 森绿强调色；HE01 配色为默认。
    勾选「图片取色」时 app.js 会以封面图主色 inline 覆盖 --card-* 变量。
-   加载顺序：cover.css 之后。
+   边框：正文与封面都用强调色；正文 24px，封面加厚到 40px（更大胆）。
+   注意：封面边框 40px 后，padding 盒原点从 24 移到 40，所以封面所有绝对定位值都在「卡外坐标-40」（比 24px 时再 -16）。
    正文水平内边距 68px（+24 边框 = 92 外坐标）使所有内容对齐网格左右边。
    ==================================================================== */
 
@@ -20,7 +21,7 @@
   --font-cjk: 'Noto Serif SC', 'Noto Sans SC', sans-serif;
   background: var(--card-bg);
   color: var(--card-ink);
-  border: 24px solid var(--card-ink);
+  border: 24px solid var(--card-accent);
   padding: 80px 68px 104px;
 }
 .card[data-theme="editorial"]::before { border: none; }
@@ -35,22 +36,20 @@
 .card[data-theme="editorial"] .card-body img { filter: grayscale(12%) contrast(1.05); }
 
 /* ====================================================================
-   封面 role-cover · 大标题下图（对齐 8×10 网格）
-   网格（卡外坐标）：左92 右988 顶158.125 底1281.875；行步距113.875，格边长98.875。
-   卡片有 24px 边框，绝对定位子元素以 padding 盒(内甤19)为基准，所以所有值 = 卡外坐标 - 24。
-   - 所有标签(页眉/标题)：左右贴网格左右 → left/right:68px
-   - 页眉最底端贴网格顶端 → 底边在 y=134.125(=158.125-24)
-   - 图片左上角=A5半高(卡外663.0625→639.0625)、右下角=H10半高(卡外1232.4375→底inset183.5625)
-   - 标题居中，H1=128；H1 中的 strong 与 em 统一用主色多巴胺色(--card-pop)；H2 也用主色多巴胺色、不斜体，位于 H1 上方
-   - 图片上方小圆角、下方方角；封面不要页脚；外边框用强调色
+   封面 role-cover · 大标题下图（对齐 8×10 网格，边框 40px）
+   网格（卡外坐标）：左92 右988 顶158.125 底1281.875；A5中663.0625，H10中1232.4375。
+   边框 40px → 绝对定位值 = 卡外坐标 - 40：left/right 52；页眉 bottom1241.875(底边@网格顶)；
+   标题 top118.125 bottom736.9375；图片 top623.0625(A5中) bottom167.5625(H10中)。
+   标题居中，H1=128；H1 中 strong/em 统一用主色多巴胺色；H2 也用主色多巴胺色、不斜体，在 H1 上方。
+   图片上方小圆角、下方方角；封面不要页脚。
    ==================================================================== */
-.card[data-theme="editorial"].role-cover { border-color: var(--card-accent); }
+.card[data-theme="editorial"].role-cover { border-width: 40px; }
 .card[data-theme="editorial"].role-cover.layout-bottom { display: block; padding: 0; }
 .card[data-theme="editorial"].role-cover.layout-bottom .li-content { display: contents; }
 
 /* 页眉 masthead：左右贴网格，底边贴网格顶端；不斜体；非纯黑黑色字 */
 .card[data-theme="editorial"].role-cover .card-eyebrow {
-  position: absolute; left: 68px; right: 68px; bottom: 1257.875px; margin: 0;
+  position: absolute; left: 52px; right: 52px; bottom: 1241.875px; margin: 0;
   display: flex; align-items: flex-end; font-family: var(--font-serif); font-style: normal;
   font-weight: 700; text-transform: none; letter-spacing: 1px; font-size: 28px; color: var(--card-soft-ink);
   padding-bottom: 16px; border-bottom: 4px solid var(--card-ink);
@@ -60,7 +59,7 @@
 
 /* 标题标签：左右贴网格，纵向位于页眉底(网格顶)与图片顶之间；水平居中，H2 在 H1 上方 */
 .card[data-theme="editorial"].role-cover .card-body {
-  position: absolute; left: 68px; right: 68px; top: 134.125px; bottom: 752.9375px;
+  position: absolute; left: 52px; right: 52px; top: 118.125px; bottom: 736.9375px;
   display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
 }
 .card[data-theme="editorial"].role-cover .card-body h1 { font-family: 'Noto Serif SC', serif; font-weight: 900; font-size: 128px; line-height: 1.02; letter-spacing: -2px; color: var(--card-soft-ink); margin: 0; }
@@ -72,7 +71,7 @@
 
 /* 图片：左上角 A5 半高、右下角 H10 半高，左右贴网格；上小圆角、下方角 */
 .card[data-theme="editorial"].role-cover.layout-bottom .card-media {
-  position: absolute; left: 68px; right: 68px; top: 639.0625px; bottom: 183.5625px;
+  position: absolute; left: 52px; right: 52px; top: 623.0625px; bottom: 167.5625px;
   width: auto; height: auto; flex: none; order: 0;
   border-radius: 8px 8px 0 0; overflow: hidden;
 }
@@ -82,7 +81,7 @@
 .card[data-theme="editorial"].role-cover .card-foot { display: none; }
 
 /* ===================== 正文 role-body =====================
-   页眉页脚与其他标签都对齐网格左右边（随卡片 68px 内边距）；页脚位置与对齐方式同封面（left/right:68、bottom:72）；均不斜体。
+   边框 24px 强调色（比封面细，同色差异）；页眉页脚与其他标签都对齐网格左右边（随卡片 68px 内边距）；页脚位置与对齐方式同封面（left/right:68、bottom:72）；均不斜体。
    ===================== */
 .card[data-theme="editorial"].role-body { background: var(--card-bg); }
 .card[data-theme="editorial"].role-body .card-head {
