@@ -33,6 +33,13 @@
   <header class="topbar">
     <div class="brand-mark">md2rednote<span>· 图文生成器</span></div>
     <div class="controls">
+      <div class="field swatch-field">
+        <span>取色</span>
+        <div class="swatch-box" title="当前取色值（图片主色多巴胺色 --card-pop）">
+          <span class="swatch-dot" id="swatchDot"></span>
+          <span class="swatch-val" id="swatchVal">—</span>
+        </div>
+      </div>
       <label class="field">
         <span>风格</span>
         <select id="theme">
@@ -110,5 +117,28 @@
   <script src="assets/js/inspector.js"></script>
   <script src="assets/js/grid.js"></script>
   <script src="assets/js/resize.js"></script>
+  <script>
+    /* 取色色块：实时读取卡片计算后的 --card-pop（图片主色多巴胺色）并显示。
+       由 app.js 在取色后以 inline style 设到 #card 上，这里用 MutationObserver 跟随更新。 */
+    (function () {
+      var card = document.getElementById("card");
+      var dot = document.getElementById("swatchDot");
+      var val = document.getElementById("swatchVal");
+      var auto = document.getElementById("autoColor");
+      if (!card || !dot || !val) return;
+      function update() {
+        var on = auto && auto.checked;
+        if (!on) { dot.style.background = "transparent"; val.textContent = "未取色"; return; }
+        var pop = getComputedStyle(card).getPropertyValue("--card-pop").trim();
+        if (!pop) { dot.style.background = "transparent"; val.textContent = "—"; return; }
+        dot.style.background = pop;
+        val.textContent = pop.toUpperCase();
+      }
+      var mo = new MutationObserver(update);
+      mo.observe(card, { attributes: true, attributeFilter: ["style", "class", "data-theme"] });
+      if (auto) auto.addEventListener("change", function () { setTimeout(update, 0); });
+      setTimeout(update, 250);
+    })();
+  </script>
 </body>
 </html>
