@@ -37,7 +37,7 @@
 ## 三个温柔的开始
 
 - 把含糖饮料换成**气泡水 + 柠檬**
-- 主食里掺一半**糙米与豆类**
+- 主食里殤一半**糙米与豆类**
 - 嘴馔时先喝一杯水，==等十分钟==
 
 ![](https://images.pexels.com/photos/27850094/pexels-photo-27850094.jpeg?auto=compress&cs=tinysrgb&w=1200)
@@ -252,8 +252,12 @@
     const to = (x) => Math.round(x * 255).toString(16).padStart(2, "0");
     return "#" + to(r) + to(g) + to(b);
   }
+  function rgbToHex(r, g, b) {
+    const to = (x) => Math.round(clamp(x, 0, 255)).toString(16).padStart(2, "0");
+    return "#" + to(r) + to(g) + to(b);
+  }
 
-  // 从图片提取主色调 → 生成调色板（含多巴胺强调色 pop）
+  // 从图片提取主色调 → 生成调色板（含原始主色 raw 与多巴胺强调色 pop）
   function extractPalette(img) {
     const w = 64, h = 64;
     const c = document.createElement("canvas");
@@ -283,6 +287,8 @@
       if (score > best) { best = score; base = c2; }
     }
     if (!base) base = arr[0];
+    // 原始取色：图片主色（dominant 色块的平均 RGB 直接转 hex），不做任何变换
+    const raw = rgbToHex(base.r, base.g, base.b);
     const [bh, bs0] = rgbToHsl(base.r, base.g, base.b);
     const bs = clamp(bs0, 0.35, 0.8);
     const bg  = hslToHex(bh, Math.min(bs * 0.42, 0.22), 0.94);
@@ -297,7 +303,7 @@
     // 多巴胺强调色 pop：取图片主色相(bh)本身，高饱和、明度稍高，做成图片主色的鲜艳版
     const popS = clamp(bs0 * 1.5, 0.72, 0.95);
     const pop = hslToHex(bh, popS, 0.5);
-    return { bg, bg2, ink, dim, rule, accent, pop };
+    return { bg, bg2, ink, dim, rule, accent, pop, raw };
   }
 
   function ensureColors(url) {
@@ -328,7 +334,7 @@
     return "";
   }
 
-  const PAL_VARS = ["--card-bg", "--card-bg-2", "--card-ink", "--card-dim", "--card-rule", "--card-accent", "--card-pop"];
+  const PAL_VARS = ["--card-bg", "--card-bg-2", "--card-ink", "--card-dim", "--card-rule", "--card-accent", "--card-pop", "--card-raw"];
   function applyColorsToCard() {
     const on = $("autoColor").checked;
     const url = coverImgSrc();
@@ -346,6 +352,7 @@
       card.style.setProperty("--card-rule", pal.rule);
       card.style.setProperty("--card-accent", pal.accent);
       card.style.setProperty("--card-pop", pal.pop);
+      card.style.setProperty("--card-raw", pal.raw);
     } else {
       PAL_VARS.forEach((v) => card.style.removeProperty(v));
     }

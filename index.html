@@ -35,7 +35,7 @@
     <div class="controls">
       <div class="field swatch-field">
         <span>取色</span>
-        <div class="swatch-box" title="当前取色值（图片主色多巴胺色 --card-pop）">
+        <div class="swatch-box" title="当前图片原始主色（未经变换 --card-raw）">
           <span class="swatch-dot" id="swatchDot"></span>
           <span class="swatch-val" id="swatchVal">—</span>
         </div>
@@ -118,7 +118,7 @@
   <script src="assets/js/grid.js"></script>
   <script src="assets/js/resize.js"></script>
   <script>
-    /* 取色色块：实时读取卡片计算后的 --card-pop（图片主色多巴胺色）并显示。
+    /* 取色色块：实时读取卡片计算后的 --card-raw（图片原始主色，未经多巴胺变换）并显示。
        由 app.js 在取色后以 inline style 设到 #card 上，这里用 MutationObserver 跟随更新。 */
     (function () {
       var card = document.getElementById("card");
@@ -129,10 +129,10 @@
       function update() {
         var on = auto && auto.checked;
         if (!on) { dot.style.background = "transparent"; val.textContent = "未取色"; return; }
-        var pop = getComputedStyle(card).getPropertyValue("--card-pop").trim();
-        if (!pop) { dot.style.background = "transparent"; val.textContent = "—"; return; }
-        dot.style.background = pop;
-        val.textContent = pop.toUpperCase();
+        var raw = getComputedStyle(card).getPropertyValue("--card-raw").trim();
+        if (!raw) { dot.style.background = "transparent"; val.textContent = "—"; return; }
+        dot.style.background = raw;
+        val.textContent = raw.toUpperCase();
       }
       var mo = new MutationObserver(update);
       mo.observe(card, { attributes: true, attributeFilter: ["style", "class", "data-theme"] });
