@@ -2,12 +2,12 @@
    editorial.css · 风格（高端杂志 Editorial，源自 HE 健康饮食）
    厚边框 + 衰线大标题 + 森绿强调色；HE01 配色为默认。
    勾选「图片取色」时 app.js 会以封面图主色 inline 覆盖 --card-* 变量。
-   边框：封面/正文/尾页统一 24px。颜色：封面用满强调色 --card-accent；正文/尾页用浅版 --card-border（L=75%）。
+   边框：统一 24px。颜色：封面用中性深框 --card-frame-ink（避免与强调字互补打架）；正文/尾页用浅版 --card-border（L=75%）。
+   封面配色逻辑：中性深框 + 单一彩色强调字（唯一彩色焦点 = 图片主色多巴胺色 pop）。
    文字色（固定、不随取色变）：
      --card-soft-ink = hsl(0,0%,5%)  → 标题（H1/H2/尾页标题）
      --card-body-ink = hsl(0,0%,10%) → 正文页除 H2/页眉/页脚 外的所有文字标签
      --card-meta-ink = hsl(0,0%,15%) → 页眉/页脚/页码
-   封面强调字(pop)不变。
    注意：封面边框 24px → 绝对定位值 = 卡外坐标 - 24。正文水平内边距 68px(+24边框=92)对齐网格。
    ==================================================================== */
 
@@ -22,6 +22,8 @@
   --card-body-ink: hsl(0, 0%, 10%);
   /* 页眉/页脚/页码 专用固定色 = hsl(0,0%,15%) */
   --card-meta-ink: hsl(0, 0%, 15%);
+  /* 封面中性深框色（固定、不随取色变） */
+  --card-frame-ink: hsl(0, 0%, 12%);
   --card-dim: #6b6b6b;
   --card-accent: #5a9e66;
   --card-pop: #5a9e66;
@@ -50,10 +52,10 @@
    封面 role-cover · 大标题下图（对齐 8×10 网格，边框 24px）
    边框 24px → 绝对定位值 = 卡外坐标 - 24：left/right 68；页眉 bottom1257.875；
    标题 top134.125 bottom752.9375；图片 top639.0625 bottom183.5625。
-   标题居中，H1=128 用 soft-ink(5%)；H1 中 strong/em 与 H2 用主色多巴胺色(pop)、不变。
+   标题居中，H1=128 用 soft-ink(5%)；H1 中 strong/em 与 H2 用主色多巴胺色(pop)、作为唯一彩色焦点。
    ==================================================================== */
-/* 封面边框保留满强调色（不变浅） */
-.card[data-theme="editorial"].role-cover { border-color: var(--card-accent); }
+/* 封面边框：中性深框（不用强调色，避免与强调字互补冲突） */
+.card[data-theme="editorial"].role-cover { border-color: var(--card-frame-ink); }
 .card[data-theme="editorial"].role-cover.layout-bottom { display: block; padding: 0; }
 .card[data-theme="editorial"].role-cover.layout-bottom .li-content { display: contents; }
 
