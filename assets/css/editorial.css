@@ -107,10 +107,16 @@
 .card[data-theme="editorial"].role-body .card-body ol li::before { color: var(--card-accent); }
 .card[data-theme="editorial"].role-body .card-body blockquote {
   font-family: 'Noto Serif SC', serif; font-style: italic; font-size: 30px; line-height: 1.5;
-  padding-left: 24px; border-left: 4px solid var(--card-accent); color: var(--card-body-ink); margin: 32px 0;
+  padding-left: 24px; border-left: 4px solid var(--card-accent); margin: 32px 0;
 }
-/* 正文页（不含尾页）：除 H2/页眉/页脚 外，所有带文字标签统一 hsl(0,0%,10%) */
+/* 正文页（不含尾页）：除 H2/页眉/页脚 外，所有带文字标签统一 hsl(0,0%,10%)。
+   注意 base.css 给 p/li/blockquote 显式设了 color（p/li=--card-ink、blockquote=--card-dim），
+   会盖过 card-body 的继承值，所以这里逐个显式覆盖。 */
 .card[data-theme="editorial"].role-body:not(.role-end) .card-body { color: var(--card-body-ink); }
+.card[data-theme="editorial"].role-body:not(.role-end) .card-body p,
+.card[data-theme="editorial"].role-body:not(.role-end) .card-body li,
+.card[data-theme="editorial"].role-body:not(.role-end) .card-body blockquote,
+.card[data-theme="editorial"].role-body:not(.role-end) .card-body h4,
 .card[data-theme="editorial"].role-body:not(.role-end) .card-body strong,
 .card[data-theme="editorial"].role-body:not(.role-end) .card-body em { color: var(--card-body-ink); }
 .card[data-theme="editorial"].role-body .card-foot {
