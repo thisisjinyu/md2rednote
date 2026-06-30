@@ -2,10 +2,13 @@
    editorial.css · 风格（高端杂志 Editorial，源自 HE 健康饮食）
    厚边框 + 衰线大标题 + 森绿强调色；HE01 配色为默认。
    勾选「图片取色」时 app.js 会以封面图主色 inline 覆盖 --card-* 变量。
-   边框：正文与封面都用强调色；正文 24px，封面加厚到 40px。
-   文字色（固定、不随取色变）：--card-soft-ink = #0f0f0f = hsl(0,0%,5%) 用于标题/页眉/页脚；
-   --card-body-ink = hsl(0,0%,10%) 用于正文页除 H2/页眉/页脚 之外的所有文字标签；封面强调字(pop)不变。
-   注意：封面边框 40px 后，所有绝对定位值 = 卡外坐标 - 40。正文水平内边距 68px(+24边框=92)对齐网格。
+   边框：封面/正文/尾页统一 24px，颜色用强调色的浅版（L=75%，见 --card-border）。
+   文字色（固定、不随取色变）：
+     --card-soft-ink = hsl(0,0%,5%)  → 标题（H1/H2/尾页标题）
+     --card-body-ink = hsl(0,0%,10%) → 正文页除 H2/页眉/页脚 外的所有文字标签
+     --card-meta-ink = hsl(0,0%,15%) → 页眉/页脚/页码
+   封面强调字(pop)不变。
+   注意：封面边框 24px → 绝对定位值 = 卡外坐标 - 24。正文水平内边距 68px(+24边框=92)对齐网格。
    ==================================================================== */
 
 /* -------- 主题变量（HE01 森绿；取色开启时被 inline 覆盖） -------- */
@@ -13,19 +16,23 @@
   --card-bg: #f8f7f3;
   --card-bg-2: #f8f7f3;
   --card-ink: #111111;
-  /* 标题/页眉/页脚 专用固定色 = #0f0f0f = hsl(0,0%,5%)（不在 PAL_VARS 里，不随图片取色变） */
+  /* 标题专用固定色 = #0f0f0f = hsl(0,0%,5%) */
   --card-soft-ink: hsl(0, 0%, 5%);
-  /* 正文页正文文字色 = hsl(0,0%,10%)（除 H2/页眉/页脚 外的所有文字标签） */
+  /* 正文页正文文字色 = hsl(0,0%,10%) */
   --card-body-ink: hsl(0, 0%, 10%);
+  /* 页眉/页脚/页码 专用固定色 = hsl(0,0%,15%) */
+  --card-meta-ink: hsl(0, 0%, 15%);
   --card-dim: #6b6b6b;
   --card-accent: #5a9e66;
   --card-pop: #5a9e66;
   --card-rule: rgba(17, 17, 17, 0.16);
+  /* 边框色：取当前强调色（取色开启时为图片派生色），亮度压到 75% → 浅一倍 */
+  --card-border: hsl(from var(--card-accent) h s 75%);
   --font-serif: 'Playfair Display', 'Noto Serif SC', Georgia, serif;
   --font-cjk: 'Noto Serif SC', 'Noto Sans SC', sans-serif;
   background: var(--card-bg);
   color: var(--card-ink);
-  border: 24px solid var(--card-accent);
+  border: 24px solid var(--card-border);
   padding: 80px 68px 104px;
 }
 .card[data-theme="editorial"]::before { border: none; }
@@ -40,28 +47,27 @@
 .card[data-theme="editorial"] .card-body img { filter: grayscale(12%) contrast(1.05); }
 
 /* ====================================================================
-   封面 role-cover · 大标题下图（对齐 8×10 网格，边框 40px）
-   边框 40px → 绝对定位值 = 卡外坐标 - 40：left/right 52；页眉 bottom1241.875；
-   标题 top118.125 bottom736.9375；图片 top623.0625 bottom167.5625。
-   标题居中，H1=128 用 #0f0f0f；H1 中 strong/em 与 H2 用主色多巴胺色(pop)、不变。
+   封面 role-cover · 大标题下图（对齐 8×10 网格，边框 24px）
+   边框 24px → 绝对定位值 = 卡外坐标 - 24：left/right 68；页眉 bottom1257.875；
+   标题 top134.125 bottom752.9375；图片 top639.0625 bottom183.5625。
+   标题居中，H1=128 用 soft-ink(5%)；H1 中 strong/em 与 H2 用主色多巴胺色(pop)、不变。
    ==================================================================== */
-.card[data-theme="editorial"].role-cover { border-width: 40px; }
 .card[data-theme="editorial"].role-cover.layout-bottom { display: block; padding: 0; }
 .card[data-theme="editorial"].role-cover.layout-bottom .li-content { display: contents; }
 
-/* 页眉 masthead：左右贴网格，底边贴网格顶端；不斜体；#0f0f0f */
+/* 页眉 masthead：左右贴网格，底边贴网格顶端；不斜体；页眉色 15% */
 .card[data-theme="editorial"].role-cover .card-eyebrow {
-  position: absolute; left: 52px; right: 52px; bottom: 1241.875px; margin: 0;
+  position: absolute; left: 68px; right: 68px; bottom: 1257.875px; margin: 0;
   display: flex; align-items: flex-end; font-family: var(--font-serif); font-style: normal;
-  font-weight: 700; text-transform: none; letter-spacing: 1px; font-size: 28px; color: var(--card-soft-ink);
+  font-weight: 700; text-transform: none; letter-spacing: 1px; font-size: 28px; color: var(--card-meta-ink);
   padding-bottom: 16px; border-bottom: 4px solid var(--card-ink);
 }
 .card[data-theme="editorial"].role-cover .card-eyebrow::after { display: none; }
-.card[data-theme="editorial"].role-cover .md-eyebrow { display: flex; align-items: center; gap: 12px; font-family: var(--font-serif); font-style: normal; font-weight: 700; font-size: 28px; color: var(--card-soft-ink); margin: 0; }
+.card[data-theme="editorial"].role-cover .md-eyebrow { display: flex; align-items: center; gap: 12px; font-family: var(--font-serif); font-style: normal; font-weight: 700; font-size: 28px; color: var(--card-meta-ink); margin: 0; }
 
 /* 标题标签：左右贴网格，水平居中，H2 在 H1 上方 */
 .card[data-theme="editorial"].role-cover .card-body {
-  position: absolute; left: 52px; right: 52px; top: 118.125px; bottom: 736.9375px;
+  position: absolute; left: 68px; right: 68px; top: 134.125px; bottom: 752.9375px;
   display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
 }
 .card[data-theme="editorial"].role-cover .card-body h1 { font-family: 'Noto Serif SC', serif; font-weight: 900; font-size: 128px; line-height: 1.02; letter-spacing: -2px; color: var(--card-soft-ink); margin: 0; }
@@ -73,7 +79,7 @@
 
 /* 图片：左上角 A5 半高、右下角 H10 半高，左右贴网格；上小圆角、下方角 */
 .card[data-theme="editorial"].role-cover.layout-bottom .card-media {
-  position: absolute; left: 52px; right: 52px; top: 623.0625px; bottom: 167.5625px;
+  position: absolute; left: 68px; right: 68px; top: 639.0625px; bottom: 183.5625px;
   width: auto; height: auto; flex: none; order: 0;
   border-radius: 8px 8px 0 0; overflow: hidden;
 }
@@ -83,7 +89,7 @@
 .card[data-theme="editorial"].role-cover .card-foot { display: none; }
 
 /* ===================== 正文 role-body =====================
-   边框 24px 强调色；页眉/页脚 用 #0f0f0f(5%)，正文其他文字用 hsl(0,0%,10%)；页脚无上边框、不显页码、品牌靠右。
+   边框 24px 浅强调色；页眉/页脚 用 15%，正文其他文字用 10%；页脚无上边框、不显页码、品牌靠右。
    ===================== */
 .card[data-theme="editorial"].role-body { background: var(--card-bg); }
 .card[data-theme="editorial"].role-body .card-head {
@@ -91,12 +97,12 @@
 }
 .card[data-theme="editorial"].role-body .card-eyebrow {
   font-family: var(--font-serif); font-style: normal; font-weight: 700; text-transform: none;
-  letter-spacing: 0.5px; font-size: 26px; color: var(--card-soft-ink); margin-bottom: 0;
+  letter-spacing: 0.5px; font-size: 26px; color: var(--card-meta-ink); margin-bottom: 0;
 }
 .card[data-theme="editorial"].role-body .card-eyebrow::after { display: none; }
 .card[data-theme="editorial"].role-body .card-progress.kind-numbers { font-family: 'Inter', 'Noto Sans SC', sans-serif; gap: 8px; }
 .card[data-theme="editorial"].role-body .card-progress.kind-numbers .pg { font-size: 18px; font-weight: 800; letter-spacing: 1px; color: var(--card-dim); }
-.card[data-theme="editorial"].role-body .card-progress.kind-numbers .pg.active { font-size: 18px; color: var(--card-soft-ink); }
+.card[data-theme="editorial"].role-body .card-progress.kind-numbers .pg.active { font-size: 18px; color: var(--card-meta-ink); }
 .card[data-theme="editorial"].role-body .card-body h1 { font-family: 'Noto Serif SC', serif; font-size: 76px; font-weight: 900; line-height: 1.06; margin: 0 0 24px; color: var(--card-body-ink); }
 .card[data-theme="editorial"].role-body .card-body h2 { font-family: 'Noto Serif SC', serif; font-size: 52px; font-weight: 700; line-height: 1.2; margin: 0 0 28px; color: var(--card-soft-ink); }
 .card[data-theme="editorial"].role-body .card-body h2:first-child { margin-top: 0; }
@@ -110,8 +116,7 @@
   padding-left: 24px; border-left: 4px solid var(--card-accent); margin: 32px 0;
 }
 /* 正文页（不含尾页）：除 H2/页眉/页脚 外，所有带文字标签统一 hsl(0,0%,10%)。
-   注意 base.css 给 p/li/blockquote 显式设了 color（p/li=--card-ink、blockquote=--card-dim），
-   会盖过 card-body 的继承值，所以这里逐个显式覆盖。 */
+   注意 base.css 给 p/li/blockquote 显式设了 color，会盖过继承，所以逐个显式覆盖。 */
 .card[data-theme="editorial"].role-body:not(.role-end) .card-body { color: var(--card-body-ink); }
 .card[data-theme="editorial"].role-body:not(.role-end) .card-body p,
 .card[data-theme="editorial"].role-body:not(.role-end) .card-body li,
@@ -122,7 +127,7 @@
 .card[data-theme="editorial"].role-body .card-foot {
   left: 68px; right: 68px; bottom: 72px; justify-content: flex-end;
   padding-top: 22px; font-family: var(--font-serif);
-  font-style: normal; font-size: 22px; color: var(--card-soft-ink); letter-spacing: 0; text-transform: none;
+  font-style: normal; font-size: 22px; color: var(--card-meta-ink); letter-spacing: 0; text-transform: none;
 }
 .card[data-theme="editorial"].role-body .card-body .body-figure.is-empty {
   background: var(--card-bg); box-shadow: inset 0 0 0 2px var(--card-rule);
