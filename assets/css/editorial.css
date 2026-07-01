@@ -4,10 +4,10 @@
    勾选「图片取色」时 app.js 会以封面图主色 inline 覆盖 --card-* 变量。
    边框：统一 24px。封面用 --card-frame-deep（pop L=25%）；正文/尾页用 --card-border（pop L=30%）。
    强调文字（H1 em / H2）用多巴胺色加深版 --card-pop-deep（L=40%），更深但仍鲜艳。
-   封面配色逻辑：图片主色深色框 + 同色相的彩色强调字（唯一彩色焦点 = pop），同色系深浅呈不打架。
+   引用块：与正文同字号、多巴胺色(pop)、斜体，无任何线条（含挡掉从 kinfolk.css 泄漏的 ::before 顶线）。
    文字色（固定、不随取色变）：
      --card-soft-ink = hsl(0,0%,5%)  → 标题（H1/H2/尾页标题）
-     --card-body-ink = hsl(0,0%,10%) → 正文页除 H2/页眉/页脚 外的所有文字标签
+     --card-body-ink = hsl(0,0%,10%) → 正文页除 H2/页眉/页脚/引用 外的所有文字标签
      --card-meta-ink = hsl(0,0%,15%) → 页眉/页脚（页码当前页号用多巴胺色 pop）
    注意：封面边框 24px → 绝对定位值 = 卡外坐标 - 24。正文水平内边距 68px(+24边框=92)对齐网格。
    ==================================================================== */
@@ -125,16 +125,17 @@
 .card[data-theme="editorial"].role-body .card-body li { font-size: 31px; line-height: 1.6; }
 .card[data-theme="editorial"].role-body .card-body ul li::before { background: var(--card-accent); }
 .card[data-theme="editorial"].role-body .card-body ol li::before { color: var(--card-accent); }
+/* 引用：与正文同字号(32px)、多巴胺色(pop)、斜体，无线条（挡掉 kinfolk 泄漏的顶线 ::before） */
 .card[data-theme="editorial"].role-body .card-body blockquote {
-  font-family: 'Noto Serif SC', serif; font-style: italic; font-size: 30px; line-height: 1.5;
-  padding-left: 24px; border-left: 4px solid var(--card-accent); margin: 32px 0;
+  font-family: 'Noto Serif SC', serif; font-style: italic; font-size: 32px; line-height: 1.7;
+  color: var(--card-pop); border: none; padding: 0; margin: 32px 0;
 }
-/* 正文页（不含尾页）：除 H2/页眉/页脚 外，所有带文字标签统一 hsl(0,0%,10%)。
-   注意 base.css 给 p/li/blockquote 显式设了 color，会盖过继承，所以逐个显式覆盖。 */
+.card[data-theme="editorial"].role-body .card-body blockquote::before { content: none; }
+/* 正文页（不含尾页）：除 H2/页眉/页脚/引用 外，所有带文字标签统一 hsl(0,0%,10%)。
+   注意 base.css 给 p/li 显式设了 color，会盖过继承，所以逐个显式覆盖（blockquote 不在内，保留 pop）。 */
 .card[data-theme="editorial"].role-body:not(.role-end) .card-body { color: var(--card-body-ink); }
 .card[data-theme="editorial"].role-body:not(.role-end) .card-body p,
 .card[data-theme="editorial"].role-body:not(.role-end) .card-body li,
-.card[data-theme="editorial"].role-body:not(.role-end) .card-body blockquote,
 .card[data-theme="editorial"].role-body:not(.role-end) .card-body h4,
 .card[data-theme="editorial"].role-body:not(.role-end) .card-body strong,
 .card[data-theme="editorial"].role-body:not(.role-end) .card-body em { color: var(--card-body-ink); }
