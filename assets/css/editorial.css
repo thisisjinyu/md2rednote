@@ -167,4 +167,6 @@
 .card[data-theme="editorial"].role-end .card-body { justify-content: center; align-items: stretch; text-align: left; }
 .card[data-theme="editorial"].role-end .card-body .body-figure { display: none; }
 .card[data-theme="editorial"].role-end .card-eyebrow { justify-content: flex-start; }
+/* 去掉 kinfolk 漏进来的尾页 H1 上方那条 accent 短横线 */
+.card[data-theme="editorial"].role-end .card-body h1::before { content: none; }
 .card[data-theme="editorial"].role-end .card-foot { display: flex; border-top: none; padding-top: 0; }
