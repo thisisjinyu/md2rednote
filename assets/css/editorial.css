@@ -21,7 +21,6 @@
 /* -------- 主题变量（HE01 森绿；取色开启时被 inline 覆盖） -------- */
 .card[data-theme="editorial"] {
   --card-bg: #f8f7f3;
-  --card-bg-2: #f8f7f3;
   --card-ink: #111111;
   /* 标题专用固定色 = #0f0f0f = hsl(0,0%,5%) */
   --card-soft-ink: hsl(0, 0%, 5%);
