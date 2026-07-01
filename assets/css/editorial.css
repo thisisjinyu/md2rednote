@@ -2,13 +2,13 @@
    editorial.css · 风格（高端杂志 Editorial，源自 HE 健康饮食）
    厚边框 + 衰线大标题 + 森绿强调色；HE01 配色为默认。
    勾选「图片取色」时 app.js 会以封面图主色 inline 覆盖 --card-* 变量。
-   边框：统一 24px。封面用图片主色(pop)的深版 --card-frame-deep（L=25%）；正文/尾页用强调色浅版 --card-border（L=75%）。
+   边框：统一 24px。封面用 --card-frame-deep（pop L=25%）；正文/尾页用 --card-border（pop L=30%）。
    强调文字（H1 em / H2）用多巴胺色加深版 --card-pop-deep（L=40%），更深但仍鲜艳。
    封面配色逻辑：图片主色深色框 + 同色相的彩色强调字（唯一彩色焦点 = pop），同色系深浅呈不打架。
    文字色（固定、不随取色变）：
      --card-soft-ink = hsl(0,0%,5%)  → 标题（H1/H2/尾页标题）
      --card-body-ink = hsl(0,0%,10%) → 正文页除 H2/页眉/页脚 外的所有文字标签
-     --card-meta-ink = hsl(0,0%,15%) → 页眉/页脚/页码
+     --card-meta-ink = hsl(0,0%,15%) → 页眉/页脚/页码（页码为页眉一部分，同色）
    注意：封面边框 24px → 绝对定位值 = 卡外坐标 - 24。正文水平内边距 68px(+24边框=92)对齐网格。
    ==================================================================== */
 
@@ -27,8 +27,8 @@
   --card-accent: #5a9e66;
   --card-pop: #5a9e66;
   --card-rule: rgba(17, 17, 17, 0.16);
-  /* 浅边框色（正文/尾页）：取强调色色相，亮度 75% */
-  --card-border: hsl(from var(--card-accent) h s 75%);
+  /* 正文/尾页边框：取多巴胺色(pop)色相，亮度 30% */
+  --card-border: hsl(from var(--card-pop) h s 30%);
   /* 深边框色（封面）：取图片主色(pop)色相，亮度压到 25% → 图片颜色的深沉版 */
   --card-frame-deep: hsl(from var(--card-pop) h s 25%);
   /* 强调文字加深版：多巴胺色 pop 同色相同饱和，明度压到 40% → 更深但仍多巴胺 */
@@ -96,7 +96,7 @@
 .card[data-theme="editorial"].role-cover .card-foot { display: none; }
 
 /* ===================== 正文 role-body =====================
-   边框 24px 浅强调色；页眉/页脚 用 15%，正文其他文字用 10%；页脚无上边框、不显页码、品牌靠右。
+   边框 24px 多巴胺色 30%；页眉/页脚/页码 用 15%，正文其他文字用 10%；页脚无上边框、不显页码、品牌靠右。
    ===================== */
 .card[data-theme="editorial"].role-body { background: var(--card-bg); }
 .card[data-theme="editorial"].role-body .card-head {
@@ -107,8 +107,9 @@
   letter-spacing: 0.5px; font-size: 26px; color: var(--card-meta-ink); margin-bottom: 0;
 }
 .card[data-theme="editorial"].role-body .card-eyebrow::after { display: none; }
-.card[data-theme="editorial"].role-body .card-progress.kind-numbers { font-family: 'Inter', 'Noto Sans SC', sans-serif; gap: 8px; }
-.card[data-theme="editorial"].role-body .card-progress.kind-numbers .pg { font-size: 18px; font-weight: 800; letter-spacing: 1px; color: var(--card-dim); }
+/* 页码：属于页眉的一部分，继承页眉色 meta-ink(15%)；字体同页眉衰线体 */
+.card[data-theme="editorial"].role-body .card-progress.kind-numbers { font-family: var(--font-serif); gap: 8px; }
+.card[data-theme="editorial"].role-body .card-progress.kind-numbers .pg { font-size: 18px; font-weight: 700; letter-spacing: 1px; color: var(--card-meta-ink); }
 .card[data-theme="editorial"].role-body .card-progress.kind-numbers .pg.active { font-size: 18px; color: var(--card-meta-ink); }
 .card[data-theme="editorial"].role-body .card-body h1 { font-family: 'Noto Serif SC', serif; font-size: 76px; font-weight: 900; line-height: 1.06; margin: 0 0 24px; color: var(--card-body-ink); }
 .card[data-theme="editorial"].role-body .card-body h2 { font-family: 'Noto Serif SC', serif; font-size: 52px; font-weight: 700; line-height: 1.2; margin: 0 0 28px; color: var(--card-soft-ink); }
