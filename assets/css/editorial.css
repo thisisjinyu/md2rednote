@@ -3,12 +3,15 @@
    厚边框 + 衰线大标题 + 森绿强调色；HE01 配色为默认。
    勾选「图片取色」时 app.js 会以封面图主色 inline 覆盖 --card-* 变量。
    边框：统一 24px。封面用 --card-frame-deep（pop L=25%）；正文/尾页用 --card-border（pop L=30%）。
-   强调文字（H1 em / H2）用多巴胺色加深版 --card-pop-deep（L=40%），更深但仍鲜艳。
-   引用块：与正文同字号、多巴胺色(pop)、斜体，无任何线条（含挡掉从 kinfolk.css 泄漏的 ::before 顶线）。
+
+   【多巴胺色 --card-pop】canonical 定义：= 封面 H2 用色。
+     取色时由 app.js 计算 = hsl(图片主色相, 高饱和, L=0.4)；默认 = hsl(130,27%,40%)。
+     强调文字（封面 H1 em/strong、封面 H2、正文 em、页码当前页、引用）均直接用 --card-pop。
+     边框/深边框由 --card-pop 推导（只取其色相+饱和，强制 L=30%/25%）。
    文字色（固定、不随取色变）：
      --card-soft-ink = hsl(0,0%,5%)  → 标题（H1/H2/尾页标题）
      --card-body-ink = hsl(0,0%,10%) → 正文页除 H2/页眉/页脚/引用 外的所有文字标签
-     --card-meta-ink = hsl(0,0%,15%) → 页眉/页脚（页码当前页号用多巴胺色 pop）
+     --card-meta-ink = hsl(0,0%,15%) → 页眉/页脚（页码当前页号用 --card-pop）
    注意：封面边框 24px → 绝对定位值 = 卡外坐标 - 24。正文水平内边距 68px(+24边框=92)对齐网格。
    ==================================================================== */
 
@@ -25,14 +28,13 @@
   --card-meta-ink: hsl(0, 0%, 15%);
   --card-dim: #6b6b6b;
   --card-accent: #5a9e66;
-  --card-pop: #5a9e66;
+  /* 多巴胺色（canonical，= 封面 H2 用色）：默认森绿 L=40%；取色时被 app.js 覆盖 */
+  --card-pop: hsl(130, 27%, 40%);
   --card-rule: rgba(17, 17, 17, 0.16);
-  /* 正文/尾页边框：取多巴胺色(pop)色相，亮度 30% */
+  /* 正文/尾页边框：取多巴胺色(pop)色相+饱和，亮度强制 30% */
   --card-border: hsl(from var(--card-pop) h s 30%);
-  /* 深边框色（封面）：取图片主色(pop)色相，亮度压到 25% → 图片颜色的深沉版 */
+  /* 深边框色（封面）：取多巴胺色(pop)色相+饱和，亮度强制 25% → 更深沉的框 */
   --card-frame-deep: hsl(from var(--card-pop) h s 25%);
-  /* 强调文字加深版：多巴胺色 pop 同色相同饱和，明度压到 40% → 更深但仍多巴胺 */
-  --card-pop-deep: hsl(from var(--card-pop) h s 40%);
   --font-serif: 'Playfair Display', 'Noto Serif SC', Georgia, serif;
   --font-cjk: 'Noto Serif SC', 'Noto Sans SC', sans-serif;
   background: var(--card-bg);
@@ -44,7 +46,7 @@
 
 /* -------- 通用排版 -------- */
 .card[data-theme="editorial"] .card-body strong { color: var(--card-accent); font-weight: 900; }
-.card[data-theme="editorial"] .card-body em { color: var(--card-pop-deep); font-style: normal; }
+.card[data-theme="editorial"] .card-body em { color: var(--card-pop); font-style: normal; }
 .card[data-theme="editorial"] .card-body mark { background: linear-gradient(transparent 56%, color-mix(in srgb, var(--card-accent) 36%, transparent) 56%); padding: 0 4px; }
 
 /* 页脚：所有页脚（含品牌）统一衰线体，覆盖 base.css 的 sans */
@@ -59,7 +61,7 @@
    封面 role-cover · 大标题下图（对齐 8×10 网格，边框 24px）
    边框 24px → 绝对定位值 = 卡外坐标 - 24：left/right 68；页眉 bottom1257.875；
    标题 top134.125 bottom752.9375；图片 top639.0625 bottom183.5625。
-   标题居中，H1=128 用 soft-ink(5%)；H1 中 strong/em 与 H2 用多巴胺加深色(pop-deep)、作为唯一彩色焦点。
+   标题居中，H1=128 用 soft-ink(5%)；H1 中 strong/em 与 H2 用多巴胺色(pop)、作为唯一彩色焦点。
    ==================================================================== */
 /* 封面边框：图片主色的深色版（L=25%），与强调字同色系，避免纯黑生硬 */
 .card[data-theme="editorial"].role-cover { border-color: var(--card-frame-deep); }
@@ -82,10 +84,10 @@
   display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
 }
 .card[data-theme="editorial"].role-cover .card-body h1 { font-family: 'Noto Serif SC', serif; font-weight: 900; font-size: 128px; line-height: 1.02; letter-spacing: -2px; color: var(--card-soft-ink); margin: 0; }
-/* H1 里的 strong(**粗体**) 与 em(*斜体*) 统一：同为多巴胺加深色、不斜体 */
+/* H1 里的 strong(**粗体**) 与 em(*斜体*) 统一：同为多巴胺色、不斜体 */
 .card[data-theme="editorial"].role-cover .card-body h1 em,
-.card[data-theme="editorial"].role-cover .card-body h1 strong { color: var(--card-pop-deep); font-style: normal; font-weight: inherit; }
-.card[data-theme="editorial"].role-cover .card-body h2 { order: -1; font-family: 'Noto Serif SC', serif; font-style: normal; font-weight: 700; font-size: 40px; color: var(--card-pop-deep); margin: 0 0 20px; letter-spacing: 0; line-height: 1.3; }
+.card[data-theme="editorial"].role-cover .card-body h1 strong { color: var(--card-pop); font-style: normal; font-weight: inherit; }
+.card[data-theme="editorial"].role-cover .card-body h2 { order: -1; font-family: 'Noto Serif SC', serif; font-style: normal; font-weight: 700; font-size: 40px; color: var(--card-pop); margin: 0 0 20px; letter-spacing: 0; line-height: 1.3; }
 .card[data-theme="editorial"].role-cover .card-body p { font-size: 30px; font-weight: 400; color: var(--card-dim); margin: 22px 0 0; line-height: 1.55; }
 
 /* 图片：左上角 A5 半高、右下角 H10 半高，左右贴网格；上小圆角、下方角 */

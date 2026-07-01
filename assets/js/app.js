@@ -300,9 +300,9 @@
     const ch = bh + 0.5;
     const cs = clamp(bs0 * 1.1, 0.4, 0.62);
     const accent = hslToHex(ch, cs, 0.5);
-    // 多巴胺强调色 pop：取图片主色相(bh)本身，高饱和、明度稍高，做成图片主色的鲜艳版
+    // 多巴胺色 pop（canonical，= 封面 H2 用色）：取图片主色相(bh)本身，高饱和、明度 0.4，鲜艳但在米底上够沉够清晰
     const popS = clamp(bs0 * 1.5, 0.72, 0.95);
-    const pop = hslToHex(bh, popS, 0.5);
+    const pop = hslToHex(bh, popS, 0.4);
     return { bg, bg2, ink, dim, rule, accent, pop, raw };
   }
 
