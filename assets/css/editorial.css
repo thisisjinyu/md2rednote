@@ -8,7 +8,7 @@
    文字色（固定、不随取色变）：
      --card-soft-ink = hsl(0,0%,5%)  → 标题（H1/H2/尾页标题）
      --card-body-ink = hsl(0,0%,10%) → 正文页除 H2/页眉/页脚 外的所有文字标签
-     --card-meta-ink = hsl(0,0%,15%) → 页眉/页脚/页码（页码为页眉一部分，同色）
+     --card-meta-ink = hsl(0,0%,15%) → 页眉/页脚（页码当前页号用多巴胺色 pop）
    注意：封面边框 24px → 绝对定位值 = 卡外坐标 - 24。正文水平内边距 68px(+24边框=92)对齐网格。
    ==================================================================== */
 
@@ -21,7 +21,7 @@
   --card-soft-ink: hsl(0, 0%, 5%);
   /* 正文页正文文字色 = hsl(0,0%,10%) */
   --card-body-ink: hsl(0, 0%, 10%);
-  /* 页眉/页脚/页码 专用固定色 = hsl(0,0%,15%) */
+  /* 页眉/页脚 专用固定色 = hsl(0,0%,15%) */
   --card-meta-ink: hsl(0, 0%, 15%);
   --card-dim: #6b6b6b;
   --card-accent: #5a9e66;
@@ -46,6 +46,10 @@
 .card[data-theme="editorial"] .card-body strong { color: var(--card-accent); font-weight: 900; }
 .card[data-theme="editorial"] .card-body em { color: var(--card-pop-deep); font-style: normal; }
 .card[data-theme="editorial"] .card-body mark { background: linear-gradient(transparent 56%, color-mix(in srgb, var(--card-accent) 36%, transparent) 56%); padding: 0 4px; }
+
+/* 页脚：所有页脚（含品牌）统一衰线体，覆盖 base.css 的 sans */
+.card[data-theme="editorial"] .card-foot,
+.card[data-theme="editorial"] .card-foot .card-brand { font-family: var(--font-serif); font-style: normal; letter-spacing: 0; }
 
 /* -------- 配图滤镜（杂志灰调） -------- */
 .card[data-theme="editorial"] .card-media img { filter: grayscale(18%) contrast(1.08); }
@@ -96,7 +100,7 @@
 .card[data-theme="editorial"].role-cover .card-foot { display: none; }
 
 /* ===================== 正文 role-body =====================
-   边框 24px 多巴胺色 30%；页眉/页脚/页码 用 15%，正文其他文字用 10%；页脚无上边框、不显页码、品牌靠右。
+   边框 24px 多巴胺色 30%；页眉/页脚 用 15%，正文其他文字用 10%；页脚无上边框、不显页码、品牌靠右。
    ===================== */
 .card[data-theme="editorial"].role-body { background: var(--card-bg); }
 .card[data-theme="editorial"].role-body .card-head {
@@ -107,10 +111,10 @@
   letter-spacing: 0.5px; font-size: 26px; color: var(--card-meta-ink); margin-bottom: 0;
 }
 .card[data-theme="editorial"].role-body .card-eyebrow::after { display: none; }
-/* 页码：属于页眉的一部分，继承页眉色；分数式 03 / 06，当前页深(meta-ink)+pop 荧光条，总页浅(dim)；同页眉衰线体 */
+/* 页码：属于页眉的一部分；分数式 03 / 06，当前页号用多巴胺色 pop、无底色，总页浅(dim)；同页眉衰线体 */
 .card[data-theme="editorial"].role-body .card-progress.kind-numbers { font-family: var(--font-serif); display: flex; align-items: baseline; gap: 4px; }
 .card[data-theme="editorial"].role-body .card-progress.kind-numbers .pg { font-size: 20px; font-weight: 700; letter-spacing: 1px; line-height: 1; }
-.card[data-theme="editorial"].role-body .card-progress.kind-numbers .pg.active { color: var(--card-meta-ink); background: linear-gradient(transparent 52%, color-mix(in srgb, var(--card-pop) 46%, transparent) 52%); padding: 0 3px; border-radius: 1px; }
+.card[data-theme="editorial"].role-body .card-progress.kind-numbers .pg.active { color: var(--card-pop); }
 .card[data-theme="editorial"].role-body .card-progress.kind-numbers .pg-sep { color: var(--card-dim); font-weight: 400; font-size: 18px; margin: 0 1px; }
 .card[data-theme="editorial"].role-body .card-progress.kind-numbers .pg.total { color: var(--card-dim); font-weight: 400; font-size: 18px; }
 .card[data-theme="editorial"].role-body .card-body h1 { font-family: 'Noto Serif SC', serif; font-size: 76px; font-weight: 900; line-height: 1.06; margin: 0 0 24px; color: var(--card-body-ink); }
@@ -136,7 +140,7 @@
 .card[data-theme="editorial"].role-body:not(.role-end) .card-body em { color: var(--card-body-ink); }
 .card[data-theme="editorial"].role-body .card-foot {
   left: 68px; right: 68px; bottom: 72px; justify-content: flex-end;
-  padding-top: 22px; font-family: var(--font-serif);
+  border-top: none; padding-top: 0; font-family: var(--font-serif);
   font-style: normal; font-size: 22px; color: var(--card-meta-ink); letter-spacing: 0; text-transform: none;
 }
 .card[data-theme="editorial"].role-body .card-body .body-figure.is-empty {
@@ -150,4 +154,4 @@
 .card[data-theme="editorial"].role-end .card-body h1 { font-size: 84px; font-weight: 900; line-height: 1.1; margin: 0 0 24px; color: var(--card-soft-ink); }
 .card[data-theme="editorial"].role-end .card-body h2 { font-size: 36px; font-weight: 700; color: var(--card-soft-ink); margin: 0 0 28px; }
 .card[data-theme="editorial"].role-end .card-body p { font-size: 30px; font-weight: 400; line-height: 1.7; color: var(--card-dim); }
-.card[data-theme="editorial"].role-end .card-foot { display: flex; }
+.card[data-theme="editorial"].role-end .card-foot { display: flex; border-top: none; padding-top: 0; }
