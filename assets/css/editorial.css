@@ -12,6 +12,7 @@
      --card-soft-ink = hsl(0,0%,5%)  → 封面标题
      --card-body-ink = hsl(0,0%,10%) → 正文页/尾页除 H2/页眉/页脚/引用 外的所有文字标签
      --card-meta-ink = hsl(0,0%,15%) → 页眉/页脚（页码当前页号用 --card-pop）
+   页眉：封面/正文/尾页的栏目（eyebrow）字体/字号/颜色/位置统一：衰线 700 28px meta-ink、字距1px、下内距16px、4px 黑线。页码仅正文页显示（分数式），封面/尾页无。
    注意：正文页与尾页的标签样式完全一致（以正文页为基准，尾页继承），尾页仅保留垂直居中等布局差异。
    它们都带 role-body 类，所以不带 :not(.role-end) 的正文页规则会同时作用于尾页；为盖住 kinfolk 尾页专属残留（如 h1 的 padding-top:42px），正文页标题规则显式写上 padding/letter-spacing。
    封面边框 24px → 绝对定位值 = 卡外坐标 - 24。正文水平内边距 68px(+24边框=92)对齐网格。
@@ -71,7 +72,7 @@
 .card[data-theme="editorial"].role-cover.layout-bottom { display: block; padding: 0; }
 .card[data-theme="editorial"].role-cover.layout-bottom .li-content { display: contents; }
 
-/* 页眉 masthead：左右贴网格，底边贴网格顶端；不斜体；页眉色 15% */
+/* 页眉 masthead：左右贴网格，底边贴网格顶端；不斜体；页眉色 15%（栏目基准样式，正文/尾页对齐之） */
 .card[data-theme="editorial"].role-cover .card-eyebrow {
   position: absolute; left: 68px; right: 68px; bottom: 1257.875px; margin: 0;
   display: flex; align-items: flex-end; font-family: var(--font-serif); font-style: normal;
@@ -115,12 +116,14 @@
    以下不带 :not(.role-end) 的规则会同时作用于尾页（尾页同样带 role-body 类）。
    ===================== */
 .card[data-theme="editorial"].role-body { background: var(--card-bg); }
+/* 页眉栏：下内距 16px 对齐封面；4px 黑线 */
 .card[data-theme="editorial"].role-body .card-head {
-  border-bottom: 4px solid var(--card-ink); padding-bottom: 18px; margin-bottom: 40px;
+  border-bottom: 4px solid var(--card-ink); padding-bottom: 16px; margin-bottom: 40px;
 }
+/* 栏目：字体/字号/颜色/字距 统一到封面（衰线 700 28px meta-ink、字距1px） */
 .card[data-theme="editorial"].role-body .card-eyebrow {
   font-family: var(--font-serif); font-style: normal; font-weight: 700; text-transform: none;
-  letter-spacing: 0.5px; font-size: 26px; color: var(--card-meta-ink); margin-bottom: 0;
+  letter-spacing: 1px; font-size: 28px; color: var(--card-meta-ink); margin-bottom: 0;
 }
 .card[data-theme="editorial"].role-body .card-eyebrow::after { display: none; }
 /* 页码：属于页眉的一部分；分数式 03 / 06，当前页号用多巴胺色 pop、无底色，总页浅(dim)；同页眉衰线体 */
