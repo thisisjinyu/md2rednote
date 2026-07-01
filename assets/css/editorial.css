@@ -107,10 +107,12 @@
   letter-spacing: 0.5px; font-size: 26px; color: var(--card-meta-ink); margin-bottom: 0;
 }
 .card[data-theme="editorial"].role-body .card-eyebrow::after { display: none; }
-/* 页码：属于页眉的一部分，继承页眉色 meta-ink(15%)；字体同页眉衰线体 */
-.card[data-theme="editorial"].role-body .card-progress.kind-numbers { font-family: var(--font-serif); gap: 8px; }
-.card[data-theme="editorial"].role-body .card-progress.kind-numbers .pg { font-size: 18px; font-weight: 700; letter-spacing: 1px; color: var(--card-meta-ink); }
-.card[data-theme="editorial"].role-body .card-progress.kind-numbers .pg.active { font-size: 18px; color: var(--card-meta-ink); }
+/* 页码：属于页眉的一部分，继承页眉色；分数式 03 / 06，当前页深(meta-ink)+pop 荧光条，总页浅(dim)；同页眉衰线体 */
+.card[data-theme="editorial"].role-body .card-progress.kind-numbers { font-family: var(--font-serif); display: flex; align-items: baseline; gap: 4px; }
+.card[data-theme="editorial"].role-body .card-progress.kind-numbers .pg { font-size: 20px; font-weight: 700; letter-spacing: 1px; line-height: 1; }
+.card[data-theme="editorial"].role-body .card-progress.kind-numbers .pg.active { color: var(--card-meta-ink); background: linear-gradient(transparent 52%, color-mix(in srgb, var(--card-pop) 46%, transparent) 52%); padding: 0 3px; border-radius: 1px; }
+.card[data-theme="editorial"].role-body .card-progress.kind-numbers .pg-sep { color: var(--card-dim); font-weight: 400; font-size: 18px; margin: 0 1px; }
+.card[data-theme="editorial"].role-body .card-progress.kind-numbers .pg.total { color: var(--card-dim); font-weight: 400; font-size: 18px; }
 .card[data-theme="editorial"].role-body .card-body h1 { font-family: 'Noto Serif SC', serif; font-size: 76px; font-weight: 900; line-height: 1.06; margin: 0 0 24px; color: var(--card-body-ink); }
 .card[data-theme="editorial"].role-body .card-body h2 { font-family: 'Noto Serif SC', serif; font-size: 52px; font-weight: 700; line-height: 1.2; margin: 0 0 28px; color: var(--card-soft-ink); }
 .card[data-theme="editorial"].role-body .card-body h2:first-child { margin-top: 0; }

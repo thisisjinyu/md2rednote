@@ -199,13 +199,13 @@
     sel.value = hasPrev ? prev : (list.length ? list[0].id : "");
   }
 
-  // 页眉右上角页码进度：numbers 类型只显示当前页号；其他类型逐项标记、当前页高亮
+  // 页眉右上角页码进度：numbers 类型显示 当前/总页 分数式；其他类型逐项标记、当前页高亮
   function buildProgress(theme, cur, tot) {
     if (tot < 1) return "";
     const kind = PROGRESS_KIND[theme] || "dots";
-    // numbers 类型：上面的页码只显示当前页的号码
+    // numbers 类型：分数式 当前/总页（当前页深、总页浅，样式见 editorial.css）
     if (kind === "numbers") {
-      return `<div class="card-progress kind-numbers"><span class="pg active">${String(cur).padStart(2, "0")}</span></div>`;
+      return `<div class="card-progress kind-numbers"><span class="pg active">${String(cur).padStart(2, "0")}</span><span class="pg-sep">/</span><span class="pg total">${String(tot).padStart(2, "0")}</span></div>`;
     }
     let marks = "";
     for (let i = 1; i <= tot; i++) {
