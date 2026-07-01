@@ -125,14 +125,14 @@
 .card[data-theme="editorial"].role-body .card-body h3 { font-size: 36px; font-weight: 700; color: var(--card-body-ink); margin: 28px 0 14px; }
 .card[data-theme="editorial"].role-body .card-body p { font-size: 32px; font-weight: 400; line-height: 1.7; margin: 0 0 26px; }
 
-/* -------- 列表：标记用多巴胺色 pop；无序=实心圆点，有序=前导零衰线数字 -------- */
+/* -------- 列表：标记用多巴胺色 pop；无序=实心小方块，有序=前导零衰线数字 -------- */
 .card[data-theme="editorial"].role-body .card-body ul,
 .card[data-theme="editorial"].role-body .card-body ol { margin: 0 0 28px; padding-left: 6px; }
 .card[data-theme="editorial"].role-body .card-body li { font-size: 31px; line-height: 1.6; margin-bottom: 18px; padding-left: 46px; }
-/* 无序：多巴胺实心圆点（去掉 kinfolk 的描边），竖直对齐首行光学中心 */
+/* 无序：多巴胺实心小方块（去掉 kinfolk 的描边与圆角），竖直对齐首行光学中心 */
 .card[data-theme="editorial"].role-body .card-body ul li::before {
-  content: ''; top: 18px; left: 6px; width: 11px; height: 11px;
-  background: var(--card-pop); border: none; border-radius: 50%;
+  content: ''; top: 19px; left: 6px; width: 10px; height: 10px;
+  background: var(--card-pop); border: none; border-radius: 0;
 }
 /* 有序：前导零衰线数字 01 02 03，多巴胺色、略加重 */
 .card[data-theme="editorial"].role-body .card-body ol li::before {
