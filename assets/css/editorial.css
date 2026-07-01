@@ -6,7 +6,7 @@
 
    【多巴胺色 --card-pop】canonical 定义：= 封面 H2 用色。
      取色时由 app.js 计算 = hsl(图片主色相, 高饱和, L=0.4)；默认 = hsl(130,27%,40%)。
-     强调文字（封面 H1 em/strong、封面 H2、正文 em、页码当前页、引用）均直接用 --card-pop。
+     强调文字（封面 H1 em/strong、封面 H2、正文 em、页码当前页、引用、列表标记）均直接用 --card-pop。
      边框/深边框由 --card-pop 推导（只取其色相+饱和，强制 L=30%/25%）。
    文字色（固定、不随取色变）：
      --card-soft-ink = hsl(0,0%,5%)  → 标题（H1/H2/尾页标题）
@@ -124,10 +124,20 @@
 .card[data-theme="editorial"].role-body .card-body h2:first-child { margin-top: 0; }
 .card[data-theme="editorial"].role-body .card-body h3 { font-size: 36px; font-weight: 700; color: var(--card-body-ink); margin: 28px 0 14px; }
 .card[data-theme="editorial"].role-body .card-body p { font-size: 32px; font-weight: 400; line-height: 1.7; margin: 0 0 26px; }
-.card[data-theme="editorial"].role-body .card-body li { font-size: 31px; line-height: 1.6; }
-.card[data-theme="editorial"].role-body .card-body ul li::before { background: var(--card-accent); }
-.card[data-theme="editorial"].role-body .card-body ol li::before { color: var(--card-accent); }
-/* 引用：与正文同字号(32px)、多巴胺色(pop)、斜体，无线条（挡掉 kinfolk 泄漏的顶线 ::before） */
+
+/* -------- 列表：标记用多巴胺色 pop；无序=实心圆点，有序=前导零衰线数字 -------- */
+.card[data-theme="editorial"].role-body .card-body ul,
+.card[data-theme="editorial"].role-body .card-body ol { margin: 0 0 28px; padding-left: 6px; }
+.card[data-theme="editorial"].role-body .card-body li { font-size: 31px; line-height: 1.6; margin-bottom: 18px; padding-left: 46px; }
+/* 无序：多巴胺实心圆点（去掉 kinfolk 的描边），竖直对齐首行光学中心 */
+.card[data-theme="editorial"].role-body .card-body ul li::before {
+  content: ''; top: 18px; left: 6px; width: 11px; height: 11px;
+  background: var(--card-pop); border: none; border-radius: 50%;
+}
+/* 有序：前导零衰线数字 01 02 03，多巴胺色、略加重 */
+.card[data-theme="editorial"].role-body .card-body ol li::before {
+  color: var(--card-pop); font-size: 30px; font-weight: 700; top: 0; left: 0;
+}
 .card[data-theme="editorial"].role-body .card-body blockquote {
   font-family: 'Noto Serif SC', serif; font-style: italic; font-size: 32px; line-height: 1.7;
   color: var(--card-pop); border: none; padding: 0; margin: 32px 0;
