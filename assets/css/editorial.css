@@ -13,6 +13,7 @@
      --card-body-ink = hsl(0,0%,10%) → 正文页/尾页除 H2/页眉/页脚/引用 外的所有文字标签
      --card-meta-ink = hsl(0,0%,15%) → 页眉/页脚（页码当前页号用 --card-pop）
    注意：正文页与尾页的标签样式完全一致（以正文页为基准，尾页继承），尾页仅保留垂直居中等布局差异。
+   它们都带 role-body 类，所以不带 :not(.role-end) 的正文页规则会同时作用于尾页；为盖住 kinfolk 尾页专属残留（如 h1 的 padding-top:42px），正文页标题规则显式写上 padding/letter-spacing。
    封面边框 24px → 绝对定位值 = 卡外坐标 - 24。正文水平内边距 68px(+24边框=92)对齐网格。
    ==================================================================== */
 
@@ -121,17 +122,18 @@
 .card[data-theme="editorial"].role-body .card-progress.kind-numbers .pg.active { color: var(--card-pop); }
 .card[data-theme="editorial"].role-body .card-progress.kind-numbers .pg-sep { color: var(--card-dim); font-weight: 400; font-size: 18px; margin: 0 1px; }
 .card[data-theme="editorial"].role-body .card-progress.kind-numbers .pg.total { color: var(--card-dim); font-weight: 400; font-size: 18px; }
-/* H1 = 72px；H2 = 48px 多巴胺色 pop */
-.card[data-theme="editorial"].role-body .card-body h1 { font-family: 'Noto Serif SC', serif; font-size: 72px; font-weight: 900; line-height: 1.06; margin: 0 0 24px; color: var(--card-body-ink); }
-.card[data-theme="editorial"].role-body .card-body h2 { font-family: 'Noto Serif SC', serif; font-size: 48px; font-weight: 700; line-height: 1.2; margin: 0 0 28px; color: var(--card-pop); }
+/* H1 = 72px；H2 = 48px 多巴胺色 pop；显式写 padding/letter-spacing 以盖住 kinfolk 尾页残留 */
+.card[data-theme="editorial"].role-body .card-body h1 { font-family: 'Noto Serif SC', serif; font-size: 72px; font-weight: 900; line-height: 1.06; margin: 0 0 24px; padding: 0; letter-spacing: 0; color: var(--card-body-ink); }
+.card[data-theme="editorial"].role-body .card-body h1::before { content: none; }
+.card[data-theme="editorial"].role-body .card-body h2 { font-family: 'Noto Serif SC', serif; font-size: 48px; font-weight: 700; line-height: 1.2; margin: 0 0 28px; padding: 0; letter-spacing: 0; color: var(--card-pop); }
 .card[data-theme="editorial"].role-body .card-body h2:first-child { margin-top: 0; }
 .card[data-theme="editorial"].role-body .card-body h3 { font-size: 36px; font-weight: 700; color: var(--card-body-ink); margin: 28px 0 14px; }
-.card[data-theme="editorial"].role-body .card-body p { font-size: 32px; font-weight: 400; line-height: 1.7; margin: 0 0 26px; }
+.card[data-theme="editorial"].role-body .card-body p { font-size: 32px; font-weight: 400; line-height: 1.7; letter-spacing: 0; margin: 0 0 26px; }
 
 /* -------- 列表：标记用多巴胺色 pop；无序=实心小方块，有序=前导零衰线数字 -------- */
 .card[data-theme="editorial"].role-body .card-body ul,
 .card[data-theme="editorial"].role-body .card-body ol { margin: 0 0 28px; padding-left: 6px; }
-.card[data-theme="editorial"].role-body .card-body li { font-size: 31px; line-height: 1.6; margin-bottom: 18px; padding-left: 46px; }
+.card[data-theme="editorial"].role-body .card-body li { font-size: 31px; line-height: 1.6; letter-spacing: 0; margin-bottom: 18px; padding-left: 46px; }
 /* 无序：多巴胺实心小方块（去掉 kinfolk 的描边与圆角），竖直对齐首行光学中心 */
 .card[data-theme="editorial"].role-body .card-body ul li::before {
   content: ''; top: 19px; left: 6px; width: 10px; height: 10px;
@@ -167,6 +169,6 @@
 .card[data-theme="editorial"].role-end .card-body { justify-content: center; align-items: stretch; text-align: left; }
 .card[data-theme="editorial"].role-end .card-body .body-figure { display: none; }
 .card[data-theme="editorial"].role-end .card-eyebrow { justify-content: flex-start; }
-/* 去掉 kinfolk 漏进来的尾页 H1 上方那条 accent 短横线 */
+/* 去掉 kinfolk 漏进来的尾页 H1 上方那条 accent 短横线（与预留的 padding 一并，正文页 h1 规则已 padding:0） */
 .card[data-theme="editorial"].role-end .card-body h1::before { content: none; }
 .card[data-theme="editorial"].role-end .card-foot { display: flex; border-top: none; padding-top: 0; }
